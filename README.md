@@ -1,2 +1,2 @@
-# 2022-2023-Spin-Up
-Repository for the VEX 2022-2023 game.
+# Odometry v1
+First iteration of Odometry for the VEX 2022-2023 game.
