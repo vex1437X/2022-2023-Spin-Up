@@ -1,0 +1,99 @@
+#include "main.h"
+#include "drive.hpp"
+using namespace pros;
+
+void setDrive(int left, int right){
+  // In voltage
+  // -127 to +127
+  leftF = left;
+  leftB = left;
+  rightF = right;
+  rightB = right;
+}
+
+void resetDrive(){setDrive(0, 0);}
+
+void resetDriveEncoders(){
+  leftF.tare_position();
+  leftB.tare_position();
+  rightF.tare_position();
+  rightB.tare_position();
+}
+
+double avgDriveEncoders(){
+  return (fabs(leftF.get_position()) +
+         fabs(leftB.get_position()) +
+         fabs(rightF.get_position()) +
+         fabs(rightB.get_position())) / 4;
+}
+
+void driveCoast(){
+  leftF.set_brake_mode(E_MOTOR_BRAKE_COAST);
+  leftB.set_brake_mode(E_MOTOR_BRAKE_COAST);
+  rightF.set_brake_mode(E_MOTOR_BRAKE_COAST);
+  rightB.set_brake_mode(E_MOTOR_BRAKE_COAST);
+}
+
+void driveBrake(){
+  leftF.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+  leftB.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+  rightF.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+  rightB.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+}
+
+void driverControl(){
+  int leftJoystick = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+  int rightJoystick = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+  if (abs(leftJoystick) < 10){
+    leftJoystick = 0;
+  }
+  if (abs(rightJoystick) < 10){
+    rightJoystick = 0;
+  }
+  setDrive(leftJoystick, rightJoystick);
+}
+
+void driveFor(double inches, double percent){
+  double voltage = percent*1.27;
+  int direction = fabs(inches) / inches;
+
+  imu.tare();
+  resetDriveEncoders();
+
+  while (avgDriveEncoders() < fabs(inches)){
+    setDrive(voltage*direction-(imu.get_heading()*10), voltage*direction+(imu.get_heading()*10));
+    delay(10);
+  }
+  setDrive(-10*direction, -10*direction);
+  delay(50);
+  resetDrive();
+}
+
+void turnFor(double degrees, double percent){
+  double voltage = percent*1.27;
+  int direction = fabs(degrees) / degrees;
+
+  imu.tare();
+
+  setDrive(voltage*direction, -voltage*direction);
+  while(fabs(imu.get_heading()) < fabs(degrees) - 5){
+    delay(10);
+  }
+  delay(150);
+
+  // Correct overshoot
+  if(fabs(imu.get_heading()) > fabs(degrees)){
+    setDrive(-voltage*direction*0.5, voltage*direction*0.5);
+    while(fabs(imu.get_heading()) > fabs(degrees)){
+      delay(10);
+    }
+  }
+  // Correct undershoot
+  else if(fabs(imu.get_heading()) < fabs(degrees)){
+    setDrive(voltage*direction*0.5, -voltage*direction*0.5);
+    while(fabs(imu.get_heading()) < fabs(degrees)){
+      delay(10);
+    }
+  }
+  resetDrive();
+}
