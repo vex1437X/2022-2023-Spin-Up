@@ -63,7 +63,7 @@ void driveFor(double inches, double percent){
   imu.tare();
   resetDriveEncoders();
 
-  while(avgDriveEncoders() < fabs(inches)){
+  while(avgDriveEncoders() < fabs(inToEnc(inches))){
     setDrive(voltage*direction-(imu.get_heading()*10), voltage*direction+(imu.get_heading()*10));
     delay(10);
   }

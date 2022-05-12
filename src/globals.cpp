@@ -17,4 +17,5 @@ Imu imu(7);
 
 double inToEnc(double inches){
   return ((PI*driveWheelDiam)/ticksPerRev)*inches;
+  // return inches/(PI*driveWheelDiam)*ticksPerRev;
 }
