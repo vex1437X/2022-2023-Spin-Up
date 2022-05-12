@@ -3,10 +3,11 @@ using namespace pros;
 
 extern Controller controller;
 
-// Drive motors
+// drive motors
 extern Motor leftF;
 extern Motor leftB;
 extern Motor rightF;
 extern Motor rightB;
 
+// inertial sensor
 extern Imu imu;

@@ -3,8 +3,9 @@
 using namespace pros;
 
 void setDrive(int left, int right){
-  // In voltage
+  // inputs in voltage
   // -127 to +127
+
   leftF = left;
   leftB = left;
   rightF = right;
@@ -54,46 +55,59 @@ void driverControl(){
 }
 
 void driveFor(double inches, double percent){
+  // percent to voltage conversion
   double voltage = percent*1.27;
-  int direction = fabs(inches) / inches;
+  // determine direction
+  int direction = fabs(inches) / inches; // direction = -1 when inches is negative & +1 when inches is positive
 
+  // reset inertial sensor and drive encoders
   imu.tare();
   resetDriveEncoders();
 
-  while (avgDriveEncoders() < fabs(inches)){
+  while(avgDriveEncoders() < fabs(inches)){
     setDrive(voltage*direction-(imu.get_heading()*10), voltage*direction+(imu.get_heading()*10));
     delay(10);
   }
-  setDrive(-10*direction, -10*direction);
+  // overshoot correction
+  if(avgDriveEncoders() > fabs(inches)){
+    setDrive(-voltage*direction-(imu.get_heading()*10)*0.5, -voltage*direction+(imu.get_heading()*10)*0.5);
+    while(avgDriveEncoders() > fabs(inches)){
+      delay(10);
+    }
+  }
   delay(50);
-  resetDrive();
+  resetDrive(); // stops all drive motors
 }
 
 void turnFor(double degrees, double percent){
+  // percent to voltage conversion
   double voltage = percent*1.27;
-  int direction = fabs(degrees) / degrees;
+  // determine direction
+  int direction = fabs(degrees) / degrees; // direction = -1 when degrees is negative & +1 when degrees is positive
 
   imu.tare();
 
+  // turning the drivetrain
   setDrive(voltage*direction, -voltage*direction);
   while(fabs(imu.get_heading()) < fabs(degrees) - 5){
     delay(10);
   }
   delay(150);
 
-  // Correct overshoot
+  // overshoot correction
   if(fabs(imu.get_heading()) > fabs(degrees)){
     setDrive(-voltage*direction*0.5, voltage*direction*0.5);
     while(fabs(imu.get_heading()) > fabs(degrees)){
       delay(10);
     }
   }
-  // Correct undershoot
+
+  // undershoot correction
   else if(fabs(imu.get_heading()) < fabs(degrees)){
     setDrive(voltage*direction*0.5, -voltage*direction*0.5);
     while(fabs(imu.get_heading()) < fabs(degrees)){
       delay(10);
     }
   }
-  resetDrive();
+  resetDrive(); // stops all drive motors
 }
