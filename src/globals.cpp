@@ -16,6 +16,5 @@ Motor rightB(4, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
 Imu imu(7);
 
 double inToEnc(double inches){
-  return ((PI*driveWheelDiam)/ticksPerRev)*inches;
-  // return inches/(PI*driveWheelDiam)*ticksPerRev;
+  return inches/(PI*driveWheelDiam)*ticksPerRev;
 }
