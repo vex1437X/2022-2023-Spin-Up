@@ -44,10 +44,12 @@ void driveBrake(){
 void driverControl(){
   int leftJoystick = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
   int rightJoystick = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-  if (abs(leftJoystick) < 10){
+  // left joystick deadzone
+  if (abs(leftJoystick) < 10 /*change if deadzone is wrong*/){
     leftJoystick = 0;
   }
-  if (abs(rightJoystick) < 10){
+  // right joystick deadzone
+  if (abs(rightJoystick) < 10 /*change if deadzone is wrong*/){
     rightJoystick = 0;
   }
   setDrive(leftJoystick, rightJoystick);
@@ -68,9 +70,9 @@ void driveFor(double inches, double percent){
     delay(10);
   }
   // overshoot correction
-  if(avgDriveEncoders() > fabs(inches)){
+  if(avgDriveEncoders() > fabs(inToEnc(inches))){
     setDrive(-voltage*direction-(imu.get_heading()*10)*0.5, -voltage*direction+(imu.get_heading()*10)*0.5);
-    while(avgDriveEncoders() > fabs(inches)){
+    while(avgDriveEncoders() > fabs(inToEnc(inches))){
       delay(10);
     }
   }
