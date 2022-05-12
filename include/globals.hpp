@@ -14,8 +14,8 @@ extern Imu imu;
 
 double inToEnc(double inches);
 
-#define driveWheelDiam  4
-#define driveWheelRad   2
+#define driveWheelDiam  3.25             // inches
+#define driveWheelRad   driveWheelDiam/2
 
 #define ticksPerRev     900
   // 1800 ticks/rev with 36:1 gears :: RED

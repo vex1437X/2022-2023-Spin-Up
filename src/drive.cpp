@@ -59,7 +59,7 @@ void driveFor(double inches, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
   // determine direction
-  int direction = fabs(inches) / inches; // direction = -1 when inches is negative & +1 when inches is positive
+  int direction = fabs(inches) / inches; // direction = -1 when inches is negative & = +1 when inches is positive
 
   // reset inertial sensor and drive encoders
   imu.tare();
