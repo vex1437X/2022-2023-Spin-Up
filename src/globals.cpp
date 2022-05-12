@@ -14,3 +14,7 @@ Motor rightB(4, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
 
 // inertial sensor
 Imu imu(7);
+
+double inToEnc(double inches){
+  return ((PI*driveWheelDiam)/ticksPerRev)*inches;
+}

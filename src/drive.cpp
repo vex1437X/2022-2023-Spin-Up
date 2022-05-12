@@ -5,7 +5,6 @@ using namespace pros;
 void setDrive(int left, int right){
   // inputs in voltage
   // -127 to +127
-
   leftF = left;
   leftB = left;
   rightF = right;
