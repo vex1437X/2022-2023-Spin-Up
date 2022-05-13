@@ -17,6 +17,8 @@ extern ADIEncoder auxT;
 // inertial sensor
 extern Imu imu;
 
+double radToDeg(double rad);
+double degToRad(double deg);
 double inToEnc(double inches);
 
 #define driveWheelDiam  3.25             // inches

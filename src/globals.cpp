@@ -21,6 +21,14 @@ ADIEncoder auxT(5, 6, false);
 // inertial sensor
 Imu imu(7);
 
+double radToDeg(double rad){
+  return rad*180/PI;
+}
+
+double degToRad(double deg){
+  return deg*PI/180;
+}
+
 double inToEnc(double inches){
   return inches/(PI*driveWheelDiam)*ticksPerRev;
 }

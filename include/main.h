@@ -74,6 +74,7 @@ void opcontrol(void);
 #ifdef __cplusplus
 #include "globals.hpp"
 #include "drive.hpp"
+#include "odometry.hpp"
 
 //#include <iostream>
 #endif
