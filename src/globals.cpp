@@ -12,6 +12,12 @@ Motor leftB(2, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 Motor rightF(3, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
 Motor rightB(4, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
 
+// tracking wheel encoders
+// 1 is A; 2 is B; 3 is C; etc..
+ADIEncoder leftT(1, 2, false);
+ADIEncoder rightT(3, 4, false);
+ADIEncoder auxT(5, 6, false);
+
 // inertial sensor
 Imu imu(7);
 

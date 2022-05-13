@@ -9,6 +9,11 @@ extern Motor leftB;
 extern Motor rightF;
 extern Motor rightB;
 
+// tracking encoders
+extern ADIEncoder leftT;
+extern ADIEncoder rightT;
+extern ADIEncoder auxT;
+
 // inertial sensor
 extern Imu imu;
 
