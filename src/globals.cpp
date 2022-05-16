@@ -7,10 +7,10 @@ Controller controller(E_CONTROLLER_MASTER);
 // drive motors
 // change gearset when motors are changed
 // blue: 06 // green: 18 // red: 36
-Motor leftF(1, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
-Motor leftB(2, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
-Motor rightF(3, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
-Motor rightB(4, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
+Motor leftF(1, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
+Motor leftB(2, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
+Motor rightF(3, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
+Motor rightB(4, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
 
 // tracking wheel encoders
 // 1 is A; 2 is B; 3 is C; etc..

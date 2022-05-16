@@ -2,8 +2,11 @@
 using namespace pros;
 
 void setDrive(int left, int right);
+void setDrive(int leftFv, int leftBv, int rightFv, int rightBv);
+
 void resetDrive();
 void resetDriveEncoders();
+
 double avgDriveEncoders();
 
 void driveCoast();

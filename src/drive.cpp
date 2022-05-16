@@ -11,6 +11,15 @@ void setDrive(int left, int right){
   rightB = right;
 }
 
+void setDrive(int leftFv, int leftBv, int rightFv, int rightBv){
+  // inputs in voltage
+  // -127 to +127
+  leftF = leftFv;
+  leftB = leftBv;
+  rightF = rightFv;
+  rightB = rightBv;
+}
+
 void resetDrive(){setDrive(0, 0);}
 
 void resetDriveEncoders(){
@@ -42,17 +51,40 @@ void driveBrake(){
 }
 
 void driverControl(){
-  int leftJoystick = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-  int rightJoystick = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+  int leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+  int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
+  int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+  int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+  // Regular tank drive
+
+  /*
   // left joystick deadzone
-  if (abs(leftJoystick) < 10 /*change if deadzone is wrong*/){
-    leftJoystick = 0;
+  if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
+    leftJoystickY = 0;
   }
   // right joystick deadzone
-  if (abs(rightJoystick) < 10 /*change if deadzone is wrong*/){
-    rightJoystick = 0;
+  if (abs(rightJoystickY) < 10){ // change if deadzone is wrong
+    rightJoystickY = 0;
   }
-  setDrive(leftJoystick, rightJoystick);
+  setDrive(leftJoystickY, rightJoystickY);
+  */
+
+  // X drive
+
+  if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
+    leftJoystickY = 0;
+  }
+  if (abs(leftJoystickX) < 10){ // change if deadzone is wrong
+    leftJoystickY = 0;
+  }
+  if (abs(rightJoystickX) < 10){ // change if deadzone is wrong
+    leftJoystickY = 0;
+  }
+  // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
+  setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
+    leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
+    leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
+    leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
 }
 
 void driveFor(double inches, double percent){
