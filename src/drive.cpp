@@ -55,36 +55,23 @@ void driverControl(){
   int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
   int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
   int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-  // Regular tank drive
-
-  // /*
-  // left joystick deadzone
-  if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
-    leftJoystickY = 0;
-  }
-  // right joystick deadzone
-  if (abs(rightJoystickY) < 10){ // change if deadzone is wrong
-    rightJoystickY = 0;
-  }
-  setDrive(leftJoystickY, rightJoystickY);
-  // */
 
   // X drive
   //
-  // if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
-  //   leftJoystickY = 0;
-  // }
-  // if (abs(leftJoystickX) < 10){ // change if deadzone is wrong
-  //   leftJoystickY = 0;
-  // }
-  // if (abs(rightJoystickX) < 10){ // change if deadzone is wrong
-  //   leftJoystickY = 0;
-  // }
-  // // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
-  // setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
-  //   leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
-  //   leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
-  //   leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
+  if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
+    leftJoystickY = 0;
+  }
+  if (abs(leftJoystickX) < 10){ // change if deadzone is wrong
+    leftJoystickY = 0;
+  }
+  if (abs(rightJoystickX) < 10){ // change if deadzone is wrong
+    leftJoystickY = 0;
+  }
+  // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
+  setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
+    leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
+    leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
+    leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
 }
 
 void driveFor(double inches, double percent){
