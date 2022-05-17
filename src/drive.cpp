@@ -5,19 +5,19 @@ using namespace pros;
 void setDrive(int left, int right){
   // inputs in voltage
   // -127 to +127
-  leftF = left;
-  leftB = left;
-  rightF = right;
-  rightB = right;
+  leftF.move(left);
+  leftB.move(left);
+  rightF.move(right);
+  rightB.move(right);
 }
 
 void setDrive(int leftFv, int leftBv, int rightFv, int rightBv){
   // inputs in voltage
   // -127 to +127
-  leftF = leftFv;
-  leftB = leftBv;
-  rightF = rightFv;
-  rightB = rightBv;
+  leftF.move(leftFv);
+  leftB.move(leftBv);
+  rightF.move(rightFv);
+  rightB.move(rightBv);
 }
 
 void resetDrive(){setDrive(0, 0);}
@@ -34,6 +34,12 @@ double avgDriveEncoders(){
          fabs(leftB.get_position()) +
          fabs(rightF.get_position()) +
          fabs(rightB.get_position())) / 4;
+}
+
+double avgTrackEncoders(){
+  return (fabs(leftT.get_value()) +
+         fabs(rightT.get_value()) +
+         fabs(auxT.get_value())) / 3;
 }
 
 void driveCoast(){
@@ -55,9 +61,9 @@ void driverControl(){
   int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
   int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
   int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+
   // Regular tank drive
 
-  // /*
   // left joystick deadzone
   if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
     leftJoystickY = 0;
@@ -67,24 +73,6 @@ void driverControl(){
     rightJoystickY = 0;
   }
   setDrive(leftJoystickY, rightJoystickY);
-  // */
-
-  // X drive
-  //
-  // if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
-  //   leftJoystickY = 0;
-  // }
-  // if (abs(leftJoystickX) < 10){ // change if deadzone is wrong
-  //   leftJoystickY = 0;
-  // }
-  // if (abs(rightJoystickX) < 10){ // change if deadzone is wrong
-  //   leftJoystickY = 0;
-  // }
-  // // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
-  // setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
-  //   leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
-  //   leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
-  //   leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
 }
 
 void driveFor(double inches, double percent){

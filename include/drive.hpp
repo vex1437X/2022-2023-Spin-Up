@@ -8,6 +8,7 @@ void resetDrive();
 void resetDriveEncoders();
 
 double avgDriveEncoders();
+double avgTrackEncoders();
 
 void driveCoast();
 void driveBrake();
