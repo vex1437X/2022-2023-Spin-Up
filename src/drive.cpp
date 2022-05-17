@@ -57,7 +57,6 @@ void driverControl(){
   int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
   // X drive
-  //
   if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
     leftJoystickY = 0;
   }
