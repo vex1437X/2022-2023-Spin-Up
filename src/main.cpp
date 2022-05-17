@@ -45,15 +45,18 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
+	lcd::set_text(2, "Autonomous");
   // set drive motors to brake
   driveBrake();
 }
 
 void opcontrol() {
+	lcd::set_text(3, "Driver Control");
   // set drive motors to coast
   driveCoast();
+	
 	while (true) {
-    // control drive using the controller
+		// driver control
     driverControl();
 
     delay(20);

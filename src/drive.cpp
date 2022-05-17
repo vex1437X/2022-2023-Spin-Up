@@ -5,19 +5,19 @@ using namespace pros;
 void setDrive(int left, int right){
   // inputs in voltage
   // -127 to +127
-  leftF = left;
-  leftB = left;
-  rightF = right;
-  rightB = right;
+  leftF.move(left);
+  leftB.move(left);
+  rightF.move(right);
+  rightB.move(right);
 }
 
 void setDrive(int leftFv, int leftBv, int rightFv, int rightBv){
   // inputs in voltage
   // -127 to +127
-  leftF = leftFv;
-  leftB = leftBv;
-  rightF = rightFv;
-  rightB = rightBv;
+  leftF.move(leftFv);
+  leftB.move(leftBv);
+  rightF.move(rightFv);
+  rightB.move(rightBv);
 }
 
 void resetDrive(){setDrive(0, 0);}
@@ -73,10 +73,13 @@ void driverControl(){
     leftJoystickY = 0;
   }
   // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
-  setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
-    leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
-    leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
-    leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
+  // setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
+  //   leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
+  //   leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
+  //   leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
+
+  leftF.move(leftJoystickY+leftJoystickX+rightJoystickX);
+  rightF.move(leftJoystickY-leftJoystickX-rightJoystickX);
 }
 
 void driveFor(double inches, double percent){
