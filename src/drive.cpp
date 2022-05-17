@@ -36,6 +36,12 @@ double avgDriveEncoders(){
          fabs(rightB.get_position())) / 4;
 }
 
+double avgTrackEncoders(){
+  return (fabs(leftT.get_value()) +
+          fabs(rightT.get_value()) +
+          fabs(leftT.get_value())) / 3;
+}
+
 void driveCoast(){
   leftF.set_brake_mode(E_MOTOR_BRAKE_COAST);
   leftB.set_brake_mode(E_MOTOR_BRAKE_COAST);
