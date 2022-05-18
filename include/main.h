@@ -75,9 +75,9 @@ void opcontrol(void);
 /**
  * You can add C++-only headers here
  */
-#include "globals.h"
-#include "drive.h"
-#include "odometry.h"
+#include "globals.hpp"
+#include "drive.hpp"
+#include "odometry.hpp"
 //#include <iostream>
 #endif
 

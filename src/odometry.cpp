@@ -1,5 +1,5 @@
 #include "main.h"
-#include "odometry.h"
+#include "odometry.hpp"
 using namespace pros;
 
 #define Tl    7.25     // inches

@@ -1,5 +1,5 @@
 #include "main.h"
-#include "globals.h"
+#include "globals.hpp"
 using namespace pros;
 
 Controller controller(E_CONTROLLER_MASTER);
