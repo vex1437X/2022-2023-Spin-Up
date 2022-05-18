@@ -37,9 +37,9 @@ double avgDriveEncoders(){
 }
 
 double avgTrackEncoders(){
-  return (fabs(leftT.get_value()) +
-          fabs(rightT.get_value()) +
-          fabs(leftT.get_value())) / 3;
+  return (abs(leftT.get_value()) +
+          abs(rightT.get_value()) +
+          abs(leftT.get_value())) / 3;
 }
 
 void driveCoast(){
