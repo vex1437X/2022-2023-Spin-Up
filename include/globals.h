@@ -29,4 +29,4 @@ double inToEnc(double inches);
   // 900 ticks/rev with 18:1 gears :: GREEN
   // 300 ticks/rev with 6:1 gears :: BLUE
 
-#define PI              3.141592653589793238462643383279
+#define PI              3.141592653589793238462643383279 // pi constant

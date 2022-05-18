@@ -72,9 +72,13 @@ void opcontrol(void);
 #endif
 
 #ifdef __cplusplus
-#include "globals.hpp"
-#include "drive.hpp"
-#include "odometry.hpp"
+/**
+ * You can add C++-only headers here
+ */
+#include "globals.h"
+#include "drive.h"
+#include "odometry.h"
+//#include <iostream>
 #endif
 
 #endif  // _PROS_MAIN_H_
