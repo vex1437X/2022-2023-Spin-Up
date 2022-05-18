@@ -57,10 +57,10 @@ void driveBrake(){
 }
 
 void driverControl(){
-  int leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-  int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
+  int leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y); // power
+  int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X); // strafe
   int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-  int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+  int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X); // turn
 
   // X drive
   if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
@@ -73,13 +73,10 @@ void driverControl(){
     leftJoystickY = 0;
   }
   // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
-  // setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
-  //   leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
-  //   leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
-  //   leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
-
-  leftF.move(leftJoystickY+leftJoystickX+rightJoystickX);
-  rightF.move(leftJoystickY-leftJoystickX-rightJoystickX);
+  setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
+    leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
+    leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
+    leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
 }
 
 void driveFor(double inches, double percent){
