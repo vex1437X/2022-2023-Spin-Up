@@ -90,7 +90,8 @@ void driveFor(double inches, double percent){
   resetDriveEncoders();
 
   while(avgDriveEncoders() < fabs(inToEnc(inches))){
-    setDrive(voltage*direction-(imu.get_heading()*10), voltage*direction+(imu.get_heading()*10));
+    setDrive(voltage*direction-(imu.get_heading()*10),
+             voltage*direction+(imu.get_heading()*10));
     delay(10);
   }
   // overshoot correction
