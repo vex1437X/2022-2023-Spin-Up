@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 using namespace pros;
 /**
  * A callback function for LLEMU's center button.
@@ -30,7 +31,7 @@ void initialize() {
 
   // set drive motors to coast
   driveCoast();
-
+/*
   imu.reset(); // ensure the inertial sensor is calibrated and ready to return accurate values
   while(imu.is_calibrating()){
     // should take about 2000 ms
@@ -38,6 +39,7 @@ void initialize() {
   }
 
   imu.tare(); // reset all inertial sensor values to 0
+	*/
 }
 
 void disabled() {}
@@ -54,7 +56,7 @@ void opcontrol() {
 	lcd::set_text(3, "Driver Control");
   // set drive motors to coast
   driveCoast();
-	
+
 	while (true) {
 		// driver control
     driverControl();

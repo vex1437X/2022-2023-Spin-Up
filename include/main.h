@@ -75,8 +75,6 @@ void opcontrol(void);
 #include "globals.hpp"
 #include "drive.hpp"
 #include "odometry.hpp"
-
-//#include <iostream>
 #endif
 
 #endif  // _PROS_MAIN_H_
