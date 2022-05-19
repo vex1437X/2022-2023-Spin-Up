@@ -7,6 +7,15 @@ Motor leftB(14);
 Motor rightF(10);
 Motor rightB(17);
 
+int power;
+int turn;
+int strafe;
+
+int front_l_speed;
+int front_r_speed;
+int back_l_speed;
+int back_r_speed;
+
 void setDrive(int left, int right){
   // inputs in voltage
   // -127 to +127
@@ -62,31 +71,47 @@ void driveBrake(){
 }
 
 void driverControl(){
-  double leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y); // power
-  double leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X); // strafe
-  double rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-  double rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X); // turn
-
-  // X drive
-  if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
-    leftJoystickY = 0;
-  }
-  if (abs(leftJoystickX) < 10){ // change if deadzone is wrong
-    leftJoystickY = 0;
-  }
-  if (abs(rightJoystickX) < 10){ // change if deadzone is wrong
-    leftJoystickY = 0;
-  }
-  // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
-  setDrive(leftJoystickY + rightJoystickX + leftJoystickX, // Left Front
-           leftJoystickY + rightJoystickX - leftJoystickX,       // Left Back
-           leftJoystickY - rightJoystickX - leftJoystickX,      // Right Front
-           leftJoystickY - rightJoystickX + leftJoystickX     // Right Back
+  // double leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y); // power
+  // double leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X); // strafe
+  // double rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+  // double rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X); // turn
+  //
+  // // X drive
+  // if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
+  //   leftJoystickY = 0;
+  // }
+  // if (abs(leftJoystickX) < 10){ // change if deadzone is wrong
+  //   leftJoystickY = 0;
+  // }
+  // if (abs(rightJoystickX) < 10){ // change if deadzone is wrong
+  //   leftJoystickY = 0;
+  // }
+  // // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
+  // setDrive(leftJoystickY + rightJoystickX + leftJoystickX, // Left Front
+  //          leftJoystickY + rightJoystickX - leftJoystickX,       // Left Back
+  //          leftJoystickY - rightJoystickX - leftJoystickX,      // Right Front
+  //          leftJoystickY - rightJoystickX + leftJoystickX     // Right Back
 
         // leftJoystickY + rightJoystickX + leftJoystickX,
         // leftJoystickY + rightJoystickX - leftJoystickX,
         // leftJoystickY - rightJoystickX - leftJoystickX,
         // leftJoystickY - rightJoystickX + leftJoystickX
+
+  power = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+  strafe = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
+  turn = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+
+  /* Equations for X-Drive */
+  front_l_speed = power + turn + strafe;
+  front_r_speed = power - turn - strafe;
+  back_l_speed = power + turn - strafe;
+  back_r_speed = power - turn + strafe;
+
+  /* Set the motor velocities */
+  leftF.move_velocity(front_l_speed);
+  rightF.move_velocity(front_r_speed);
+  leftB.move_velocity(back_l_speed);
+  rightB.move_velocity(back_r_speed);
 }
 
 void driveFor(double inches, double percent){
