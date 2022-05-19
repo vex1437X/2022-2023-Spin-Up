@@ -25,7 +25,7 @@ double inToEnc(double inches);
 #define driveWheelDiam  3.25             // inches
 #define driveWheelRad   driveWheelDiam/2
 
-#define ticksPerRev     900
+#define ticksPerRev     1800
   // 1800 ticks/rev with 36:1 gears :: RED
   // 900 ticks/rev with 18:1 gears :: GREEN
   // 300 ticks/rev with 6:1 gears :: BLUE

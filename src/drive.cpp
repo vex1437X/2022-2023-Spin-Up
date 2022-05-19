@@ -2,6 +2,11 @@
 #include "drive.hpp"
 using namespace pros;
 
+Motor leftF(15);
+Motor leftB(14);
+Motor rightF(10);
+Motor rightB(17);
+
 void setDrive(int left, int right){
   // inputs in voltage
   // -127 to +127
@@ -57,10 +62,10 @@ void driveBrake(){
 }
 
 void driverControl(){
-  int leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y); // power
-  int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X); // strafe
-  int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-  int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X); // turn
+  double leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y); // power
+  double leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X); // strafe
+  double rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+  double rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X); // turn
 
   // X drive
   if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
@@ -73,10 +78,15 @@ void driverControl(){
     leftJoystickY = 0;
   }
   // setDrive(int leftFv, int leftBv, int rightFv, int rightBv)
-  setDrive(leftJoystickY+leftJoystickX+rightJoystickX, // Left Front
-    leftJoystickY-leftJoystickX+rightJoystickX,        // Left Back
-    leftJoystickY-leftJoystickX-rightJoystickX,        // Right Front
-    leftJoystickY+leftJoystickX-rightJoystickX);       // Right Back
+  setDrive(leftJoystickY + rightJoystickX + leftJoystickX, // Left Front
+           leftJoystickY + rightJoystickX - leftJoystickX,       // Left Back
+           leftJoystickY - rightJoystickX - leftJoystickX,      // Right Front
+           leftJoystickY - rightJoystickX + leftJoystickX     // Right Back
+
+        // leftJoystickY + rightJoystickX + leftJoystickX,
+        // leftJoystickY + rightJoystickX - leftJoystickX,
+        // leftJoystickY - rightJoystickX - leftJoystickX,
+        // leftJoystickY - rightJoystickX + leftJoystickX
 }
 
 void driveFor(double inches, double percent){
