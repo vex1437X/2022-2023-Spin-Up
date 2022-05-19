@@ -2,6 +2,7 @@
 #include "drive.hpp"
 using namespace pros;
 
+Controller controller(E_CONTROLLER_MASTER);
 Motor leftF(15);
 Motor leftB(14);
 Motor rightF(10);
