@@ -108,10 +108,10 @@ void driverControl(){
   back_r_speed = power - turn + strafe;
 
   /* Set the motor velocities */
-  leftF.move_velocity(front_l_speed);
-  rightF.move_velocity(front_r_speed);
-  leftB.move_velocity(back_l_speed);
-  rightB.move_velocity(back_r_speed);
+  leftF.move_velocity(-front_l_speed);
+  rightF.move_velocity(-front_r_speed);
+  leftB.move_velocity(-back_l_speed);
+  rightB.move_velocity(-back_r_speed);
 }
 
 void driveFor(double inches, double percent){
