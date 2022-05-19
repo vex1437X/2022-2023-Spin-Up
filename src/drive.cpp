@@ -101,17 +101,19 @@ void driverControl(){
   strafe = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
   turn = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
 
-  /* Equations for X-Drive */
+  // Equations for X-Drive
   front_l_speed = power + turn + strafe;
   front_r_speed = power - turn - strafe;
   back_l_speed = power + turn - strafe;
   back_r_speed = power - turn + strafe;
 
-  /* Set the motor velocities */
-  leftF.move_velocity(-front_l_speed);
-  rightF.move_velocity(-front_r_speed);
-  leftB.move_velocity(-back_l_speed);
-  rightB.move_velocity(-back_r_speed);
+  // Set the motor velocities
+  // RED: factor = 0.78742 || GREEN: factor = 0.5 || BLUE: factor = .1666667
+  double scaleFactor = 0.78742;
+  leftF.move_velocity(-front_l_speed*scaleFactor);
+  rightF.move_velocity(-front_r_speed*scaleFactor);
+  leftB.move_velocity(-back_l_speed*scaleFactor);
+  rightB.move_velocity(-back_r_speed*scaleFactor);
 }
 
 void driveFor(double inches, double percent){
