@@ -25,16 +25,16 @@ void competition_initialize() {}
 
 void autonomous() {
 	lcd::set_text(2, "Autonomous");
-
 	// set drive motors to brake
 	driveBrake();
+
+	turnFor(90, 50);
 }
 
 void opcontrol() {
 	lcd::set_text(3, "Driver Control");
 	// set drive motors to coast
   	// driveCoast();
-	turnFor(90, 50);
 	driveBrake();
 
 	// pros::Controller master(pros::E_CONTROLLER_MASTER);
