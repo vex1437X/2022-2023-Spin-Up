@@ -29,7 +29,12 @@ void setDrive(int leftFv, int leftBv, int rightFv, int rightBv){
   rightB.move(rightBv);
 }
 
-void resetDrive(){setDrive(0, 0);}
+void resetDrive(){
+  leftF.move_velocity(0);
+  leftB.move_velocity(0);
+  rightF.move_velocity(0);
+  rightB.move_velocity(0);
+}
 
 void resetDriveEncoders(){
   leftF.tare_position();
@@ -105,10 +110,10 @@ void driverControl(){
   // Set the motor velocities
   // RED: factor = 0.78742 || GREEN: factor = 0.5 || BLUE: factor = .1666667
   double scaleFactor = 0.78742;
-  leftF.move_velocity(-front_l_speed*scaleFactor);
-  rightF.move_velocity(-front_r_speed*scaleFactor);
-  leftB.move_velocity(-back_l_speed*scaleFactor);
-  rightB.move_velocity(-back_r_speed*scaleFactor);
+  leftF.move_velocity(front_l_speed*scaleFactor);
+  rightF.move_velocity(front_r_speed*scaleFactor);
+  leftB.move_velocity(back_l_speed*scaleFactor);
+  rightB.move_velocity(back_r_speed*scaleFactor);
 }
 
 void driveFor(double inches, double percent){
@@ -144,28 +149,39 @@ void turnFor(double degrees, double percent){
   int direction = fabs(degrees) / degrees; // direction = -1 when degrees is negative & +1 when degrees is positive
 
   imu.tare();
+  imu.tare_heading();
+
+  degrees*=2;
+
 
   // turning the drivetrain
   setDrive(voltage*direction, -voltage*direction);
-  while(fabs(imu.get_heading()) < fabs(degrees) - 5){
+  if (direction == 1){
+    while(imu.get_heading() < fabs(degrees)){
     delay(10);
+    }
+  } 
+  else if (direction == -1){
+    while(imu.get_heading() < fabs(degrees+360)){
+    delay(10);
+    }
   }
   delay(150);
 
   // overshoot correction
-  if(fabs(imu.get_heading()) > fabs(degrees)){
-    setDrive(-voltage*direction*0.5, voltage*direction*0.5);
-    while(fabs(imu.get_heading()) > fabs(degrees)){
-      delay(10);
-    }
-  }
+  // if(fabs(imu.get_heading()) > fabs(degrees)){
+  //   setDrive(-voltage*direction*0.5, voltage*direction*0.5);
+  //   while(fabs(imu.get_heading()) > fabs(degrees)){
+  //     delay(10);
+  //   }
+  // }
 
-  // undershoot correction
-  else if(fabs(imu.get_heading()) < fabs(degrees)){
-    setDrive(voltage*direction*0.5, -voltage*direction*0.5);
-    while(fabs(imu.get_heading()) < fabs(degrees)){
-      delay(10);
-    }
-  }
+  // // undershoot correction
+  // else if(fabs(imu.get_heading()) < fabs(degrees)){
+  //   setDrive(voltage*direction*0.5, -voltage*direction*0.5);
+  //   while(fabs(imu.get_heading()) < fabs(degrees)){
+  //     delay(10);
+  //   }
+  // }
   resetDrive(); // stops all drive motors
 }
