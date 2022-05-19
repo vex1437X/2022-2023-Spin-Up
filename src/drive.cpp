@@ -2,11 +2,10 @@
 #include "drive.hpp"
 using namespace pros;
 
-Controller controller();
-Motor leftF(15);
-Motor leftB(14);
-Motor rightF(10);
-Motor rightB(17);
+// Motor leftF(15);
+// Motor leftB(14);
+// Motor rightF(10);
+// Motor rightB(17);
 
 int power;
 int turn;
