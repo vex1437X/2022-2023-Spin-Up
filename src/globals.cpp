@@ -19,7 +19,7 @@ ADIEncoder rightT(3, 4, false);
 ADIEncoder auxT(5, 6, false);
 
 // inertial sensor
-Imu imu(7);
+Imu imu(16);
 
 double radToDeg(double rad){
   return rad*180/PI;
