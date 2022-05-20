@@ -17,7 +17,6 @@ void initialize() {
 		printf("Calibration timer (ms): %f \n", delayT);
 		delay(10);
 	}
-
 	imu.tare(); // reset all inertial sensor values to 0
 }
 
