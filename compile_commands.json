@@ -27,11 +27,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/main.cpp.o",
-            "src/main.cpp"
+            "bin/globals.cpp.o",
+            "src/globals.cpp"
         ],
         "directory": "/Users/mahdi/Documents/VEX/1437X/2022-2023/Odometry-v1",
-        "file": "src/main.cpp"
+        "file": "src/globals.cpp"
     },
     {
         "arguments": [
@@ -61,11 +61,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/globals.cpp.o",
-            "src/globals.cpp"
+            "bin/main.cpp.o",
+            "src/main.cpp"
         ],
         "directory": "/Users/mahdi/Documents/VEX/1437X/2022-2023/Odometry-v1",
-        "file": "src/globals.cpp"
+        "file": "src/main.cpp"
     },
     {
         "arguments": [

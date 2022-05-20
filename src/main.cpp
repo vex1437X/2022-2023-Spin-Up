@@ -28,7 +28,7 @@ void autonomous() {
 	// set drive motors to brake
 	driveBrake();
 
-	turnFor(90, 50);
+	turnFor(90, 100);
 }
 
 void opcontrol() {

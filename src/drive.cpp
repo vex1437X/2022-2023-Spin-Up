@@ -151,19 +151,20 @@ void turnFor(double degrees, double percent){
   imu.tare();
   imu.tare_heading();
 
-  degrees*=2;
-
-
   // turning the drivetrain
   setDrive(voltage*direction, -voltage*direction);
   if (direction == 1){
-    while(imu.get_heading() < fabs(degrees)){
-    delay(10);
+    while (imu.get_heading() < fabs(degrees)) {
+      printf("degrees: %f \n", degrees);
+      printf("heading: %f \n", imu.get_heading());
+      delay(10);
     }
-  } 
+  }
   else if (direction == -1){
-    while(imu.get_heading() < fabs(degrees+360)){
-    delay(10);
+    while(imu.get_heading() > fabs(degrees+360)){
+      printf("degrees: %d", degrees);
+      printf("heading: %d", imu.get_heading());
+      delay(10);
     }
   }
   delay(150);
