@@ -21,6 +21,9 @@ ADIEncoder auxT(5, 6, false);
 // inertial sensor
 Imu imu(16);
 
+// Optical/colour sensor
+Optical optical_sensor(13);
+
 double radToDeg(double rad){
   return rad*180/PI;
 }
