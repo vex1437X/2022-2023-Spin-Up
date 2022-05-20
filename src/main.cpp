@@ -8,7 +8,7 @@ void initialize() {
 
   // set drive motors to coast
   driveCoast();
-/*
+
   imu.reset(); // ensure the inertial sensor is calibrated and ready to return accurate values
   while(imu.is_calibrating()){
     // should take about 2000 ms
@@ -16,7 +16,6 @@ void initialize() {
   }
 
   imu.tare(); // reset all inertial sensor values to 0
-	*/
 }
 
 void disabled() {}
@@ -36,10 +35,6 @@ void opcontrol() {
 	// set drive motors to coast
   	// driveCoast();
 	driveBrake();
-
-	// pros::Controller master(pros::E_CONTROLLER_MASTER);
-	// pros::Motor left_mtr(1);
-	// pros::Motor right_mtr(2);
 
 	while (true) {
 		driverControl();
