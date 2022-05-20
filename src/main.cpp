@@ -52,8 +52,14 @@ void autonomous() {
 
 void opcontrol() {
 	lcd::set_text(3, "Driver Control");
+<<<<<<< Updated upstream
   // set drive motors to coast
   driveCoast();
+=======
+	// set drive motors to coast
+  	// driveCoast();
+	driveBrake();
+>>>>>>> Stashed changes
 
 	while (true) {
     // control drive using the controller

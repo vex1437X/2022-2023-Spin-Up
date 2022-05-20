@@ -58,13 +58,18 @@ void driveBrake(){
 
 void driverControl(){
   int leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
+<<<<<<< Updated upstream
   int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
   int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
   int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
+=======
+  int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
+>>>>>>> Stashed changes
 
   // Regular tank drive
 
   // left joystick deadzone
+<<<<<<< Updated upstream
   if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
     leftJoystickY = 0;
   }
@@ -73,6 +78,24 @@ void driverControl(){
     rightJoystickY = 0;
   }
   setDrive(leftJoystickY, rightJoystickY);
+=======
+  if (abs(leftJoystickY) < 6){ // change if deadzone is wrong
+    leftJoystickY = 0;
+  }
+  // right joystick deadzone
+  if (abs(rightJoystickY) < 6){ // change if deadzone is wrong
+    rightJoystickY = 0;
+  }
+  setDrive(leftJoystickY, rightJoystickY);
+
+  // Set the motor velocities
+  // RED: factor = 0.78742 || GREEN: factor = 0.5 || BLUE: factor = .1666667
+  double scaleFactor = 0.78742;
+  leftF.move_velocity(leftJoystickY*scaleFactor);
+  leftB.move_velocity(leftJoystickY*scaleFactor);
+  rightF.move_velocity(rightJoystickY*scaleFactor);
+  rightB.move_velocity(rightJoystickY*scaleFactor);
+>>>>>>> Stashed changes
 }
 
 void driveFor(double inches, double percent){
