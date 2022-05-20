@@ -35,12 +35,12 @@ void updateValues(){
 
   prevLeftEnc = leftEnc-deltaLeftEnc;
   prevRightEnc = rightEnc-deltaRightEnc;
+
+  prevOrientationRad = currentOrientationRad;
+  prevOrientationDeg = currentOrientationDeg;
 }
 
 void updateOrientation(){
-  prevOrientationRad = currentOrientationRad;
-  prevOrientationDeg = currentOrientationDeg;
-
   updateValues();
 
   currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(Tl+Tr);
