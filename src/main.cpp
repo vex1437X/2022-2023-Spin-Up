@@ -30,14 +30,6 @@ void initialize() {
 
   // set drive motors to coast
   driveCoast();
-
-  imu.reset(); // ensure the inertial sensor is calibrated and ready to return accurate values
-  while(imu.is_calibrating()){
-    // should take about 2000 ms
-    delay(10);
-  }
-
-  imu.tare(); // reset all inertial sensor values to 0
 }
 
 void disabled() {}
@@ -52,14 +44,9 @@ void autonomous() {
 
 void opcontrol() {
 	lcd::set_text(3, "Driver Control");
-<<<<<<< Updated upstream
-  // set drive motors to coast
-  driveCoast();
-=======
 	// set drive motors to coast
   	// driveCoast();
 	driveBrake();
->>>>>>> Stashed changes
 
 	while (true) {
     // control drive using the controller

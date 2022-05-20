@@ -58,27 +58,11 @@ void driveBrake(){
 
 void driverControl(){
   int leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
-<<<<<<< Updated upstream
-  int leftJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
   int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
-  int rightJoystickX = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-=======
-  int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
->>>>>>> Stashed changes
 
   // Regular tank drive
 
   // left joystick deadzone
-<<<<<<< Updated upstream
-  if (abs(leftJoystickY) < 10){ // change if deadzone is wrong
-    leftJoystickY = 0;
-  }
-  // right joystick deadzone
-  if (abs(rightJoystickY) < 10){ // change if deadzone is wrong
-    rightJoystickY = 0;
-  }
-  setDrive(leftJoystickY, rightJoystickY);
-=======
   if (abs(leftJoystickY) < 6){ // change if deadzone is wrong
     leftJoystickY = 0;
   }
@@ -86,16 +70,14 @@ void driverControl(){
   if (abs(rightJoystickY) < 6){ // change if deadzone is wrong
     rightJoystickY = 0;
   }
-  setDrive(leftJoystickY, rightJoystickY);
 
   // Set the motor velocities
   // RED: factor = 0.78742 || GREEN: factor = 0.5 || BLUE: factor = .1666667
-  double scaleFactor = 0.78742;
+  double scaleFactor = 0.5;
   leftF.move_velocity(leftJoystickY*scaleFactor);
   leftB.move_velocity(leftJoystickY*scaleFactor);
   rightF.move_velocity(rightJoystickY*scaleFactor);
   rightB.move_velocity(rightJoystickY*scaleFactor);
->>>>>>> Stashed changes
 }
 
 void driveFor(double inches, double percent){
@@ -104,10 +86,10 @@ void driveFor(double inches, double percent){
   // determine direction
   int direction = fabs(inches) / inches; // direction = -1 when inches is negative & = +1 when inches is positive
 
-  // reset inertial sensor and drive encoders
-  imu.tare();
+  // reset drive encoders
   resetDriveEncoders();
 
+  /*
   while(avgDriveEncoders() < fabs(inToEnc(inches))){
     setDrive(voltage*direction-(imu.get_heading()*10), voltage*direction+(imu.get_heading()*10));
     delay(10);
@@ -121,6 +103,7 @@ void driveFor(double inches, double percent){
   }
   delay(50);
   resetDrive(); // stops all drive motors
+  */
 }
 
 void turnFor(double degrees, double percent){
@@ -129,7 +112,7 @@ void turnFor(double degrees, double percent){
   // determine direction
   int direction = fabs(degrees) / degrees; // direction = -1 when degrees is negative & +1 when degrees is positive
 
-  imu.tare();
+  /*
 
   // turning the drivetrain
   setDrive(voltage*direction, -voltage*direction);
@@ -154,4 +137,5 @@ void turnFor(double degrees, double percent){
     }
   }
   resetDrive(); // stops all drive motors
+  */
 }
