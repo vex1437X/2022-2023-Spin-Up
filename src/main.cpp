@@ -52,6 +52,10 @@ void opcontrol() {
     // control drive using the controller
     driverControl();
 
+	updateValues();
+	updateOrientation();
+	printf("Orientation: %d \n", getCurrentOrientation());
+
     delay(20);
 	}
 }

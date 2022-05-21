@@ -4,3 +4,4 @@ using namespace pros;
 
 void updateValues();
 void updateOrientation();
+double getCurrentOrientation();
