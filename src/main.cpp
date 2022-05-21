@@ -28,8 +28,11 @@ void initialize() {
 	lcd::set_text(1, "TEAM 1437X");
 	// pros::lcd::register_btn1_cb(on_center_button);
 
-  // set drive motors to coast
-  driveCoast();
+	// set drive motors to coast
+	driveCoast();
+
+	// reset tracking wheel encoders
+	resetTrack();
 }
 
 void disabled() {}
@@ -38,8 +41,8 @@ void competition_initialize() {}
 
 void autonomous() {
 	lcd::set_text(1, "Autonomous");
-  // set drive motors to brake
-  driveBrake();
+	// set drive motors to brake
+	driveBrake();
 }
 
 void opcontrol() {
@@ -52,7 +55,7 @@ void opcontrol() {
     // control drive using the controller
     driverControl();
 
-	updateValues();
+	// updateValues();
 	updateOrientation();
 	printf("Orientation: %d \n", getCurrentOrientation());
 

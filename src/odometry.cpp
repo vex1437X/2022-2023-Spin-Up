@@ -2,9 +2,9 @@
 #include "odometry.hpp"
 using namespace pros;
 
-#define Tl    7.25     // inches
-#define Tr    7.25     // inches
-#define Tb    7.75      // inches
+#define Tl    5.5     // inches
+#define Tr    6.5     // inches
+#define Tb    8      // inches
 
 double deltaOrientationRad = 0; // radians
 double deltaOrientationDeg = 0; // degrees
@@ -26,9 +26,15 @@ double rightEnc = 0;
 
 // source: https://youtu.be/vxSK2NYtYJQ
 
+void resetTrack(){
+	leftT.reset();
+	rightT.reset();
+	auxT.reset();
+}
+
 void updateValues(){
-	leftEnc = leftT.get_value();
-	rightEnc = rightT.get_value();
+	leftEnc = leftT.get_value()/360;
+	rightEnc = rightT.get_value()/360;
 
 	deltaLeftEnc = leftEnc-prevLeftEnc;
 	deltaRightEnc = rightEnc-prevRightEnc;
@@ -41,7 +47,7 @@ void updateOrientation(){
 	prevOrientationRad = currentOrientationRad;
 	prevOrientationDeg = currentOrientationDeg;
 
-	updateValues();
+	// updateValues();
 
 	currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(Tl+Tr);
 
@@ -58,7 +64,8 @@ void updateOrientation(){
 }
 
 double getCurrentOrientation(){
-	return currentOrientationDeg;
+	return rightT.get_value()/360;
+	// return currentOrientationDeg;
 }
 
 
