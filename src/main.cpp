@@ -57,7 +57,7 @@ void opcontrol() {
 
 	// updateValues();
 	updateOrientation();
-	printf("Orientation: %d \n", getCurrentOrientation());
+	printf("Orientation: %f \n", getCurrentOrientation());
 
     delay(20);
 	}

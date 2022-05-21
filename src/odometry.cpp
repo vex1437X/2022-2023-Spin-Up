@@ -33,40 +33,34 @@ void resetTrack(){
 }
 
 void updateValues(){
-	leftEnc = leftT.get_value()/360;
-	rightEnc = rightT.get_value()/360;
+	prevLeftEnc = leftEnc;
+	prevRightEnc = rightEnc;
+
+	leftEnc = leftT.get_value();
+	rightEnc = rightT.get_value();
 
 	deltaLeftEnc = leftEnc-prevLeftEnc;
 	deltaRightEnc = rightEnc-prevRightEnc;
-
-	prevLeftEnc = leftEnc-deltaLeftEnc;
-	prevRightEnc = rightEnc-deltaRightEnc;
 }
 
 void updateOrientation(){
 	prevOrientationRad = currentOrientationRad;
 	prevOrientationDeg = currentOrientationDeg;
 
-	// updateValues();
+	updateValues();
 
-	currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(Tl+Tr);
+	currentOrientationRad += ((deltaLeftEnc-deltaRightEnc)/(Tl+Tr))*0.02707;
 
-	if (currentOrientationRad > 2*PI){
-		currentOrientationRad = currentOrientationRad-2*PI;
-	}
 	currentOrientationDeg = radToDeg(currentOrientationRad);
-	if (currentOrientationDeg > 360){
-		currentOrientationDeg = currentOrientationDeg-360;
-	}
 
 	deltaOrientationDeg = currentOrientationDeg-prevOrientationDeg;
 	deltaOrientationRad = currentOrientationRad-prevOrientationRad;
 }
 
 double getCurrentOrientation(){
-	return rightT.get_value()/360;
-	// return currentOrientationDeg;
+	return currentOrientationDeg;
 }
+
 
 
 // Code from https://github.com/jloh02/VEX-Worlds-2019-8059A/blob/master/src/base_lib.cpp

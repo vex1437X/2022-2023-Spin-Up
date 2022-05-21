@@ -21,6 +21,7 @@ extern Imu imu;
 double radToDeg(double rad);
 double degToRad(double deg);
 double inToEnc(double inches);
+double encToIn(double enc);
 
 #define driveWheelDiam  3.25             // inches
 #define driveWheelRad   driveWheelDiam/2
