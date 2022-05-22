@@ -52,7 +52,8 @@ void updateOrientation(){
 	updateValues();
 
 	// currentOrientationRad += ((deltaLeftEnc-deltaRightEnc)/(Tl+Tr))*0.02707;
-	currentOrientationRad += ((deltaLeftEnc-deltaRightEnc)*inPerDeg/(Tl+Tr));
+	// currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(Tl+Tr)*inPerDeg;
+	currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(11)*inPerDeg;
 
 	currentOrientationDeg = radToDeg(currentOrientationRad);
 
