@@ -6,6 +6,8 @@ using namespace pros;
 #define Tr    6.5     // inches
 #define Tb    8      // inches
 
+#define inPerDeg driveWheelDiam*PI/360 // inches
+
 double deltaOrientationRad = 0; // radians
 double deltaOrientationDeg = 0; // degrees
 
@@ -49,7 +51,8 @@ void updateOrientation(){
 
 	updateValues();
 
-	currentOrientationRad += ((deltaLeftEnc-deltaRightEnc)/(Tl+Tr))*0.02707;
+	// currentOrientationRad += ((deltaLeftEnc-deltaRightEnc)/(Tl+Tr))*0.02707;
+	currentOrientationRad += ((deltaLeftEnc-deltaRightEnc)*inPerDeg/(Tl+Tr));
 
 	currentOrientationDeg = radToDeg(currentOrientationRad);
 

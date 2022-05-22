@@ -23,7 +23,7 @@ double degToRad(double deg);
 double inToEnc(double inches);
 double encToIn(double enc);
 
-#define driveWheelDiam  3.25             // inches
+#define driveWheelDiam  2.75             // inches
 #define driveWheelRad   driveWheelDiam/2
 
 #define ticksPerRev     900
