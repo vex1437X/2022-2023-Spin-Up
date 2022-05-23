@@ -33,6 +33,8 @@ void initialize() {
 
 	// reset tracking wheel encoders
 	resetTrack();
+
+	Task odom(updateOrientation);
 }
 
 void disabled() {}
@@ -47,6 +49,7 @@ void autonomous() {
 	driveBrake();
 	
 	turnTo(-90, 20);
+	delay(1000);
 	turnTo(0, 20);
 }
 

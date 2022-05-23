@@ -2,8 +2,8 @@
 #include "odometry.hpp"
 using namespace pros;
 
-#define Tl    5.5     // inches
-#define Tr    6.5     // inches
+#define Tl    6     // inches
+#define Tr    7     // inches
 #define Tb    8      // inches
 
 #define inPerDeg driveWheelDiam*PI/360 // inches
@@ -52,10 +52,14 @@ void updateOrientation(){
 
 		updateValues();
 
-		// currentOrientationRad += ((deltaLeftEnc-deltaRightEnc)/(Tl+Tr))*0.02707;
-		// currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(Tl+Tr)*inPerDeg;
-		// currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(11.6)*inPerDeg;
-		currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(11)*inPerDeg;
+		currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(12)*inPerDeg;
+
+		if (currentOrientationRad < 0){
+			currentOrientationRad += 2*PI;
+		}
+		if (currentOrientationRad > 2*PI){
+			currentOrientationRad -= 2*PI;
+		}
 
 		currentOrientationDeg = radToDeg(currentOrientationRad);
 

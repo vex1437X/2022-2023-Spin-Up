@@ -109,6 +109,18 @@ void driveFor(double inches, double percent){
 void turnTo(double degrees, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
+
+  // Code for orientation locked to (0,360)
+
+  // determine direction
+  int direction = 0;
+  if (degrees-getCurrentOrientation() < 0){
+    direction = -1;
+  } else{
+    direction = 1;
+  }
+
+  /*
   // determine direction
   int direction = 0;
   if (degrees > getCurrentOrientation()){
@@ -119,7 +131,8 @@ void turnTo(double degrees, double percent){
     direction = 0;
   }
   // direction = fabs(degrees) / degrees; // direction = -1 when degrees is negative & +1 when degrees is positive
-
+  */
+ 
   if (direction == -1){
     // turning the drivetrain
     setDrive(voltage*direction, -voltage*direction);
@@ -128,7 +141,7 @@ void turnTo(double degrees, double percent){
       delay(10);
     }
 
-    delay(150);
+    delay(100);
 
     // overshoot correction
     if(getCurrentOrientation()-.5 < degrees && getCurrentOrientation()+.5 < degrees){
@@ -156,7 +169,7 @@ void turnTo(double degrees, double percent){
       delay(10);
     }
 
-    delay(150);
+    delay(100);
 
     // overshoot correction
     if(getCurrentOrientation()-.5 > degrees && getCurrentOrientation()+.5 > degrees){
