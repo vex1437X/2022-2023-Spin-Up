@@ -41,8 +41,13 @@ void competition_initialize() {}
 
 void autonomous() {
 	lcd::set_text(1, "Autonomous");
+	Task odom(updateOrientation);
+
 	// set drive motors to brake
 	driveBrake();
+	
+	turnTo(-90, 20);
+	turnTo(0, 20);
 }
 
 void opcontrol() {
@@ -50,15 +55,15 @@ void opcontrol() {
 	// set drive motors to coast
   	// driveCoast();
 	driveBrake();
+	Task odom(updateOrientation);
+
 
 	while (true) {
-    // control drive using the controller
-    driverControl();
+		// control drive using the controller
+		driverControl();
 
-	// updateValues();
-	updateOrientation();
-	printf("Orientation: %f \n", getCurrentOrientation());
+		printf("Orientation: %f \n", getCurrentOrientation());
 
-    delay(20);
+		delay(20);
 	}
 }

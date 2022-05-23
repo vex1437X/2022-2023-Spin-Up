@@ -106,36 +106,75 @@ void driveFor(double inches, double percent){
   */
 }
 
-void turnFor(double degrees, double percent){
+void turnTo(double degrees, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
   // determine direction
-  int direction = fabs(degrees) / degrees; // direction = -1 when degrees is negative & +1 when degrees is positive
-
-  /*
-
-  // turning the drivetrain
-  setDrive(voltage*direction, -voltage*direction);
-  while(fabs(imu.get_heading()) < fabs(degrees) - 5){
-    delay(10);
+  int direction = 0;
+  if (degrees > getCurrentOrientation()){
+    direction = 1;
+  } else if (degrees < getCurrentOrientation()){
+    direction = -1;
+  } else{
+    direction = 0;
   }
-  delay(150);
+  // direction = fabs(degrees) / degrees; // direction = -1 when degrees is negative & +1 when degrees is positive
 
-  // overshoot correction
-  if(fabs(imu.get_heading()) > fabs(degrees)){
-    setDrive(-voltage*direction*0.5, voltage*direction*0.5);
-    while(fabs(imu.get_heading()) > fabs(degrees)){
+  if (direction == -1){
+    // turning the drivetrain
+    setDrive(voltage*direction, -voltage*direction);
+    while (getCurrentOrientation()-1 > degrees && getCurrentOrientation()+1 > degrees){
+      printf("nOrientation: %f \n", getCurrentOrientation());
       delay(10);
     }
-  }
 
-  // undershoot correction
-  else if(fabs(imu.get_heading()) < fabs(degrees)){
-    setDrive(voltage*direction*0.5, -voltage*direction*0.5);
-    while(fabs(imu.get_heading()) < fabs(degrees)){
+    delay(150);
+
+    // overshoot correction
+    if(getCurrentOrientation()-.5 < degrees && getCurrentOrientation()+.5 < degrees){
+      setDrive(-voltage*direction*0.8, voltage*direction*0.8);
+      while(getCurrentOrientation()-.5 < degrees && getCurrentOrientation()+.5 < degrees){
+        printf("nOrientation1: %f \n", getCurrentOrientation());
+        delay(10);
+      }
+    }
+
+    // undershoot correction
+    else if(getCurrentOrientation()-.5 > degrees && getCurrentOrientation()+.5 > degrees){
+      setDrive(voltage*direction*0.8, -voltage*direction*0.8);
+      while(getCurrentOrientation()-.5 > degrees && getCurrentOrientation()+.5 > degrees){
+        printf("nOrientation2: %f \n", getCurrentOrientation());
+        delay(10);
+      }
+    }
+  } 
+  else if (direction == 1){
+    // turning the drivetrain
+    setDrive(voltage*direction, -voltage*direction);
+    while (getCurrentOrientation()-1 < degrees && getCurrentOrientation()+1 < degrees){
+      printf("pOrientation: %f \n", getCurrentOrientation());
       delay(10);
+    }
+
+    delay(150);
+
+    // overshoot correction
+    if(getCurrentOrientation()-.5 > degrees && getCurrentOrientation()+.5 > degrees){
+      setDrive(-voltage*direction*0.8, voltage*direction*0.8);
+      while(getCurrentOrientation()-.5 > degrees && getCurrentOrientation()+.5 > degrees){
+        printf("pOrientation1: %f \n", getCurrentOrientation());
+        delay(10);
+      }
+    }
+
+    // undershoot correction
+    else if(getCurrentOrientation()-.5 < degrees && getCurrentOrientation()+.5 < degrees){
+      setDrive(voltage*direction*0.8, -voltage*direction*0.8);
+      while(getCurrentOrientation()-.5 < degrees && getCurrentOrientation()+.5 < degrees){
+        printf("pOrientation2: %f \n", getCurrentOrientation());
+        delay(10);
+      }
     }
   }
   resetDrive(); // stops all drive motors
-  */
 }
