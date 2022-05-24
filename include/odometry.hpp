@@ -6,3 +6,4 @@ void resetTrack();
 void updateValues();
 void updateOrientation();
 double getCurrentOrientation();
+void setCurrentOrientation(double x);

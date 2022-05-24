@@ -2,6 +2,8 @@
 #include "drive.hpp"
 using namespace pros;
 
+bool first = true;
+
 void setDrive(int left, int right){
   // inputs in voltage
   // -127 to +127
@@ -111,13 +113,32 @@ void turnTo(double degrees, double percent){
   double voltage = percent*1.27;
 
   // Code for orientation locked to (0,360)
+  printf("Orien %f \n", getCurrentOrientation());
+  double currOrien = 0;
 
   // determine direction
   int direction = 0;
-  if (degrees-getCurrentOrientation() < 0){
-    direction = -1;
-  } else{
-    direction = 1;
+  if (first == true){
+    if (currOrien-degrees < 0){
+      direction = -1;
+      printf("Direction %d \n", -1);
+    } else if (currOrien-degrees > 0){
+      direction = 1;
+      printf("DirectionBye %d \n", 1);
+    }
+    printf("Direction %d \n", direction);
+    printf("Deg %f \n", degrees);
+    first = false;
+  } else if (direction == false){
+    if (getCurrentOrientation()-degrees < 0){
+      direction = -1;
+      printf("Direction %d \n", -1);
+    } else if (getCurrentOrientation()-degrees > 0){
+      direction = 1;
+      printf("DirectionHi %d \n", 1);
+    }
+    printf("Direction %d \n", direction);
+    printf("Deg %f \n", degrees);
   }
 
   /*
@@ -164,7 +185,7 @@ void turnTo(double degrees, double percent){
   else if (direction == 1){
     // turning the drivetrain
     setDrive(voltage*direction, -voltage*direction);
-    while (getCurrentOrientation()-1 < degrees && getCurrentOrientation()+1 < degrees){
+    while (!(getCurrentOrientation()-1 < degrees && getCurrentOrientation()+1 > degrees)){
       printf("pOrientation: %f \n", getCurrentOrientation());
       delay(10);
     }

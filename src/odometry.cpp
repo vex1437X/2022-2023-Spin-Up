@@ -57,11 +57,21 @@ void updateOrientation(){
 		if (currentOrientationRad < 0){
 			currentOrientationRad += 2*PI;
 		}
-		if (currentOrientationRad > 2*PI){
+		if (currentOrientationRad >= 2*PI){
 			currentOrientationRad -= 2*PI;
+		}
+		if (currentOrientationRad == 2*PI){
+			currentOrientationRad = 0;
+		}
+		if (currentOrientationRad > PI/180-0.001 && currentOrientationRad < PI/180+0.001){
+			currentOrientationRad = 0;
 		}
 
 		currentOrientationDeg = radToDeg(currentOrientationRad);
+
+		if (currentOrientationDeg >= 360.0){
+			currentOrientationDeg = 0;
+		}
 
 		deltaOrientationDeg = currentOrientationDeg-prevOrientationDeg;
 		deltaOrientationRad = currentOrientationRad-prevOrientationRad;
@@ -71,4 +81,8 @@ void updateOrientation(){
 
 double getCurrentOrientation(){
 	return currentOrientationDeg;
+}
+
+void setCurrentOrientation(double x){
+	currentOrientationRad = 0;
 }

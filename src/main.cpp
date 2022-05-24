@@ -44,13 +44,16 @@ void competition_initialize() {}
 void autonomous() {
 	lcd::set_text(1, "Autonomous");
 	Task odom(updateOrientation);
+	setCurrentOrientation(0);
+	// reset tracking wheel encoders
+	resetTrack();
 
 	// set drive motors to brake
 	driveBrake();
 	
-	turnTo(-90, 20);
+	turnTo(270, 20);
 	delay(1000);
-	turnTo(0, 20);
+	turnTo(40, 20);
 }
 
 void opcontrol() {
