@@ -15,15 +15,12 @@ extern ADIEncoder leftT;
 extern ADIEncoder rightT;
 extern ADIEncoder auxT;
 
-// inertial sensor
-extern Imu imu;
-
 double radToDeg(double rad);
 double degToRad(double deg);
 double inToEnc(double inches);
 double encToIn(double enc);
 
-#define driveWheelDiam  2.75             // inches
+#define driveWheelDiam  2.73             // inches
 #define driveWheelRad   driveWheelDiam/2
 
 #define ticksPerRev     900

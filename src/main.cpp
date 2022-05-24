@@ -34,7 +34,9 @@ void initialize() {
 	// reset tracking wheel encoders
 	resetTrack();
 
-	Task odom(updateOrientation);
+	// Task odom(updateOrientation);
+	// Task odomPos(updatePosition);
+	Task odometry(updateOdometry);
 }
 
 void disabled() {}
@@ -42,8 +44,10 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-	lcd::set_text(1, "Autonomous");
-	Task odom(updateOrientation);
+	lcd::set_text(2, "Autonomous");
+	// Task odomOr(updateOrientation);
+	// Task odomPos(updatePosition);
+	Task odometry(updateOdometry);
 	setCurrentOrientation(0);
 	// reset tracking wheel encoders
 	resetTrack();
@@ -51,9 +55,9 @@ void autonomous() {
 	// set drive motors to brake
 	driveBrake();
 	
-	turnTo(270, 20);
+	turnTo(270, 25);
 	delay(1000);
-	turnTo(40, 20);
+	turnTo(0, 25);
 }
 
 void opcontrol() {
@@ -61,14 +65,18 @@ void opcontrol() {
 	// set drive motors to coast
   	// driveCoast();
 	driveBrake();
-	Task odom(updateOrientation);
-
+	// Task odom(updateOrientation);
+	// Task odomPos(updatePosition);
+	Task odometry(updateOdometry);
 
 	while (true) {
 		// control drive using the controller
 		driverControl();
 
 		printf("Orientation: %f \n", getCurrentOrientation());
+		printf("PosX: %f \n", getX());
+		printf("PosY: %f \n", getY());
+		printf("auxT: %d \n", getAuxEnc());
 
 		delay(20);
 	}
