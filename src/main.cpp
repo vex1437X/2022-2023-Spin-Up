@@ -26,8 +26,6 @@ void on_center_button() {
 void initialize() {
 	lcd::initialize();
 	lcd::set_text(1, "TEAM 1437X");
-	// begin odometry tracking
-	Task odometry(updateOdometry);
 
 	// set drive motors to coast
 	driveCoast();
@@ -54,9 +52,12 @@ void autonomous() {
 	// set drive motors to brake
 	driveBrake();
 	
-	turnTo(270, 25);
-	delay(1000);
-	turnTo(0, 25);
+	driveTo(0, 10, 20);
+	// delay(1000);
+	// driveTo(0, 0, 20);
+	// turnTo(270, 25);
+	// delay(1000);
+	// turnTo(0, 25);
 }
 
 void opcontrol() {

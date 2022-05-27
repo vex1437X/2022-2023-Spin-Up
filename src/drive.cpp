@@ -86,14 +86,108 @@ void driveTo(double X, double Y, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
 
+  double deltX = X-getX();
+  double deltY = Y-getY();
+  double theta;
+
+  // determine direction
+  int directionX;
+
+  if (deltX < 0){
+    directionX = -1;
+  } else if (deltX > 0){
+    directionX = 1;
+  } else if (directionX == 0){ 
+    directionX = 0;
+  }
+
+  int directionY;
+
+  if (deltY < 0){
+    directionY = -1;
+  } else if (deltY > 0){
+    directionY = 1;
+  } else if (directionY == 0){
+    directionY = 0;
+  }
+
+  // get the distance needed to reach target
+  double d = sqrt(pow(deltX, 2) + pow(deltY, 2));
+
+  // determine orientation
+  if (directionX == 1 && directionY == 0){
+    theta = 90;
+  } else if (directionX == -1 && directionY == 0){
+    theta = 270;
+  } else if (directionX == 0 && directionY == 1){
+    theta = 0;
+  } else if (directionX == 0 && directionY == -1){
+    theta = 180;
+  } else if (directionX == 1 && directionY == 1){
+    theta = atan(deltY/deltX);
+  } else if (directionX == -1 && directionY == 1){
+    theta = atan(deltY/deltX);
+  } else if (directionX == 1 && directionY == -1){
+    theta = atan(deltX/deltY);
+  } else if (directionX == -1 && directionY == -1){
+    theta = atan(deltX/deltY);
+  }
+
+  turnTo(theta, 20);
+
+  // drive to target
+  if (directionX == 1 && directionY == 0){
+    setDrive(voltage, voltage);
+    while(getX() < X-1 && getX() < getX() < X+1){
+      delay(10);
+    }
+  } else if (directionX == -1 && directionY == 0){
+    setDrive(voltage, voltage);
+    while(getX() > X-1 && getX() > X+1){
+      delay(10);
+    }
+  } else if (directionX == 0 && directionY == 1){
+    setDrive(voltage, voltage);
+    while(getY() < Y-1 && getY() < Y+1){
+      delay(10);
+    }
+  } else if (directionX == 0 && directionY == -1){
+    setDrive(voltage, voltage);
+    while(getY() > Y-1 && getY() > Y+1){
+      delay(10);
+    }
+  } else if (directionX == 1 && directionY == 1){
+    setDrive(voltage, voltage);
+    while(getX() < X-1 && getX() < X+1){
+      delay(10);
+    }
+  } else if (directionX == -1 && directionY == 1){
+    setDrive(voltage, voltage);
+    while(getX() > X-1 && getX() > X+1){
+      delay(10);
+    }
+  } else if (directionX == 1 && directionY == -1){
+    setDrive(voltage, voltage);
+    while(getX() < X-1 && getX() < X+1){
+      delay(10);
+    }
+  } else if (directionX == -1 && directionY == -1){
+    setDrive(voltage, voltage);
+    while(getX() > X-1 && getX() > X+1){
+      delay(10);
+    }
+  }
+  delay(100);
+  resetDrive(); // stop all drive motors
 }
 
 void turnTo(double degrees, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
 
-  // Code for orientation locked to (0,359.999...)
+  // orientation locked to (0,359.999...)
   printf("Orien %f \n", getCurrentOrientation());
+  printf("Deg %f \n", degrees);
 
   // determine direction
   int direction = 0;
@@ -110,7 +204,7 @@ void turnTo(double degrees, double percent){
     first = false;
   } else if (direction == false){
   */
-  if (direction == false){ // comment out when using first
+  if (direction == false){ // comment out when using first & currOrien; only when Orientation starts off as 360 and not 0 deg
     if (getCurrentOrientation()-degrees < 0){
       direction = -1;
     } else if (getCurrentOrientation()-degrees > 0){
@@ -130,6 +224,10 @@ void turnTo(double degrees, double percent){
   }
   // direction = fabs(degrees) / degrees; // direction = -1 when degrees is negative & +1 when degrees is positive
   */
+
+ if (getCurrentOrientation() == degrees){
+   return;
+ }
  
   if (direction == -1){
     // turning the drivetrain
