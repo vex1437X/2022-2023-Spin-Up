@@ -147,6 +147,10 @@ void updateOdometry(){
 		updateOrientation();
 		updatePosition();
 
+		printf("Orientation: %f \n", getCurrentOrientation());
+		printf("PosX: %f \n", getX());
+		printf("PosY: %f \n", getY());
+
 		Task::delay(15);
 	}
 }

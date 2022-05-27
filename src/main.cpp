@@ -26,29 +26,28 @@ void on_center_button() {
 void initialize() {
 	lcd::initialize();
 	lcd::set_text(1, "TEAM 1437X");
-	// pros::lcd::register_btn1_cb(on_center_button);
+	// begin odometry tracking
+	Task odometry(updateOdometry);
 
 	// set drive motors to coast
 	driveCoast();
 
 	// reset tracking wheel encoders
 	resetTrack();
-
-	// Task odom(updateOrientation);
-	// Task odomPos(updatePosition);
-	Task odometry(updateOdometry);
 }
 
-void disabled() {}
+void disabled() {
+	// set drive motors to coast
+	driveCoast();
+}
 
 void competition_initialize() {}
 
 void autonomous() {
 	lcd::set_text(2, "Autonomous");
-	// Task odomOr(updateOrientation);
-	// Task odomPos(updatePosition);
+	// begin odometry tracking
 	Task odometry(updateOdometry);
-	setCurrentOrientation(0);
+
 	// reset tracking wheel encoders
 	resetTrack();
 
@@ -62,21 +61,15 @@ void autonomous() {
 
 void opcontrol() {
 	lcd::set_text(3, "Driver Control");
-	// set drive motors to coast
-  	// driveCoast();
-	driveBrake();
-	// Task odom(updateOrientation);
-	// Task odomPos(updatePosition);
+	// begin odometry tracking
 	Task odometry(updateOdometry);
+
+	// set drive motors to brake
+	driveBrake();
 
 	while (true) {
 		// control drive using the controller
 		driverControl();
-
-		printf("Orientation: %f \n", getCurrentOrientation());
-		printf("PosX: %f \n", getX());
-		printf("PosY: %f \n", getY());
-		printf("auxT: %d \n", getAuxEnc());
 
 		delay(20);
 	}

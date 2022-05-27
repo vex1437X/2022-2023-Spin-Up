@@ -82,42 +82,23 @@ void driverControl(){
   rightB.move_velocity(rightJoystickY*scaleFactor);
 }
 
-void driveFor(double inches, double percent){
+void driveTo(double X, double Y, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
-  // determine direction
-  int direction = fabs(inches) / inches; // direction = -1 when inches is negative & = +1 when inches is positive
 
-  // reset drive encoders
-  resetDriveEncoders();
-
-  /*
-  while(avgDriveEncoders() < fabs(inToEnc(inches))){
-    setDrive(voltage*direction-(imu.get_heading()*10), voltage*direction+(imu.get_heading()*10));
-    delay(10);
-  }
-  // overshoot correction
-  if(avgDriveEncoders() > fabs(inToEnc(inches))){
-    setDrive(-voltage*direction-(imu.get_heading()*10)*0.5, -voltage*direction+(imu.get_heading()*10)*0.5);
-    while(avgDriveEncoders() > fabs(inToEnc(inches))){
-      delay(10);
-    }
-  }
-  delay(50);
-  resetDrive(); // stops all drive motors
-  */
 }
 
 void turnTo(double degrees, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
 
-  // Code for orientation locked to (0,360)
+  // Code for orientation locked to (0,359.999...)
   printf("Orien %f \n", getCurrentOrientation());
-  double currOrien = 0;
 
   // determine direction
   int direction = 0;
+  /*
+  double currOrien = 0;
   if (first == true){
     if (currOrien-degrees < 0){
       direction = -1;
@@ -126,19 +107,15 @@ void turnTo(double degrees, double percent){
       direction = 1;
       printf("DirectionBye %d \n", 1);
     }
-    printf("Direction %d \n", direction);
-    printf("Deg %f \n", degrees);
     first = false;
   } else if (direction == false){
+  */
+  if (direction == false){ // comment out when using first
     if (getCurrentOrientation()-degrees < 0){
       direction = -1;
-      printf("Direction %d \n", -1);
     } else if (getCurrentOrientation()-degrees > 0){
       direction = 1;
-      printf("DirectionHi %d \n", 1);
     }
-    printf("Direction %d \n", direction);
-    printf("Deg %f \n", degrees);
   }
 
   /*
