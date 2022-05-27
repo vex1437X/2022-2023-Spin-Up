@@ -8,14 +8,15 @@ using namespace pros;
 
 #define inPerDeg driveWheelDiam*PI/360 // inches
 
-double deltaOrientationRad = 0; // radians
-double deltaOrientationDeg = 0; // degrees
+double deltaOrientationRad = 0;   // radians
+double deltaOrientationDeg = 0;   // degrees
 
-double prevOrientationRad = 0; // radians
-double prevOrientationDeg = 0; // degrees
+double prevOrientationRad = 0;    // radians
+double prevOrientationDeg = 0; 	  // degrees
 
 double currentOrientationRad = 0; // radians
 double currentOrientationDeg = 0; // degrees
+double avgOrientationRad = 0;	  // radians
 
 double deltaLeftEnc = 0;
 double deltaRightEnc = 0;
@@ -30,8 +31,17 @@ double leftEnc = 0;
 double rightEnc = 0;
 double auxEnc = 0;
 
+// Cartesian coordinates
+double prevX = 0;
+double prevY = 0;
 double posX = 0;
 double posY = 0;
+double deltaX = 0;
+double deltaY = 0;
+
+// Polar coordinates
+double posR = 0;
+double posTheta = 0;
 
 // source: https://youtu.be/vxSK2NYtYJQ
 
@@ -69,13 +79,13 @@ void updateOrientation(){
 	if (currentOrientationRad == 2*PI){
 		currentOrientationRad = 0;
 	}
-	if (currentOrientationRad > PI/180-0.001 && currentOrientationRad < PI/180+0.001){
+	if (currentOrientationRad > 2*PI-0.001 && currentOrientationRad < 2*PI+0.001){
 		currentOrientationRad = 0;
 	}
 
 	currentOrientationDeg = radToDeg(currentOrientationRad);
 
-	if (currentOrientationDeg >= 360.0){
+	if (currentOrientationDeg >= 360.00){
 		currentOrientationDeg = 0;
 	}
 
@@ -83,21 +93,50 @@ void updateOrientation(){
 	deltaOrientationRad = currentOrientationRad-prevOrientationRad;
 }
 
+
+
 void updatePosition(){
 	deltaLeftEnc = (leftEnc - prevLeftEnc)*inPerDeg;
 	deltaRightEnc = (rightEnc - prevRightEnc)*inPerDeg;
 	deltaAuxEnc = (auxEnc - prevAuxEnc)*inPerDeg;
-	totalDeltaEnc = deltaLeftEnc+deltaRightEnc+deltaAuxEnc;
+	totalDeltaEnc = deltaLeftEnc+deltaRightEnc;
+
+	prevX = posX;
+	prevY = posY;
+
+	// if (deltaOrientationRad == 0){
+	// 	posX += deltaAuxEnc;
+	// 	posY += totalDeltaEnc;
+	// 	// posX = 1;
+	// 	// posY = 1;
+	// } else{
+	// 	posX += 2*sin(prevOrientationRad/2)*((deltaAuxEnc/deltaOrientationRad)+Tb);
+	// 	posY += 2*sin(prevOrientationRad/2)*((deltaRightEnc/deltaOrientationRad)+Tr);
+	// }
+
+	// avgOrientationRad = prevOrientationRad + (deltaOrientationRad/2);
+
+	// posR = sqrt(pow(posX, 2) + pow(posY, 2));
+	// posTheta = atan(posY/posX);
+	// posTheta -= avgOrientationRad;
+
+	// posX = posR * cos(posTheta);
+	// posY = posR * sin(posTheta);
 
 	if (deltaOrientationRad == 0){
-		posX += totalDeltaEnc*inPerDeg/2*sin(currentOrientationRad);
-		posY += totalDeltaEnc*inPerDeg/2*cos(currentOrientationRad);
+		posX += totalDeltaEnc/2*sin(currentOrientationRad);
+		posY += totalDeltaEnc/2*cos(currentOrientationRad);
 	}
 	else{
-		double strDist = (totalDeltaEnc/deltaOrientationRad)*sin(deltaOrientationRad/2);
-		posX += strDist * sin(prevOrientationRad+deltaOrientationRad/2);
-		posY += strDist * cos(prevOrientationRad+deltaOrientationRad/2);
+		double s = (totalDeltaEnc/deltaOrientationRad)*sin(deltaOrientationRad/2);
+		posX += s * sin(prevOrientationRad+deltaOrientationRad/2);
+		posY += s * cos(prevOrientationRad+deltaOrientationRad/2);
 	}
+	if (deltaY < 0.001){
+		posX += deltaAuxEnc;
+	}
+	deltaX = posX-prevX;
+	deltaY = posY-prevY;
 }
 
 void updateOdometry(){
@@ -127,7 +166,6 @@ double getX(){
 double getY(){
 	return posY;
 }
-
 
 void setCurrentOrientation(double x){
 	currentOrientationRad = 0;
