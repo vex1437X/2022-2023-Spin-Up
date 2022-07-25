@@ -86,6 +86,11 @@ void driveFor(double inches, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
   double targetEnc = inToEnc(inches);
+
+  setDrive(voltage, voltage);
+  while (deltatotalenc < targetEnc){
+    delay(10);
+  }
 }
 
 void driveTo(double X, double Y, double percent){
@@ -139,9 +144,13 @@ void driveTo(double X, double Y, double percent){
     theta = atan(deltX/deltY);
   }
 
+  // turn to target
   turnTo(theta, 20);
 
   // drive to target
+  driveFor(d, percent);
+  
+  /*
   if (directionX == 1 && directionY == 0){
     setDrive(voltage, voltage);
     while(getX() < X-1 && getX() < getX() < X+1){
@@ -183,6 +192,8 @@ void driveTo(double X, double Y, double percent){
       delay(10);
     }
   }
+  */
+
   delay(100);
   resetDrive(); // stop all drive motors
 }

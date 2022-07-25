@@ -31,6 +31,5 @@ double inToEnc(double inches){
 }
 
 double encToIn(double enc){
-  // fix
-  return enc*10;
+  return enc*(PI*trackWheelDiam)/trackTicksPerRev;
 }
