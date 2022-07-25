@@ -6,7 +6,7 @@ using namespace pros;
 #define Tr    7     // inches
 #define Tb    8      // inches
 
-#define inPerDeg driveWheelDiam*PI/360 // inches
+#define inPerDeg trackWheelDiam*PI/360 // inches
 
 double deltaOrientationRad = 0;   // radians
 double deltaOrientationDeg = 0;   // degrees

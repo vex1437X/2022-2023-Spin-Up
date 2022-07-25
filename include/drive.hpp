@@ -16,5 +16,6 @@ void driveBrake();
 
 void driverControl();
 
+void driveFor(double inches, double percent);
 void driveTo(double X, double Y, double percent);
 void turnTo(double degrees, double percent);

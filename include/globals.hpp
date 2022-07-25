@@ -20,10 +20,16 @@ double degToRad(double deg);
 double inToEnc(double inches);
 double encToIn(double enc);
 
-#define driveWheelDiam  2.73             // inches
-#define driveWheelRad   driveWheelDiam/2
+// not checked
+#define trackWheelDiam    2.73 // inches
+#define trackWheelRad     driveWheelDiam/2
+#define trackTicksPerRev  360
 
-#define ticksPerRev     900
+#define driveWheelDiam    2.73 // inches
+#define driveWheelRad     driveWheelDiam/2
+
+
+#define ticksPerRev       900
   // 1800 ticks/rev with 36:1 gears :: RED
   // 900 ticks/rev with 18:1 gears :: GREEN
   // 300 ticks/rev with 6:1 gears :: BLUE

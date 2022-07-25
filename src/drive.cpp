@@ -82,6 +82,12 @@ void driverControl(){
   rightB.move_velocity(rightJoystickY*scaleFactor);
 }
 
+void driveFor(double inches, double percent){
+  // percent to voltage conversion
+  double voltage = percent*1.27;
+  double targetEnc = inToEnc(inches);
+}
+
 void driveTo(double X, double Y, double percent){
   // percent to voltage conversion
   double voltage = percent*1.27;
