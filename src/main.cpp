@@ -1,12 +1,7 @@
 #include "main.h"
 
 using namespace pros;
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
+
 void on_center_button() {
 	// static bool pressed = false;
 	// pressed = !pressed;
@@ -17,48 +12,69 @@ void on_center_button() {
 	// }
 }
 
-/**
- * Runs initialization code. This occurs as soon as the program is started.
- *
- * All other competition modes are blocked by initialize; it is recommended
- * to keep execution time for this mode under a few seconds.
- */
+double stime;
+
 void initialize() {
 	lcd::initialize();
 	lcd::set_text(1, "TEAM 1437X");
-	// pros::lcd::register_btn1_cb(on_center_button);
+
+	// reset the driver timer
+	resetTimer();
 
 	// set drive motors to coast
 	driveCoast();
 
 	// reset tracking wheel encoders
 	resetTrack();
+
+	if (pros::competition::get_status() & COMPETITION_CONNECTED == true) {
+    // Field Control is Connected
+    // Run LCD Selector code or similar
+  	}
 }
 
-void disabled() {}
+
+void disabled() {
+	// set drive motors to coast
+	driveCoast();
+}
 
 void competition_initialize() {}
 
 void autonomous() {
-	lcd::set_text(1, "Autonomous");
+	lcd::set_text(2, "Autonomous");
+	// begin odometry tracking
+	Task odometry(updateOdometry);
+
+	// reset tracking wheel encoders
+	resetTrack();
+
 	// set drive motors to brake
 	driveBrake();
+	
+	driveTo(0, 10, 20);
+	// delay(1000);
+	// driveTo(0, 0, 20);
+	// turnTo(270, 25);
+	// delay(1000);
+	// turnTo(0, 25);
 }
 
 void opcontrol() {
 	lcd::set_text(3, "Driver Control");
-	// set drive motors to coast
-  	// driveCoast();
+	// begin odometry tracking
+	Task odometry(updateOdometry);
+	// begin timer for driver
+	Task timer(updateDriveTimer);
+
+	// set drive motors to brake
 	driveBrake();
 
 	while (true) {
-    // control drive using the controller
-    driverControl();
+		// control drive using the controller
+		driverControl();
 
-	// updateValues();
-	updateOrientation();
-	printf("Orientation: %f \n", getCurrentOrientation());
 
-    delay(20);
+		delay(20);
 	}
 }

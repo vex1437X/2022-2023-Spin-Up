@@ -75,6 +75,7 @@ void opcontrol(void);
 #include "globals.hpp"
 #include "drive.hpp"
 #include "odometry.hpp"
+#include "driverassistant.hpp"
 
 //#include <iostream>
 #endif

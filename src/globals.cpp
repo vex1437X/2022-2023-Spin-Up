@@ -16,7 +16,7 @@ Motor rightB(8, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
 // 1 is A; 2 is B; 3 is C; etc..
 ADIEncoder leftT(2, 1, false);
 ADIEncoder rightT(7, 8, false);
-ADIEncoder auxT(4, 5, false);
+ADIEncoder auxT(5, 6, false);
 
 double radToDeg(double rad){
   return rad*180/PI;
