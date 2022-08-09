@@ -74,8 +74,8 @@ void driverControl(){
   }
 
   // Set the motor velocities
-  // RED: factor = 0.78742 || GREEN: factor = 0.5 || BLUE: factor = .1666667
-  double scaleFactor = 0.5;
+  // RED: factor = 0.78742 || GREEN: factor = 1.575 || BLUE: factor = 4.725
+  double scaleFactor = 1.575;
   leftF.move_velocity(leftJoystickY*scaleFactor);
   leftB.move_velocity(leftJoystickY*scaleFactor);
   rightF.move_velocity(rightJoystickY*scaleFactor);
@@ -88,9 +88,21 @@ void driveFor(double inches, double percent){
   double targetEnc = inToEnc(inches);
 
   setDrive(voltage, voltage);
-  while (deltatotalenc < targetEnc){
-    delay(10);
-  }
+
+  //   _   _  ____ _______   _____   ____  _   _ ______ 
+  //  | \ | |/ __ \__   __| |  __ \ / __ \| \ | |  ____|
+  //  |  \| | |  | | | |    | |  | | |  | |  \| | |__   
+  //  | . ` | |  | | | |    | |  | | |  | | . ` |  __|  
+  //  | |\  | |__| | | |    | |__| | |__| | |\  | |____ 
+  //  |_| \_|\____/  |_|    |_____/ \____/|_| \_|______|
+                                                   
+                                                   
+  // while (deltatotalenc < targetEnc){
+  //   delay(10);
+  // }
+
+  delay(100);
+  resetDrive();
 }
 
 void driveTo(double X, double Y, double percent){

@@ -12,7 +12,7 @@ void on_center_button() {
 	// }
 }
 
-double stime;
+// double stime;
 
 void initialize() {
 	lcd::initialize();

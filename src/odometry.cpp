@@ -104,15 +104,17 @@ void updatePosition(){
 	prevX = posX;
 	prevY = posY;
 
-	// if (deltaOrientationRad == 0){
-	// 	posX += deltaAuxEnc;
-	// 	posY += totalDeltaEnc;
-	// 	// posX = 1;
-	// 	// posY = 1;
-	// } else{
-	// 	posX += 2*sin(prevOrientationRad/2)*((deltaAuxEnc/deltaOrientationRad)+Tb);
-	// 	posY += 2*sin(prevOrientationRad/2)*((deltaRightEnc/deltaOrientationRad)+Tr);
-	// }
+	// **
+
+	if (deltaOrientationRad == 0){
+		posX += deltaAuxEnc;
+		posY += totalDeltaEnc;
+		// posX = 1;
+		// posY = 1;
+	} else{
+		posX += 2*((deltaAuxEnc/deltaOrientationRad)+Tb)*sin(deltaOrientationRad/2);
+		posY += 2*((deltaRightEnc/deltaOrientationRad)+Tr)*sin(deltaOrientationRad/2);
+	}
 
 	// avgOrientationRad = prevOrientationRad + (deltaOrientationRad/2);
 
@@ -123,20 +125,22 @@ void updatePosition(){
 	// posX = posR * cos(posTheta);
 	// posY = posR * sin(posTheta);
 
-	if (deltaOrientationRad == 0){
-		posX += totalDeltaEnc/2*sin(currentOrientationRad);
-		posY += totalDeltaEnc/2*cos(currentOrientationRad);
-	}
-	else{
-		double s = (totalDeltaEnc/deltaOrientationRad)*sin(deltaOrientationRad/2);
-		posX += s * sin(prevOrientationRad+deltaOrientationRad/2);
-		posY += s * cos(prevOrientationRad+deltaOrientationRad/2);
-	}
-	if (deltaY < 0.001){
-		posX += deltaAuxEnc;
-	}
-	deltaX = posX-prevX;
-	deltaY = posY-prevY;
+	// **
+
+	// if (deltaOrientationRad == 0){
+	// 	posX += totalDeltaEnc/2*sin(currentOrientationRad);
+	// 	posY += totalDeltaEnc/2*cos(currentOrientationRad);
+	// }
+	// else{
+	// 	double s = (totalDeltaEnc/deltaOrientationRad)*sin(deltaOrientationRad/2);
+	// 	posX += s * sin(prevOrientationRad+deltaOrientationRad/2);
+	// 	posY += s * cos(prevOrientationRad+deltaOrientationRad/2);
+	// }
+	// if (deltaY < 0.001){
+	// 	posX += deltaAuxEnc;
+	// }
+	// deltaX = posX-prevX;
+	// deltaY = posY-prevY;
 }
 
 void updateOdometry(){
@@ -157,6 +161,10 @@ void updateOdometry(){
 
 double getCurrentOrientation(){
 	return currentOrientationDeg;
+}
+
+double getDeltaOrientation(){
+	return deltaOrientationDeg;
 }
 
 int getAuxEnc(){
