@@ -76,10 +76,10 @@ void driverControl(){
   // Set the motor velocities
   // RED: factor = 0.78742 || GREEN: factor = 1.575 || BLUE: factor = 4.725
   double scaleFactor = 1.575;
-  leftF.move_velocity(leftJoystickY*scaleFactor);
-  leftB.move_velocity(leftJoystickY*scaleFactor);
-  rightF.move_velocity(rightJoystickY*scaleFactor);
-  rightB.move_velocity(rightJoystickY*scaleFactor);
+  leftF.move_velocity(leftJoystickY*scaleFactor/2);
+  leftB.move_velocity(leftJoystickY*scaleFactor/2);
+  rightF.move_velocity(rightJoystickY*scaleFactor/2);
+  rightB.move_velocity(rightJoystickY*scaleFactor/2);
 }
 
 void driveFor(double inches, double percent){

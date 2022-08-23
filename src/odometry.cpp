@@ -22,6 +22,7 @@ double deltaLeftEnc = 0;
 double deltaRightEnc = 0;
 double deltaAuxEnc = 0;
 double totalDeltaEnc = 0;
+double deltT = 0;
 
 double prevLeftEnc = 0;
 double prevRightEnc = 0;
@@ -38,6 +39,8 @@ double posX = 0;
 double posY = 0;
 double deltaX = 0;
 double deltaY = 0;
+double changeX = 0;
+double changeY = 0;
 
 // Polar coordinates
 double posR = 0;
@@ -96,25 +99,26 @@ void updateOrientation(){
 
 
 void updatePosition(){
-	deltaLeftEnc = (leftEnc - prevLeftEnc)*inPerDeg;
-	deltaRightEnc = (rightEnc - prevRightEnc)*inPerDeg;
-	deltaAuxEnc = (auxEnc - prevAuxEnc)*inPerDeg;
+	deltaLeftEnc = ((leftEnc-prevLeftEnc)*trackCirc)/360;
+	deltaRightEnc = ((rightEnc-prevRightEnc)*trackCirc)/360;
+	deltaAuxEnc = ((auxEnc-prevAuxEnc)*trackCirc)/360;
 	totalDeltaEnc = deltaLeftEnc+deltaRightEnc;
+	deltT = (deltaRightEnc-deltaRightEnc)/(Tl+Tr);
 
 	prevX = posX;
 	prevY = posY;
 
 	// **
 
-	if (deltaOrientationRad == 0){
-		posX += deltaAuxEnc;
-		posY += totalDeltaEnc;
-		// posX = 1;
-		// posY = 1;
-	} else{
-		posX += 2*((deltaAuxEnc/deltaOrientationRad)+Tb)*sin(deltaOrientationRad/2);
-		posY += 2*((deltaRightEnc/deltaOrientationRad)+Tr)*sin(deltaOrientationRad/2);
-	}
+	// if (deltaOrientationRad == 0){
+	// 	posX += deltaAuxEnc;
+	// 	posY += totalDeltaEnc;
+	// 	// posX = 1;
+	// 	// posY = 1;
+	// } else{
+	// 	posX += 2*((deltaAuxEnc/deltaOrientationDeg)+Tb)*sin(deltaOrientationDeg/2);
+	// 	posY += 2*((deltaRightEnc/deltaOrientationDeg)+Tr)*sin(deltaOrientationDeg/2);
+	// }
 
 	// avgOrientationRad = prevOrientationRad + (deltaOrientationRad/2);
 
@@ -139,8 +143,25 @@ void updatePosition(){
 	// if (deltaY < 0.001){
 	// 	posX += deltaAuxEnc;
 	// }
-	// deltaX = posX-prevX;
-	// deltaY = posY-prevY;
+
+	// **
+
+	if (deltaOrientationRad==0){
+		posX += deltaLeftEnc*sin(currentOrientationRad);
+		posY += deltaLeftEnc*cos(currentOrientationRad);
+	} else{
+		double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
+		changeX = s*sin(currentOrientationRad+(deltaOrientationRad/2));
+		changeY = s*cos(currentOrientationRad+(deltaOrientationRad/2));
+
+		posX += changeX;
+		posY += changeY;
+	}
+
+	// **
+	
+	deltaX = posX-prevX;
+	deltaY = posY-prevY;
 }
 
 void updateOdometry(){
@@ -155,7 +176,7 @@ void updateOdometry(){
 		printf("PosX: %f \n", getX());
 		printf("PosY: %f \n", getY());
 
-		Task::delay(15);
+		Task::delay(20);
 	}
 }
 
@@ -172,11 +193,11 @@ int getAuxEnc(){
 }
 
 double getX(){
-	return posX;
+	return posX/12;
 }
 
 double getY(){
-	return posY;
+	return posY/12;
 }
 
 void setCurrentOrientation(double x){

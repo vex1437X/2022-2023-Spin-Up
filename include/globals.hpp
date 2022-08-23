@@ -24,6 +24,7 @@ double encToIn(double enc);
 #define trackWheelDiam    2.73 // inches
 #define trackWheelRad     driveWheelDiam/2
 #define trackTicksPerRev  360
+#define trackCirc         PI*trackWheelDiam
 
 #define driveWheelDiam    2.73 // inches
 #define driveWheelRad     driveWheelDiam/2
