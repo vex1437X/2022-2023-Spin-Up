@@ -21,7 +21,7 @@ double inToEnc(double inches);
 double encToIn(double enc);
 
 // not checked
-#define trackWheelDiam    2.73 // inches
+#define trackWheelDiam    2.5 // inches
 #define trackWheelRad     driveWheelDiam/2
 #define trackTicksPerRev  360
 #define trackCirc         PI*trackWheelDiam

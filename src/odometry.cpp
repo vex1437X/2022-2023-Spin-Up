@@ -2,9 +2,9 @@
 #include "odometry.hpp"
 using namespace pros;
 
-#define Tl    6     // inches
+#define Tl    7     // inches
 #define Tr    7     // inches
-#define Tb    8      // inches
+#define Tb    8.5      // inches
 
 #define inPerDeg trackWheelDiam*PI/360 // inches
 
@@ -54,6 +54,47 @@ void resetTrack(){
 	auxT.reset();
 }
 
+void resetOdoValues(){
+ deltaOrientationRad = 0;   // radians
+ deltaOrientationDeg = 0;   // degrees
+
+ prevOrientationRad = 0;    // radians
+ prevOrientationDeg = 0; 	  // degrees
+
+ currentOrientationRad = 0; // radians
+ currentOrientationDeg = 0; // degrees
+ avgOrientationRad = 0;	  // radians
+
+ deltaLeftEnc = 0;
+ deltaRightEnc = 0;
+ deltaAuxEnc = 0;
+ totalDeltaEnc = 0;
+ deltT = 0;
+
+ prevLeftEnc = 0;
+ prevRightEnc = 0;
+ prevAuxEnc = 0;
+
+ leftEnc = 0;
+ rightEnc = 0;
+ auxEnc = 0;
+
+// Cartesian coordinates
+ prevX = 0;
+ prevY = 0;
+ posX = 0;
+ posY = 0;
+ deltaX = 0;
+ deltaY = 0;
+ changeX = 0;
+ changeY = 0;
+
+// Polar coordinates
+ posR = 0;
+posTheta = 0;
+
+}
+
 void updateValues(){
 	prevLeftEnc = leftEnc;
 	prevRightEnc = rightEnc;
@@ -99,9 +140,9 @@ void updateOrientation(){
 
 
 void updatePosition(){
-	deltaLeftEnc = ((leftEnc-prevLeftEnc)*trackCirc)/360;
-	deltaRightEnc = ((rightEnc-prevRightEnc)*trackCirc)/360;
-	deltaAuxEnc = ((auxEnc-prevAuxEnc)*trackCirc)/360;
+	deltaLeftEnc = ((leftEnc-prevLeftEnc)*trackCirc)/trackTicksPerRev;
+	deltaRightEnc = ((rightEnc-prevRightEnc)*trackCirc)/trackTicksPerRev;
+	deltaAuxEnc = ((auxEnc-prevAuxEnc)*trackCirc)/trackTicksPerRev;
 	totalDeltaEnc = deltaLeftEnc+deltaRightEnc;
 	deltT = (deltaRightEnc-deltaRightEnc)/(Tl+Tr);
 
@@ -193,11 +234,13 @@ int getAuxEnc(){
 }
 
 double getX(){
-	return posX/12;
+	// return posX/12;
+	return posX;
 }
 
 double getY(){
-	return posY/12;
+	// return posY/12;
+	return posY;
 }
 
 void setCurrentOrientation(double x){

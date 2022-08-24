@@ -26,6 +26,8 @@ void initialize() {
 
 	// reset tracking wheel encoders
 	resetTrack();
+	// reset odometry values
+	resetOdoValues();
 
 	if (pros::competition::get_status() & COMPETITION_CONNECTED == true) {
     // Field Control is Connected

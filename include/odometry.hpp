@@ -3,6 +3,7 @@
 using namespace pros;
 
 void resetTrack();
+void resetOdoValues();
 void updateValues();
 void updateOrientation();
 void updatePosition();
