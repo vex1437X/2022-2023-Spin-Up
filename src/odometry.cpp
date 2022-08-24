@@ -22,6 +22,7 @@ double deltaLeftEnc = 0;
 double deltaRightEnc = 0;
 double deltaAuxEnc = 0;
 double totalDeltaEnc = 0;
+double avgDeltaEnc = 0;
 double deltT = 0;
 
 double prevLeftEnc = 0;
@@ -69,6 +70,7 @@ void resetOdoValues(){
  deltaRightEnc = 0;
  deltaAuxEnc = 0;
  totalDeltaEnc = 0;
+ avgDeltaEnc = 0;
  deltT = 0;
 
  prevLeftEnc = 0;
@@ -112,7 +114,8 @@ void updateValues(){
 }
 
 void updateOrientation(){
-	currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(12)*inPerDeg;
+	// currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(12)*inPerDeg;
+	currentOrientationRad += (deltaRightEnc-deltaLeftEnc)/(Tl+Tr)*inPerDeg;
 
 	if (currentOrientationRad < 0){
 		currentOrientationRad += 2*PI;
@@ -140,11 +143,16 @@ void updateOrientation(){
 
 
 void updatePosition(){
-	deltaLeftEnc = ((leftEnc-prevLeftEnc)*trackCirc)/trackTicksPerRev;
-	deltaRightEnc = ((rightEnc-prevRightEnc)*trackCirc)/trackTicksPerRev;
-	deltaAuxEnc = ((auxEnc-prevAuxEnc)*trackCirc)/trackTicksPerRev;
+	deltaLeftEnc = (leftEnc-prevLeftEnc)*inPerDeg;
+	deltaRightEnc = (rightEnc-prevRightEnc)*inPerDeg;
+
+	// deltaLeftEnc = ((leftEnc-prevLeftEnc)*trackCirc)/trackTicksPerRev;
+	// deltaRightEnc = ((rightEnc-prevRightEnc)*trackCirc)/trackTicksPerRev;
+	
+	// deltaAuxEnc = ((auxEnc-prevAuxEnc)*trackCirc)/trackTicksPerRev;
 	totalDeltaEnc = deltaLeftEnc+deltaRightEnc;
-	deltT = (deltaRightEnc-deltaRightEnc)/(Tl+Tr);
+	avgDeltaEnc = (deltaLeftEnc+deltaRightEnc)/2;
+	// deltT = (deltaRightEnc-deltaLeftEnc)/(Tl+Tr);
 
 	prevX = posX;
 	prevY = posY;
@@ -191,12 +199,15 @@ void updatePosition(){
 		posX += deltaLeftEnc*sin(currentOrientationRad);
 		posY += deltaLeftEnc*cos(currentOrientationRad);
 	} else{ // problem from last commit
-		double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
-		changeX = s*sin(currentOrientationRad+(deltaOrientationRad/2));
-		changeY = s*cos(currentOrientationRad+(deltaOrientationRad/2));
+		// double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
+		// changeX = s*sin(currentOrientationRad+(deltaOrientationRad/2));
+		// changeY = s*cos(currentOrientationRad+(deltaOrientationRad/2));
 
-		posX += changeX;
-		posY += changeY;
+		// posX += changeX;
+		// posY += changeY;
+		double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
+		posX += s*sin(currentOrientationRad+(deltaOrientationRad/2));
+		posY += s*cos(currentOrientationRad+(deltaOrientationRad/2));
 	}
 
 	// **
