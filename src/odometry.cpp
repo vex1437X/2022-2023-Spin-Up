@@ -190,7 +190,7 @@ void updatePosition(){
 	if (deltaOrientationRad==0){
 		posX += deltaLeftEnc*sin(currentOrientationRad);
 		posY += deltaLeftEnc*cos(currentOrientationRad);
-	} else{
+	} else{ // problem from last commit
 		double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
 		changeX = s*sin(currentOrientationRad+(deltaOrientationRad/2));
 		changeY = s*cos(currentOrientationRad+(deltaOrientationRad/2));
