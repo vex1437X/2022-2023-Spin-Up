@@ -2,8 +2,8 @@
 #include "odometry.hpp"
 using namespace pros;
 
-#define Tl    7     // inches
-#define Tr    7     // inches
+#define Tl    6     // inches
+#define Tr    6     // inches
 #define Tb    8.5      // inches
 
 #define inPerDeg trackWheelDiam*PI/360 // inches

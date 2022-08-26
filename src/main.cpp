@@ -54,10 +54,10 @@ void autonomous() {
 	// set drive motors to brake
 	driveBrake();
 	
-	driveTo(0, 10, 20);
+	// driveTo(0, 10, 20);
 	// delay(1000);
 	// driveTo(0, 0, 20);
-	// turnTo(270, 25);
+	turnTo(90, 25);
 	// delay(1000);
 	// turnTo(0, 25);
 }
