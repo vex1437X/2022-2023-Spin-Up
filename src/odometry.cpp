@@ -143,16 +143,16 @@ void updateOrientation(){
 
 
 void updatePosition(){
-	deltaLeftEnc = (leftEnc-prevLeftEnc)*inPerDeg;
-	deltaRightEnc = (rightEnc-prevRightEnc)*inPerDeg;
-	deltaAuxEnc = (auxEnc-prevAuxEnc)*inPerDeg;
+	double deltaLeftEnc1 = (deltaLeftEnc)*inPerDeg;
+	double deltaRightEnc1 = (deltaRightEnc)*inPerDeg;
+	double deltaAuxEnc1 = (deltaAuxEnc)*inPerDeg;
 
 	// deltaLeftEnc = ((leftEnc-prevLeftEnc)*trackCirc)/trackTicksPerRev;
 	// deltaRightEnc = ((rightEnc-prevRightEnc)*trackCirc)/trackTicksPerRev;
 	
 	// deltaAuxEnc = ((auxEnc-prevAuxEnc)*trackCirc)/trackTicksPerRev;
-	totalDeltaEnc = deltaLeftEnc+deltaRightEnc;
-	avgDeltaEnc = (deltaLeftEnc+deltaRightEnc)/2;
+	totalDeltaEnc = deltaLeftEnc1+deltaRightEnc1;
+	avgDeltaEnc = (deltaLeftEnc1+deltaRightEnc1)/2;
 	// deltT = (deltaRightEnc-deltaLeftEnc)/(Tl+Tr);
 
 	prevX = posX;
@@ -197,15 +197,15 @@ void updatePosition(){
 	// **
 
 	if (deltaOrientationRad==0){
-		posX += deltaLeftEnc*sin(currentOrientationRad);
-		posY += deltaLeftEnc*cos(currentOrientationRad);
+		posX += deltaLeftEnc1*sin(currentOrientationRad);
+		posY += deltaLeftEnc1*cos(currentOrientationRad);
 	} else{
-		// double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
-		// posX += s*sin(currentOrientationRad+(deltaOrientationRad/2));
-		// posY += s*cos(currentOrientationRad+(deltaOrientationRad/2));
-		double s = 2*sin(currentOrientationRad/2);
-		posX += s * ((deltaAuxEnc/deltaOrientationRad)+Tb);
-		posY += s * ((deltaRightEnc/deltaOrientationRad)+Tr);
+		double s = 2*((deltaLeftEnc1/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
+		posX += s*sin(currentOrientationRad+(deltaOrientationRad/2));
+		posY += s*cos(currentOrientationRad+(deltaOrientationRad/2));
+		// double s = 2*sin(currentOrientationRad/2);
+		// posX += s * ((deltaAuxEnc1/deltaOrientationRad)+Tb);
+		// posY += s * ((deltaRightEnc1/deltaOrientationRad)+Tr);
 	}
 
 	// **
