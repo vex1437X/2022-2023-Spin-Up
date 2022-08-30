@@ -220,7 +220,7 @@ void turnTo(double degrees, double percent){
 
   // determine direction
   int direction = 0;
-  /*
+  // /*
   double currOrien = 0;
   if (first == true){
     if (currOrien-degrees < 0){
@@ -232,14 +232,14 @@ void turnTo(double degrees, double percent){
     }
     first = false;
   } else if (direction == false){
-  */
+  // */
   if (direction == false){ // comment out when using first & currOrien; only when Orientation starts off as 360 and not 0 deg
     if (getCurrentOrientation()-degrees < 0){
       direction = -1;
     } else if (getCurrentOrientation()-degrees > 0){
       direction = 1;
     }
-  }
+  } }
 
   /*
   // determine direction

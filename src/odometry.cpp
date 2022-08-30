@@ -114,8 +114,8 @@ void updateValues(){
 }
 
 void updateOrientation(){
-	// currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(12)*inPerDeg;
-	currentOrientationRad += (deltaRightEnc-deltaLeftEnc)/(Tl+Tr)*inPerDeg;
+	currentOrientationRad += (deltaLeftEnc-deltaRightEnc)/(12)*inPerDeg;
+	// currentOrientationRad += (deltaRightEnc-deltaLeftEnc)/(Tl+Tr)*inPerDeg;
 
 	if (currentOrientationRad < 0){
 		currentOrientationRad += 2*PI;
@@ -145,6 +145,7 @@ void updateOrientation(){
 void updatePosition(){
 	deltaLeftEnc = (leftEnc-prevLeftEnc)*inPerDeg;
 	deltaRightEnc = (rightEnc-prevRightEnc)*inPerDeg;
+	deltaAuxEnc = (auxEnc-prevAuxEnc)*inPerDeg;
 
 	// deltaLeftEnc = ((leftEnc-prevLeftEnc)*trackCirc)/trackTicksPerRev;
 	// deltaRightEnc = ((rightEnc-prevRightEnc)*trackCirc)/trackTicksPerRev;
@@ -198,16 +199,13 @@ void updatePosition(){
 	if (deltaOrientationRad==0){
 		posX += deltaLeftEnc*sin(currentOrientationRad);
 		posY += deltaLeftEnc*cos(currentOrientationRad);
-	} else{ // problem from last commit
+	} else{
 		// double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
-		// changeX = s*sin(currentOrientationRad+(deltaOrientationRad/2));
-		// changeY = s*cos(currentOrientationRad+(deltaOrientationRad/2));
-
-		// posX += changeX;
-		// posY += changeY;
-		double s = 2*((deltaLeftEnc/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
-		posX += s*sin(currentOrientationRad+(deltaOrientationRad/2));
-		posY += s*cos(currentOrientationRad+(deltaOrientationRad/2));
+		// posX += s*sin(currentOrientationRad+(deltaOrientationRad/2));
+		// posY += s*cos(currentOrientationRad+(deltaOrientationRad/2));
+		double s = 2*sin(currentOrientationRad/2);
+		posX += s * ((deltaAuxEnc/deltaOrientationRad)+Tb);
+		posY += s * ((deltaRightEnc/deltaOrientationRad)+Tr);
 	}
 
 	// **
