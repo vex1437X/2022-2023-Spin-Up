@@ -138,6 +138,8 @@ void updateOrientation(){
 
 	deltaOrientationDeg = currentOrientationDeg-prevOrientationDeg;
 	deltaOrientationRad = currentOrientationRad-prevOrientationRad;
+
+	avgOrientationRad = prevOrientationRad+(deltaOrientationRad/2);
 }
 
 
@@ -160,26 +162,6 @@ void updatePosition(){
 
 	// **
 
-	// if (deltaOrientationRad == 0){
-	// 	posX += deltaAuxEnc;
-	// 	posY += totalDeltaEnc;
-	// 	// posX = 1;
-	// 	// posY = 1;
-	// } else{
-	// 	posX += 2*((deltaAuxEnc/deltaOrientationDeg)+Tb)*sin(deltaOrientationDeg/2);
-	// 	posY += 2*((deltaRightEnc/deltaOrientationDeg)+Tr)*sin(deltaOrientationDeg/2);
-	// }
-
-	// avgOrientationRad = prevOrientationRad + (deltaOrientationRad/2);
-
-	// posR = sqrt(pow(posX, 2) + pow(posY, 2));
-	// posTheta = atan(posY/posX);
-	// posTheta -= avgOrientationRad;
-
-	// posX = posR * cos(posTheta);
-	// posY = posR * sin(posTheta);
-
-	// **
 
 	// if (deltaOrientationRad == 0){
 	// 	posX += totalDeltaEnc/2*sin(currentOrientationRad);
@@ -195,20 +177,19 @@ void updatePosition(){
 	// }
 
 	// **
-
+	
 	if (deltaOrientationRad==0){
 		posX += deltaLeftEnc1*sin(currentOrientationRad);
 		posY += deltaLeftEnc1*cos(currentOrientationRad);
 	} else{
-		double s = 2*((deltaLeftEnc1/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
-		posX += s*sin(currentOrientationRad+(deltaOrientationRad/2));
-		posY += s*cos(currentOrientationRad+(deltaOrientationRad/2));
-		// double s = 2*sin(currentOrientationRad/2);
-		// posX += s * ((deltaAuxEnc1/deltaOrientationRad)+Tb);
-		// posY += s * ((deltaRightEnc1/deltaOrientationRad)+Tr);
+		// double s = 2*((deltaLeftEnc1/deltaOrientationRad)+Tl)*sin(deltaOrientationRad/2);
+		// posX += s*sin(currentOrientationRad+(deltaOrientationRad/2));
+		// posY += s*cos(currentOrientationRad+(deltaOrientationRad/2));
+
+		posX += (2*sin(deltaOrientationRad/2))*(deltaAuxEnc1/deltaOrientationRad+Tb); //step 8
+    	posY += (2*sin(deltaOrientationRad/2))*(deltaRightEnc1/deltaOrientationRad+Tr);
 	}
 
-	// **
 	
 	deltaX = posX-prevX;
 	deltaY = posY-prevY;
