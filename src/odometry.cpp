@@ -190,6 +190,10 @@ void updatePosition(){
     	posY += (2*sin(deltaOrientationRad/2))*(deltaRightEnc1/deltaOrientationRad+Tr);
 	}
 
+	// Offset when turning to calculate the actual absolute position of the Robot
+	posX -= deltaAuxEnc1;
+	posY -= deltaRightEnc1;
+
 	
 	deltaX = posX-prevX;
 	deltaY = posY-prevY;
