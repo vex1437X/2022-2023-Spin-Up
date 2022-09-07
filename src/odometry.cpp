@@ -8,7 +8,7 @@ using namespace pros;
 
 #define inPerDeg trackWheelDiam*PI/360 // inches
 
-double deltaOrientationRad = 0;   // radians //hello
+double deltaOrientationRad = 0;   // radians
 double deltaOrientationDeg = 0;   // degrees
 
 double prevOrientationRad = 0;    // radians
