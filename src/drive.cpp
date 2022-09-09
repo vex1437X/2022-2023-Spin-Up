@@ -69,7 +69,12 @@ void driverControl(){
 
   // Set the motor velocities
   // RED: factor = 0.78742 || GREEN: factor = 1.575 || BLUE: factor = 4.725
-  double scaleFactor = 4.725;
+  double scaleFactor = 0;
+  if (controller.get_digital(E_CONTROLLER_DIGITAL_R2)){
+    scaleFactor = 4.725/3;
+  } else{
+    scaleFactor = 4.725;
+  }
   leftF.move_velocity(leftJoystickY*scaleFactor);
   leftB.move_velocity(leftJoystickY*scaleFactor);
   rightF.move_velocity(rightJoystickY*scaleFactor);

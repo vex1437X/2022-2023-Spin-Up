@@ -12,8 +12,8 @@ Motor leftB(12, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
 Motor rightF(20, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 Motor rightB(10, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 
-Motor flymotor1(1, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
-Motor flymotor2(2, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+Motor flymotor1(14, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+Motor flymotor2(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 
 // tracking wheel encoders
 // 1 is A; 2 is B; 3 is C; etc..

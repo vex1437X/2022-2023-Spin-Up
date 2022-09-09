@@ -1,4 +1,5 @@
 #include "main.h"
+#include "flywheel.hpp"
 
 using namespace pros;
 
@@ -51,13 +52,26 @@ void opcontrol() {
 	// begin timer for driver
 	Task timer(updateDriveTimer);
 
+	bool flytoggle = true;
+
 	// set drive motors to brake
-	driveBrake();
+	driveCoast();
 
 	while (true) {
 		lcd::set_text(3, "Driver Control");
 		// control drive using the controller
 		driverControl();
+
+		if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
+			if (flytoggle == true){
+				setFly(127);
+				flytoggle = false;
+			} else if (flytoggle == false){
+				setFly(0);
+				flytoggle = true;
+			}
+			delay(150);
+		}
 
 
 		delay(20);
