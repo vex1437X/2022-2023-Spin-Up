@@ -6,6 +6,12 @@ using namespace pros;
 
 Vision vsensor(11);
 
+vision_signature_s_t RED = Vision::signature_from_utility(5, 6701, 8763, 7732, -1129, -541, -836, 3.6, 0);
+vision_signature_s_t BLUE = Vision::signature_from_utility(6, -2453, -1587,-2020, 6337, 8753, 7546, 1.9, 0);
+
+vision_object_s_t red = vsensor.get_by_sig(0, 5);
+vision_object_s_t blue = vsensor.get_by_sig(0, 6);
+
 int stime = 0;
 
 void updateDriveTimer(){
@@ -21,30 +27,21 @@ void resetTimer(){
 }
 
 void centerGoal(){
-  
-//   signature BLUE = signature (3, -2453, -1587,-2020, 6337, 8753, 7546, 1.9, 0);
-//   signature RED = signature (6, 6701, 8763, 7732, -1129, -541, -836, 3.6, 0);
 
-  vision_signature_s_t RED = Vision::signature_from_utility(5, 6701, 8763, 7732, -1129, -541, -836, 3.6, 0);
-  vision_signature_s_t BLUE = Vision::signature_from_utility(6, -2453, -1587,-2020, 6337, 8753, 7546, 1.9, 0);
   
   //if you want to keep your previous stopping mode, change it after this function is called.
   driveBrake();
-
-  int spdpct = 15;
 
   int midx = 316/2;
 
   int x = 0;
 
-  while(x < 175){
-	vision_object_s_t red = vsensor.get_by_sig(0, 5);
-	vision_object_s_t blue = vsensor.get_by_sig(0, 6);
+//   while(x < 175){
 	
 	int redXmid = red.x_middle_coord;
 	int blueXmid = blue.x_middle_coord;
 
-    if (red.height > 3 || blue.height > 3){
+    // if (red.height > 3 || blue.height > 3){
       if ((redXmid < midx - 20 && redXmid > 0)||(blueXmid < midx - 20 && blueXmid > 0)){
 		setDrive(20/2, 20);
       }
@@ -55,12 +52,12 @@ void centerGoal(){
         setDrive(0,0);
         x++;
       }
-    }
-    else{
-      setDrive(0,0);
-    }
+    // }
+    // else{
+    //   setDrive(0,0);
+    // }
     delay(30);
-  }
+//   }
 }
 
 int getTime(){

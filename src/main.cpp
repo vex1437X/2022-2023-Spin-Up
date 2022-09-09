@@ -75,7 +75,10 @@ void opcontrol() {
 			}
 			delay(150);
 		}
-
+		
+		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
+			centerGoal();
+		}
 
 		delay(20);
 	}
