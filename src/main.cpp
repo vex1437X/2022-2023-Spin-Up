@@ -48,7 +48,6 @@ void autonomous() {
 }
 
 void opcontrol() {
-	lcd::set_text(3, "Driver Control");
 	// begin timer for driver
 	Task timer(updateDriveTimer);
 
@@ -56,6 +55,7 @@ void opcontrol() {
 	driveBrake();
 
 	while (true) {
+		lcd::set_text(3, "Driver Control");
 		// control drive using the controller
 		driverControl();
 
