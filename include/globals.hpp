@@ -13,6 +13,8 @@ extern Motor rightB;
 extern Motor flymotor1;
 extern Motor flymotor2;
 
+extern Vision vsensor;
+
 // tracking encoders
 // extern ADIEncoder leftT;
 // extern ADIEncoder rightT;

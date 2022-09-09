@@ -6,4 +6,6 @@ void updateDriveTimer();
 
 void resetTimer();
 
+void centerGoal();
+
 int getTime();

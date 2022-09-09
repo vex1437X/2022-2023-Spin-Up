@@ -22,6 +22,9 @@ void initialize() {
 	// reset the driver timer
 	resetTimer();
 
+	// reset vision sensor
+	vsensor.clear_led();
+
 	// set drive motors to coast
 	driveCoast();
 

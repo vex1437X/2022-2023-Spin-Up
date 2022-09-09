@@ -15,6 +15,8 @@ Motor rightB(10, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 Motor flymotor1(14, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
 Motor flymotor2(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 
+Vision vsensor(11);
+
 // tracking wheel encoders
 // 1 is A; 2 is B; 3 is C; etc..
 // ADIEncoder leftT(2, 1, false);
