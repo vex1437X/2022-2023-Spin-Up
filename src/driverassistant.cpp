@@ -18,7 +18,7 @@ void updateDriveTimer(){
 	while (true){
 		stime++;
 		// 1000 ms: 1 sec
-    controller.print(0, 0, "Fw: %d", getFly(), "fs %d", 20);
+    controller.print(0, 0, "T: %d", getFly(), "A %d", getFlyVolt());
 		Task::delay(1000);
 	}
 }

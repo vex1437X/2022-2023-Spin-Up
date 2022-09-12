@@ -14,6 +14,10 @@ void setFly(int percent){
   flymotor2.move(voltage);
 }
 
+int getFlyVolt(){
+  return (flymotor1.get_voltage()+flymotor2.get_voltage())/2;
+}
+
 void flywheelControl(){
   if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
 			if (flytoggle == true){

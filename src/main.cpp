@@ -55,18 +55,20 @@ void opcontrol() {
 	// begin timer for driver
 	Task timer(updateDriveTimer);
 
-	// set drive motors to brake
-	driveCoast();
+	
 
 	while (true) {
 		lcd::set_text(3, "Driver Control");
+		// set drive motors to coast
+		driveCoast();
+
 		// control drive using the controller
 		driverControl();
 
 		// control flywheel using the controller
 		flywheelControl();
 		
-		// center the goal to vision sensor
+		// center flywheel to goal
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			centerGoal();
 		}
