@@ -55,8 +55,6 @@ void opcontrol() {
 	// begin timer for driver
 	Task timer(updateDriveTimer);
 
-	bool flytoggle = true;
-
 	// set drive motors to brake
 	driveCoast();
 
@@ -65,17 +63,10 @@ void opcontrol() {
 		// control drive using the controller
 		driverControl();
 
-		if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)){
-			if (flytoggle == true){
-				setFly(127);
-				flytoggle = false;
-			} else if (flytoggle == false){
-				setFly(0);
-				flytoggle = true;
-			}
-			delay(150);
-		}
+		// control flywheel using the controller
+		flywheelControl();
 		
+		// center the goal to vision sensor
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			centerGoal();
 		}
