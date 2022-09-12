@@ -44,7 +44,7 @@ void disabled() {
 void competition_initialize() {}
 
 void autonomous() {
-	lcd::set_text(2, "Autonomous");
+	lcd::set_text(1, "Autonomous");
 	// begin odometry tracking
 
 	// set drive motors to brake
@@ -58,7 +58,7 @@ void opcontrol() {
 	
 
 	while (true) {
-		lcd::set_text(3, "Driver Control");
+		lcd::set_text(1, "Driver Control");
 		// set drive motors to coast
 		driveCoast();
 
