@@ -76,6 +76,7 @@ void opcontrol(void);
 #include "drive.hpp"
 #include "flywheel.hpp"
 #include "driverassistant.hpp"
+#include "PID.hpp"
 
 //#include <iostream>
 #endif

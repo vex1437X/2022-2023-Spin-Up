@@ -13,8 +13,6 @@ void on_center_button() {
 	// }
 }
 
-// double stime;
-
 void initialize() {
 	lcd::initialize();
 	lcd::set_text(1, "TEAM 1437X");
