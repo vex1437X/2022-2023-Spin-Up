@@ -1,5 +1,6 @@
 #include "main.h"
 #include "flywheel.hpp"
+#include <cmath>
 using namespace pros;
 
 int flypct = 0;
@@ -15,7 +16,11 @@ void setFly(int percent){
 }
 
 int getFlyVolt(){
-  return (flymotor1.get_voltage()+flymotor2.get_voltage())/2;
+  return round(((flymotor1.get_voltage()/1.27)+(flymotor2.get_voltage()/1.27))/2);
+}
+
+void setflypct(int set){
+	flypct = set;
 }
 
 void flywheelControl(){
@@ -24,7 +29,8 @@ void flywheelControl(){
 				flypct = 90;
 				flytoggle = false;
 			} else if (flytoggle == false){
-				flypct = 0;
+				// set back to idle
+				flypct = 30;
 				flytoggle = true;
 			}
 			delay(200);
@@ -35,7 +41,8 @@ void flywheelControl(){
 				flypct = 85;
 				flytoggle1 = false;
 			} else if (flytoggle1 == false){
-				flypct = 0;
+				// set back to idle
+				flypct = 30;
 				flytoggle1 = true;
 			}
 			delay(200);

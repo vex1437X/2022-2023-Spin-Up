@@ -4,8 +4,6 @@
 #include "pros/vision.h"
 using namespace pros;
 
-// Vision vsensor(11);
-
 vision_signature_s_t RED = Vision::signature_from_utility(5, 6701, 8763, 7732, -1129, -541, -836, 3.6, 0);
 vision_signature_s_t BLUE = Vision::signature_from_utility(6, -2453, -1587,-2020, 6337, 8753, 7546, 1.9, 0);
 
@@ -34,32 +32,21 @@ void centerGoal(){
   driveBrake();
 
   int midx = 316/2;
-
-  int x = 0;
-
-//   while(x < 175){
 	
 	int redXmid = red.x_middle_coord;
 	int blueXmid = blue.x_middle_coord;
 
-    // if (red.height > 3 || blue.height > 3){
-      if ((redXmid < midx - 20 && redXmid > 0)||(blueXmid < midx - 20 && blueXmid > 0)){
-		setDrive(20/2, 20);
-      }
-      else if ((redXmid > midx + 20 && redXmid < 316)||(blueXmid > midx + 20 && blueXmid < 316)){
-		setDrive(20, 20/2);
-      }
-      else if ((redXmid >= midx - 20 && redXmid <= midx + 20 && red.width > 20 )||(blueXmid >= midx - 20 && blueXmid <= midx + 20 && blue.width > 20)){
-        setDrive(0,0);
-        x++;
-      }
-    // }
-    // else{
-    //   setDrive(0,0);
-    // }
+  if ((redXmid < midx - 20 && redXmid > 0)||(blueXmid < midx - 20 && blueXmid > 0)){
+    setDrive(20/2, 20);
+  }
+  else if ((redXmid > midx + 20 && redXmid < 316)||(blueXmid > midx + 20 && blueXmid < 316)){
+    setDrive(20, 20/2);
+  }
+  else if ((redXmid >= midx - 20 && redXmid <= midx + 20 && red.width > 20 )||(blueXmid >= midx - 20 && blueXmid <= midx + 20 && blue.width > 20)){
+    setDrive(0,0);
+  }
     delay(30);
-//   }
-}
+  }
 
 int getTime(){
     return stime;

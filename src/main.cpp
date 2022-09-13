@@ -53,7 +53,8 @@ void opcontrol() {
 	// begin timer for driver
 	Task timer(updateDriveTimer);
 
-	
+	// idle the flywheel @ 30%
+	setflypct(30);
 
 	while (true) {
 		lcd::set_text(1, "Driver Control");
@@ -65,7 +66,7 @@ void opcontrol() {
 
 		// control flywheel using the controller
 		flywheelControl();
-		
+
 		// center flywheel to goal
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){
 			centerGoal();
