@@ -82,24 +82,19 @@ void driverControl(){
 }
 
 void driveFor(double inches, double percent){
+  resetDriveEncoders();
   // percent to voltage conversion
   double voltage = percent*1.27;
   double targetEnc = inToEnc(inches);
 
   setDrive(voltage, voltage);
-
-  //   _   _  ____ _______   _____   ____  _   _ ______ 
-  //  | \ | |/ __ \__   __| |  __ \ / __ \| \ | |  ____|
-  //  |  \| | |  | | | |    | |  | | |  | |  \| | |__   
-  //  | . ` | |  | | | |    | |  | | |  | | . ` |  __|  
-  //  | |\  | |__| | | |    | |__| | |__| | |\  | |____ 
-  //  |_| \_|\____/  |_|    |_____/ \____/|_| \_|______|
-                                                   
-                                                   
-  // while (deltatotalenc < targetEnc){
-  //   delay(10);
-  // }
-
-  delay(100);
+  while (avgDriveEncoders() < targetEnc){
+    delay(10);
+  }
+  setDrive(-voltage/4, -voltage/4);
+  while (avgDriveEncoders() > targetEnc){
+    delay(10);
+  }
+  delay(50);
   resetDrive();
 }
