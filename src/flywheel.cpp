@@ -38,7 +38,7 @@ void flywheelControl(){
 
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)){
 			if (flytoggle1 == true){
-				flypct = 85;
+				flypct = 70;
 				flytoggle1 = false;
 			} else if (flytoggle1 == false){
 				// set back to idle

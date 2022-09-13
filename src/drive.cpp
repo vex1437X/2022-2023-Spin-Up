@@ -85,14 +85,15 @@ void driveFor(double inches, double percent){
   resetDriveEncoders();
   // percent to voltage conversion
   double voltage = percent*1.27;
+  inches *= 1.52;
   double targetEnc = inToEnc(inches);
 
   setDrive(voltage, voltage);
-  while (avgDriveEncoders() < targetEnc){
+  while (avgDriveEncoders() < targetEnc - inToEnc(.5)){
     delay(10);
   }
   setDrive(-voltage/4, -voltage/4);
-  while (avgDriveEncoders() > targetEnc){
+  while (avgDriveEncoders() > targetEnc + inToEnc(.5)){
     delay(10);
   }
   delay(50);
