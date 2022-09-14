@@ -53,19 +53,7 @@ void driveBrake(){
   rightB.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 }
 
-bool braketoggle = true;
-
 void driverControl(){
-  if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
-    if (braketoggle == true){
-				driveBrake();
-				braketoggle = false;
-			} else if (braketoggle == false){
-				driveCoast();
-				braketoggle = true;
-			}
-			delay(200);
-  }
   int leftJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y);
   int rightJoystickY = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y);
 

@@ -1,5 +1,6 @@
 #include "main.h"
 #include "flywheel.hpp"
+#include "pros/misc.h"
 
 using namespace pros;
 
@@ -60,6 +61,7 @@ void opcontrol() {
 
 	// set drive motors to coast
 	driveCoast();
+	bool braketoggle = true;
 
 	while (true) {
 		lcd::set_text(1, "Driver Control");
@@ -70,6 +72,18 @@ void opcontrol() {
 
 		// control flywheel using the controller
 		flywheelControl();
+
+		// Coast/Brake drive toggle
+		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
+    		if (braketoggle == true){
+				driveBrake();
+				braketoggle = false;
+			} else if (braketoggle == false){
+				driveCoast();
+				braketoggle = true;
+			}
+		delay(200);
+  		}
 
 		// center flywheel to goal
 		if (controller.get_digital(E_CONTROLLER_DIGITAL_R1)){

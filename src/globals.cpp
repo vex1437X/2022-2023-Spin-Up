@@ -32,9 +32,9 @@ double degToRad(double deg){
 }
 
 double inToEnc(double inches){
-  return inches/(PI*trackWheelDiam)*trackTicksPerRev;
+  return inches/(PI*driveWheelDiam)*360;
 }
 
 double encToIn(double enc){
-  return enc*(PI*trackWheelDiam)/trackTicksPerRev;
+  return enc*(PI*driveWheelDiam)/360;
 }
