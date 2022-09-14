@@ -307,9 +307,9 @@
     },
     "upload_options": {
       "compress_bin": true,
-      "description": "Dumbo base using EZ template",
+      "description": "DumboEZtemplate",
       "remote_name": "EZ-Template",
-      "slot": 2,
+      "slot": 1,
       "icon": "planet"
     }
   }
