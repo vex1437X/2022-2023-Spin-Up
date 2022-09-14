@@ -58,10 +58,12 @@ void opcontrol() {
 	// idle the flywheel @ 30%
 	setflypct(30);
 
+	// set drive motors to coast
+	driveCoast();
+
 	while (true) {
 		lcd::set_text(1, "Driver Control");
-		// set drive motors to coast
-		driveCoast();
+		
 
 		// control drive using the controller
 		driverControl();
