@@ -78,7 +78,8 @@ bin/main.cpp.o: src/main.cpp include/main.h include/api.h \
  include/EZ-Template/util.hpp include/EZ-Template/auton.hpp \
  include/EZ-Template/auton_selector.hpp \
  include/EZ-Template/drive/drive.hpp include/EZ-Template/sdcard.hpp \
- include/autons.hpp include/flywheel.hpp include/main.h
+ include/autons.hpp include/flywheel.hpp include/main.h \
+ include/intake.hpp
 include/main.h:
 include/api.h:
 include/pros/adi.h:
@@ -237,3 +238,4 @@ include/EZ-Template/sdcard.hpp:
 include/autons.hpp:
 include/flywheel.hpp:
 include/main.h:
+include/intake.hpp:

@@ -78,7 +78,7 @@ bin/flywheel.cpp.o: src/flywheel.cpp include/flywheel.hpp include/main.h \
  include/EZ-Template/util.hpp include/EZ-Template/auton.hpp \
  include/EZ-Template/auton_selector.hpp \
  include/EZ-Template/drive/drive.hpp include/EZ-Template/sdcard.hpp \
- include/autons.hpp include/main.h
+ include/autons.hpp include/intake.hpp include/main.h
 include/flywheel.hpp:
 include/main.h:
 include/api.h:
@@ -236,4 +236,5 @@ include/EZ-Template/auton_selector.hpp:
 include/EZ-Template/drive/drive.hpp:
 include/EZ-Template/sdcard.hpp:
 include/autons.hpp:
+include/intake.hpp:
 include/main.h:

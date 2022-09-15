@@ -2,6 +2,9 @@
 #include "main.h"
 using namespace ez;
 
+Motor flymotor1(14, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+Motor flymotor2(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
+
 int flypct = 0;
 bool flytoggle = true;
 bool flytoggle1 = true;

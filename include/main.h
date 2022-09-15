@@ -65,6 +65,7 @@ using namespace pros;
 
 #ifdef __cplusplus
 #include "flywheel.hpp"
+#include "intake.hpp"
 extern "C" {
 #endif
 void autonomous(void);

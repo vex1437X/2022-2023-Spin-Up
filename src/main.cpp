@@ -160,6 +160,7 @@ void opcontrol() {
   while (true) {
 
     flywheelControl();
+    intakeControl();
     chassis.tank();
 
     // Coast/Brake drive toggle
@@ -174,6 +175,6 @@ void opcontrol() {
       delay(200);
   	}
 
-    pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+    delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
