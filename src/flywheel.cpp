@@ -27,29 +27,28 @@ void setflypct(int set){
 
 void flywheelControl(){
   if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
-        if (flytoggle == true){
-            flypct = 90;
-            flytoggle = false;
-        } else if (flytoggle == false){
-            // set back to idle
-            flypct = 30;
-            flytoggle = true;
-        }
-        delay(200);
+    if (flytoggle == true){
+        flypct = 90;
+        flytoggle = false;
+    } else if (flytoggle == false){
+        // set back to idle
+        flypct = 30;
+        flytoggle = true;
     }
-
-    if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
-        if (flytoggle1 == true){
-            flypct = 70;
-            flytoggle1 = false;
-        } else if (flytoggle1 == false){
-            // set back to idle
-            flypct = 30;
-            flytoggle1 = true;
-        }
-        delay(200);
+    delay(200);
+  }
+  if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
+    if (flytoggle1 == true){
+        flypct = 70;
+        flytoggle1 = false;
+    } else if (flytoggle1 == false){
+        // set back to idle
+        flypct = 30;
+        flytoggle1 = true;
     }
-    setFly(flypct);
+    delay(200);
+  }
+  setFly(flypct);
 }
 
 int getFly(){

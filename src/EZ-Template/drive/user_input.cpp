@@ -202,6 +202,10 @@ void Drive::joy_thresh_opcontrol(int l_stick, int r_stick) {
 }
 
 // Tank control
+
+bool dspeedToggle = true;
+double multFac = 1;
+
 void Drive::tank() {
   is_tank = true;
   reset_drive_sensors_opcontrol();
@@ -213,8 +217,21 @@ void Drive::tank() {
   int l_stick = left_curve_function(master.get_analog(ANALOG_LEFT_Y));
   int r_stick = left_curve_function(master.get_analog(ANALOG_RIGHT_Y));
 
+
+  // Toggle Drive Speed
+  if (master.get_digital(E_CONTROLLER_DIGITAL_X)){
+    if (dspeedToggle == true){
+        multFac = .15;
+        dspeedToggle = false;
+    } else if (dspeedToggle == false){
+        multFac = 1;
+        dspeedToggle = true;
+    }
+    delay(200);
+  }
+
   // Set robot to l_stick and r_stick, check joystick threshold, set active brake
-  joy_thresh_opcontrol(l_stick, r_stick);
+  joy_thresh_opcontrol(l_stick*multFac, r_stick*multFac);
 }
 
 // Arcade standard
