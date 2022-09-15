@@ -28,6 +28,7 @@ bool getIndexState(){
 bool intaketoggle = true;
 
 void intakeControl(){
+  // Toggle intake
   if (master.get_digital(E_CONTROLLER_DIGITAL_R1)){
         if (intaketoggle == true){
             setIntake(100);
@@ -40,15 +41,16 @@ void intakeControl(){
         delay(200);
     }
 
+  // Toggle indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
-      if (indexState == true){
-        indexer.set_value(indexState);
-        setIntake(100);
-        indexState = false;
-      } else if (indexState == false){
-        indexer.set_value(indexState);
-        indexState = true;
-      }
-      delay(250);
+    if (indexState == true){
+      indexer.set_value(indexState);
+      setIntake(100);
+      indexState = false;
+    } else if (indexState == false){
+      indexer.set_value(indexState);
+      indexState = true;
+    }
+    delay(250);
   }
 }

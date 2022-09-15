@@ -26,6 +26,7 @@ void setflypct(int set){
 }
 
 void flywheelControl(){
+  // Flywheel toggle 90%
   if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
     if (flytoggle == true){
         flypct = 90;
@@ -37,6 +38,7 @@ void flywheelControl(){
     }
     delay(200);
   }
+  // Flywheel toggle 70%
   if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
     if (flytoggle1 == true){
         flypct = 70;
