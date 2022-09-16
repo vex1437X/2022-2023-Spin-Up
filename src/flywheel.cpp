@@ -6,8 +6,8 @@ Motor flymotor1(14, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
 Motor flymotor2(15, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 
 int flypct = 0;
-bool flytoggle = true;
-bool flytoggle1 = true;
+bool flytoggle = false;
+bool flytoggle1 = false;
 
 void setFly(int percent){
   // percent to voltage
@@ -28,25 +28,25 @@ void setflypct(int set){
 void flywheelControl(){
   // Flywheel toggle 90%
   if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
-    if (flytoggle == true){
+    if (flytoggle == false){
         flypct = 90;
-        flytoggle = false;
-    } else if (flytoggle == false){
+        flytoggle = true;
+    } else if (flytoggle == true){
         // set back to idle
         flypct = 30;
-        flytoggle = true;
+        flytoggle = false;
     }
     delay(200);
   }
   // Flywheel toggle 70%
   if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
-    if (flytoggle1 == true){
+    if (flytoggle1 == false){
         flypct = 70;
-        flytoggle1 = false;
-    } else if (flytoggle1 == false){
+        flytoggle1 = true;
+    } else if (flytoggle1 == true){
         // set back to idle
         flypct = 30;
-        flytoggle1 = true;
+        flytoggle1 = false;
     }
     delay(200);
   }

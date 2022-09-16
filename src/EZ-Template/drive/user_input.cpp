@@ -203,7 +203,7 @@ void Drive::joy_thresh_opcontrol(int l_stick, int r_stick) {
 
 // Tank control
 
-bool dspeedToggle = true;
+bool dspeedToggle = false;
 double multFac = 1;
 
 void Drive::tank() {
@@ -220,12 +220,12 @@ void Drive::tank() {
 
   // Toggle Drive Speed
   if (master.get_digital(E_CONTROLLER_DIGITAL_X)){
-    if (dspeedToggle == true){
+    if (dspeedToggle == false){
         multFac = .15;
-        dspeedToggle = false;
-    } else if (dspeedToggle == false){
-        multFac = 1;
         dspeedToggle = true;
+    } else if (dspeedToggle == true){
+        multFac = 1;
+        dspeedToggle = false;
     }
     delay(200);
   }

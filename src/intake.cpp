@@ -5,10 +5,13 @@
 using namespace ez;
 
 Motor intake(16, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+ADIDigitalOut indexer(1, false);
 
 bool indexState = false;
+bool isJammed = false;
 
-ADIDigitalOut indexer(1, indexState);
+bool intaketoggle = false;
+bool intaketoggle1 = false;
 
 void setIntake(int percent){
   // percent to voltage
@@ -25,45 +28,42 @@ bool getIndexState(){
   return indexState;
 }
 
-bool intaketoggle = true;
-bool intaketoggle1 = true;
-
 void intakeControl(){
   // Toggle intake
   if (master.get_digital(E_CONTROLLER_DIGITAL_R1)){
-        if (intaketoggle == true){
+        if (intaketoggle == false){
             setIntake(100);
-            intaketoggle = false;
-        } else if (intaketoggle == false){
+            intaketoggle = true;
+        } else if (intaketoggle == true){
             // set back to idle
             setIntake(0);
-            intaketoggle = true;
+            intaketoggle = false;
         }
         delay(200);
     }
 
   // Toggle indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
-    if (indexState == true){
+    if (indexState == false){
       indexer.set_value(indexState);
       setIntake(100);
-      indexState = false;
-    } else if (indexState == false){
-      indexer.set_value(indexState);
       indexState = true;
+    } else if (indexState == true){
+      indexer.set_value(indexState);
+      indexState = false;
     }
     delay(250);
   }
 
   // Toggle intake reverse
   if (master.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
-    if (intaketoggle1 == true){
+    if (intaketoggle1 == false){
         setIntake(-100);
-        intaketoggle1 = false;
-    } else if (intaketoggle1 == false){
+        intaketoggle1 = true;
+    } else if (intaketoggle1 == true){
         // set back to idle
         setIntake(0);
-        intaketoggle1 = true;
+        intaketoggle1 = false;
     }
     delay(200);
   }
