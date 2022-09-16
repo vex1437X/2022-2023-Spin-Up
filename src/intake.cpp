@@ -26,6 +26,7 @@ bool getIndexState(){
 }
 
 bool intaketoggle = true;
+bool intaketoggle1 = true;
 
 void intakeControl(){
   // Toggle intake
@@ -52,5 +53,18 @@ void intakeControl(){
       indexState = true;
     }
     delay(250);
+  }
+
+  // Toggle intake reverse
+  if (master.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
+    if (intaketoggle1 == true){
+        setIntake(-100);
+        intaketoggle1 = false;
+    } else if (intaketoggle1 == false){
+        // set back to idle
+        setIntake(0);
+        intaketoggle1 = true;
+    }
+    delay(200);
   }
 }
