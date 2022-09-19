@@ -36,19 +36,19 @@ void flywheelControl(){
         flypct = 30;
         flytoggle = false;
     }
-    delay(200);
+    delay(250);
   }
-  // Flywheel toggle 70%
+  // Flywheel toggle 85%
   if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
     if (flytoggle1 == false){
-        flypct = 70;
+        flypct = 85;
         flytoggle1 = true;
     } else if (flytoggle1 == true){
         // set back to idle
         flypct = 30;
         flytoggle1 = false;
     }
-    delay(200);
+    delay(250);
   }
   setFly(flypct);
 }

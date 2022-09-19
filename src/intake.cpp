@@ -39,7 +39,7 @@ void intakeControl(){
             setIntake(0);
             intaketoggle = false;
         }
-        delay(200);
+        delay(250);
     }
 
   // Toggle indexer
@@ -65,6 +65,6 @@ void intakeControl(){
         setIntake(0);
         intaketoggle1 = false;
     }
-    delay(200);
+    delay(250);
   }
 }
