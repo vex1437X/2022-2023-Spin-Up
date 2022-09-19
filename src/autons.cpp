@@ -36,8 +36,8 @@ void default_constants() {
 void tuning_constants() {
   chassis.set_slew_min_power(70, 70);
   chassis.set_slew_distance(10, 10);
-  chassis.set_pid_constants(&chassis.headingPID, 0, 0, 0, 0);   //12 15
-  chassis.set_pid_constants(&chassis.forward_drivePID, 0, 0, 0, 0);  //0.5  6
+  chassis.set_pid_constants(&chassis.headingPID, 0, 0, 0, 0);
+  chassis.set_pid_constants(&chassis.forward_drivePID, 0, 0, 0, 0);
   chassis.set_pid_constants(&chassis.backward_drivePID, 0, 0, 0, 0);
   chassis.set_pid_constants(&chassis.turnPID, 0, 0, 0, 0);
   chassis.set_pid_constants(&chassis.swingPID, 0, 0, 0, 0);
