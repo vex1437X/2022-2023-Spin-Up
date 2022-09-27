@@ -4,7 +4,7 @@
 #include "pros/misc.h"
 using namespace ez;
 
-Motor intake(16, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+Motor intake(6, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 ADIDigitalOut indexer(1, false);
 
 bool indexState = false;
