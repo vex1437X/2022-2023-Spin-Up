@@ -60,7 +60,9 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("PID Tuner\n", tune_PID)
+    Auton("PID Tuner\n", tune_PID),
+    Auton("RED Winpoint\n", winpointRED),
+    Auton("BLUE Winpoint\n", winpointBLUE)
   });
 
   // Initialize chassis and auton selector

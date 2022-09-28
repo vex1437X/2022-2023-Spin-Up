@@ -3,6 +3,7 @@
 #include "pros/adi.hpp"
 
 extern Motor intake;
+extern Motor intake2;
 extern ADIDigitalOut indexer;
 
 void setIntake(int percent);

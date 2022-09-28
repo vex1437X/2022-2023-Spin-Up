@@ -60,3 +60,102 @@ void tune_PID() {
   chassis.set_drive_pid(-12, 40);
   chassis.wait_drive();
 }
+
+void winpointRED(){
+  setIntake(100); // turn colour wheel
+  delay(3000);
+  setIntake(0);
+
+  // drive backwards so turn doesnt collide with the wall
+  chassis.set_drive_pid(-8, 60);
+  chassis.wait_drive();
+
+  // turn to goal
+  chassis.set_turn_pid(80, 50);
+  chassis.wait_drive();
+
+  setFly(100);
+  delay(2000); // let flywheel get up to speed
+  // shoot 1st disc
+  indexer.set_value(true);
+  delay(200);
+  indexer.set_value(false);
+  delay(2000); // wait for flywheel to get up to speed again
+  // shoot 2nd disc
+  indexer.set_value(true);
+  delay(200);
+  indexer.set_value(false);
+  setFly(0);
+
+  // turn to be parallel to the auton line
+  chassis.set_turn_pid(65, 50);
+  chassis.wait_drive();
+
+  setIntake(100);
+  // drive forwards while intaking 3 discs for driver control
+  chassis.set_drive_pid(150, 97);
+  chassis.wait_drive();
+
+  // turn to face other colour wheel
+  chassis.set_turn_pid(65, 50);
+  chassis.wait_drive();
+
+  // drive into colour wheel
+  chassis.set_drive_pid(24, 70);
+  chassis.wait_drive();
+
+  // spin colour wheel
+  setIntake(100);
+  delay(3000);
+  setIntake(0);
+}
+
+void winpointBLUE(){
+  setIntake(-100); // turn colour wheel
+  delay(3000);
+  setIntake(0);
+
+  // drive backwards so turn doesnt collide with the wall
+  chassis.set_drive_pid(-8, 60);
+  chassis.wait_drive();
+
+  // turn to goal
+  chassis.set_turn_pid(80, 50);
+  chassis.wait_drive();
+
+  setFly(100);
+  delay(2000); // let flywheel get up to speed
+  // shoot 1st disc
+  indexer.set_value(true);
+  delay(200);
+  indexer.set_value(false);
+  delay(2000); // wait for flywheel to get up to speed again
+  // shoot 2nd disc
+  indexer.set_value(true);
+  delay(200);
+  indexer.set_value(false);
+  setFly(0);
+
+  // turn to be parallel to the auton line
+  chassis.set_turn_pid(65, 50);
+  chassis.wait_drive();
+
+  setIntake(100);
+  // drive forwards while intaking 3 discs for driver control
+  chassis.set_drive_pid(150, 97);
+  chassis.wait_drive();
+
+  // turn to face other colour wheel
+  chassis.set_turn_pid(65, 50);
+  chassis.wait_drive();
+
+  // drive into colour wheel
+  chassis.set_drive_pid(24, 70);
+  chassis.wait_drive();
+
+  // spin colour wheel
+  setIntake(-100);
+  delay(3000);
+  setIntake(0);
+}
+

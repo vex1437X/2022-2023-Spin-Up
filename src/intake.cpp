@@ -5,9 +5,12 @@
 using namespace ez;
 
 Motor intake(6, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor intake2(16, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 ADIDigitalOut indexer(1, false);
+ADIDigitalOut tripleIndexer(8, false);
 
 bool indexState = false;
+bool tripIndexState = false;
 bool isJammed = false;
 
 bool intaketoggle = false;
@@ -18,6 +21,7 @@ void setIntake(int percent){
   int voltage = percent*1.27;
   // -127 to +127
   intake.move(voltage);
+  intake2.move(voltage);
 }
 
 void setIndexState(bool state){
@@ -46,7 +50,6 @@ void intakeControl(){
   if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
     if (indexState == false){
       indexer.set_value(indexState);
-      setIntake(100);
       indexState = true;
     } else if (indexState == true){
       indexer.set_value(indexState);
@@ -64,6 +67,18 @@ void intakeControl(){
         // set back to idle
         setIntake(0);
         intaketoggle1 = false;
+    }
+    delay(250);
+  }
+
+  // Toggle triple indexer
+  if (master.get_digital(E_CONTROLLER_DIGITAL_A)){
+    if (tripIndexState == false){
+      tripleIndexer.set_value(tripIndexState);
+      tripIndexState = true;
+    } else if (tripIndexState == true){
+      tripleIndexer.set_value(tripIndexState);
+      tripIndexState = false;
     }
     delay(250);
   }
