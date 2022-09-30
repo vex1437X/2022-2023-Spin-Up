@@ -9,9 +9,13 @@ Motor intake2(16, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 ADIDigitalOut indexer(1, false);
 ADIDigitalOut tripleIndexer(8, false);
 
+Task anti_jam_task(anti_jam, nullptr);
+
 bool indexState = false;
 bool tripIndexState = false;
 bool isJammed = false;
+bool isIntakeOn = false;
+bool isOuttakeOn = false;
 
 bool intaketoggle = false;
 bool intaketoggle1 = false;
@@ -32,16 +36,45 @@ bool getIndexState(){
   return indexState;
 }
 
+void anti_jam(void*) {
+  isJammed = false;
+  int jamCounter = 0;
+  int waitTime = 250;
+
+  while (true) {
+    if (isJammed) {
+      setIntake(-60);
+      jamCounter += ez::util::DELAY_TIME;
+      if (jamCounter > waitTime) {
+        isJammed = false;
+        jamCounter = 0;
+        setIntake(100);
+      }
+    } else if (intake.get_actual_velocity() == 0 && intake2.get_actual_velocity() == 0 && (isOuttakeOn || isIntakeOn)) {
+
+      jamCounter += ez::util::DELAY_TIME;
+      if (jamCounter > waitTime) {
+        jamCounter = 0;
+        isJammed = true;
+      }
+    }
+
+    pros::delay(ez::util::DELAY_TIME);
+  }
+}
+
 void intakeControl(){
   // Toggle intake
   if (master.get_digital(E_CONTROLLER_DIGITAL_R1)){
         if (intaketoggle == false){
             setIntake(100);
             intaketoggle = true;
+            isIntakeOn = true;
         } else if (intaketoggle == true){
             // set back to idle
             setIntake(0);
             intaketoggle = false;
+            isIntakeOn = false;
         }
         delay(250);
     }
@@ -63,10 +96,12 @@ void intakeControl(){
     if (intaketoggle1 == false){
         setIntake(-100);
         intaketoggle1 = true;
+        isOuttakeOn = true;
     } else if (intaketoggle1 == true){
         // set back to idle
         setIntake(0);
         intaketoggle1 = false;
+        isOuttakeOn = false;
     }
     delay(250);
   }
