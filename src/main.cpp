@@ -1,5 +1,6 @@
 #include "main.h"
 #include "autons.hpp"
+#include "pros/misc.h"
 
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
@@ -114,7 +115,7 @@ void opcontrol() {
     chassis.tank();
 
     // Coast/Brake drive toggle
-		if (master.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
+		if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
     		if (braketoggle == true){
           chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
           braketoggle = false;

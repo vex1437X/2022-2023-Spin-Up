@@ -39,7 +39,7 @@ bool getIndexState(){
 void anti_jam(void*) {
   isJammed = false;
   int jamCounter = 0;
-  int waitTime = 250;
+  int waitTime = 1000;
 
   while (true) {
     if (isJammed) {
@@ -50,7 +50,7 @@ void anti_jam(void*) {
         jamCounter = 0;
         setIntake(100);
       }
-    } else if (intake.get_actual_velocity() == 0 && intake2.get_actual_velocity() == 0 && (isOuttakeOn || isIntakeOn)) {
+    } else if (abs(intake.get_actual_velocity()) <= 20 && abs(intake2.get_actual_velocity()) <= 20 && (isOuttakeOn || isIntakeOn)) {
 
       jamCounter += ez::util::DELAY_TIME;
       if (jamCounter > waitTime) {
@@ -58,7 +58,6 @@ void anti_jam(void*) {
         isJammed = true;
       }
     }
-
     pros::delay(ez::util::DELAY_TIME);
   }
 }
@@ -80,7 +79,7 @@ void intakeControl(){
     }
 
   // Toggle indexer
-  if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
+  if (master.get_digital(E_CONTROLLER_DIGITAL_UP)){
     if (indexState == false){
       indexer.set_value(indexState);
       indexState = true;
@@ -92,7 +91,7 @@ void intakeControl(){
   }
 
   // Toggle intake reverse
-  if (master.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
+  if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
     if (intaketoggle1 == false){
         setIntake(-100);
         intaketoggle1 = true;
@@ -107,7 +106,7 @@ void intakeControl(){
   }
 
   // Toggle triple indexer
-  if (master.get_digital(E_CONTROLLER_DIGITAL_A)){
+  if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
     if (tripIndexState == false){
       tripleIndexer.set_value(tripIndexState);
       tripIndexState = true;
