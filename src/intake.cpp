@@ -16,6 +16,7 @@ bool tripIndexState = false;
 bool isJammed = false;
 bool isIntakeOn = false;
 bool isOuttakeOn = false;
+bool stop = false;
 
 bool intaketoggle = false;
 bool intaketoggle1 = false;
@@ -43,18 +44,19 @@ void anti_jam(void*) {
 
   while (true) {
     if (isJammed) {
-      setIntake(-60);
-      jamCounter += ez::util::DELAY_TIME;
+      stop = true;
+      setIntake(-100);
+      jamCounter++;
       if (jamCounter > waitTime) {
         isJammed = false;
         jamCounter = 0;
-        setIntake(100);
+        stop = false;
       }
-    } else if (abs(intake.get_actual_velocity()) <= 20 && abs(intake2.get_actual_velocity()) <= 20 && (isOuttakeOn || isIntakeOn)) {
+    } else if (abs(intake.get_actual_velocity()) <= 15 && abs(intake2.get_actual_velocity()) <= 15 && (isOuttakeOn || isIntakeOn)) {
 
       jamCounter += ez::util::DELAY_TIME;
       if (jamCounter > waitTime) {
-        jamCounter = 0;
+      //   jamCounter = 0;
         isJammed = true;
       }
     }
@@ -64,19 +66,38 @@ void anti_jam(void*) {
 
 void intakeControl(){
   // Toggle intake
-  if (master.get_digital(E_CONTROLLER_DIGITAL_R1)){
-        if (intaketoggle == false){
-            setIntake(100);
-            intaketoggle = true;
-            isIntakeOn = true;
-        } else if (intaketoggle == true){
-            // set back to idle
-            setIntake(0);
-            intaketoggle = false;
-            isIntakeOn = false;
-        }
-        delay(250);
+  if (master.get_digital(E_CONTROLLER_DIGITAL_R1) && !stop){
+    if (intaketoggle == false){
+      setIntake(100);
+      intaketoggle = true;
+      isIntakeOn = true;
+    } else if (intaketoggle == true){
+      // set back to idle
+      setIntake(0);
+      intaketoggle = false;
+      isIntakeOn = false;
     }
+      delay(250);
+  }
+
+  // Toggle intake reverse
+  if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT) && !stop){
+    if (intaketoggle1 == false){
+      setIntake(-100);
+      intaketoggle1 = true;
+        isOuttakeOn = true;
+    } else if (intaketoggle1 == true){
+      // set back to idle
+      setIntake(0);
+      intaketoggle1 = false;
+      isOuttakeOn = false;
+    }
+    delay(250);
+  }
+  
+  if (stop){
+    setIntake(0);
+  }
 
   // Toggle indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_UP)){
@@ -86,21 +107,6 @@ void intakeControl(){
     } else if (indexState == true){
       indexer.set_value(indexState);
       indexState = false;
-    }
-    delay(250);
-  }
-
-  // Toggle intake reverse
-  if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
-    if (intaketoggle1 == false){
-        setIntake(-100);
-        intaketoggle1 = true;
-        isOuttakeOn = true;
-    } else if (intaketoggle1 == true){
-        // set back to idle
-        setIntake(0);
-        intaketoggle1 = false;
-        isOuttakeOn = false;
     }
     delay(250);
   }
