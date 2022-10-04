@@ -120,7 +120,7 @@ void intakeControl(){
   }
 
   // Toggle intake reverse
-  if (master.get_digital(E_CONTROLLER_DIGITAL_RIGHT) && !stop){
+  if (master.get_digital(E_CONTROLLER_DIGITAL_R2) && !stop){
     if (intaketoggle1 == false){
       setIntake(-100);
       intaketoggle1 = true;
@@ -140,7 +140,7 @@ void intakeControl(){
     isIntakeOn = false;
   }
   // Toggle indexer
-  if (master.get_digital(E_CONTROLLER_DIGITAL_UP)){
+  if (master.get_digital(E_CONTROLLER_DIGITAL_DOWN)){
     if (indexState == true){
       if (numDisc > 0){
         numDisc--;
@@ -156,10 +156,10 @@ void intakeControl(){
   }
 
   // Toggle triple indexer
-  if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
+  if (master.get_digital(E_CONTROLLER_DIGITAL_B)){
     tripleIndexer.set_value(true);
     numDisc = 0;
-    delay(50);
+    delay(100);
     indexer.set_value(true);
     delay(500);
     indexer.set_value(false);
