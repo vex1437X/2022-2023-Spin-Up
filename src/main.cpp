@@ -111,7 +111,7 @@ void opcontrol() {
   while (true) {
 
     flywheelControl();
-    intakeControl();
+    // intakeControl();
     chassis.tank();
 
     // Coast/Brake drive toggle

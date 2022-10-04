@@ -1,4 +1,6 @@
 #include "intake.hpp"
+#include "EZ-Template/sdcard.hpp"
+#include "EZ-Template/util.hpp"
 #include "main.h"
 #include "pros/adi.hpp"
 #include "pros/misc.h"
@@ -8,8 +10,10 @@ Motor intake(6, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 Motor intake2(16, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 ADIDigitalOut indexer(1, false);
 ADIDigitalOut tripleIndexer(8, false);
+ADIDigitalIn limitswitch(2);
 
 Task anti_jam_task(anti_jam, nullptr);
+Task limit(limitS, nullptr);
 
 bool indexState = false;
 bool tripIndexState = false;
@@ -17,6 +21,8 @@ bool isJammed = false;
 bool isIntakeOn = false;
 bool isOuttakeOn = false;
 bool stop = false;
+
+int numDisc = 0;
 
 bool intaketoggle = false;
 bool intaketoggle1 = false;
@@ -37,6 +43,36 @@ bool getIndexState(){
   return indexState;
 }
 
+void limitS(void*){
+  bool cringe = false;
+  bool cringe2 = false;
+
+  while(true){
+    intakeControl();
+    printf("limit: %d \n", limitswitch.get_new_press());
+    printf("numDisc: %d \n", numDisc);
+    // numDisc += limitswitch.get_new_press();
+    if(limitswitch.get_value() && !cringe){
+      numDisc++;
+      cringe = true;
+      delay(350);
+    } else if (!limitswitch.get_value()){
+      cringe = false;
+    }
+    if (numDisc == 3 && !cringe2){
+      delay(500);
+      setIntake(0);
+      isIntakeOn = false;
+      isOuttakeOn = false;
+      cringe2 = true;
+    }
+    if (numDisc != 3){
+      cringe2 = false;
+    }
+    delay(10);
+  }
+}
+
 void anti_jam(void*) {
   isJammed = false;
   int jamCounter = 0;
@@ -52,7 +88,7 @@ void anti_jam(void*) {
         jamCounter = 0;
         stop = false;
       }
-    } else if (abs(intake.get_actual_velocity()) <= 15 && abs(intake2.get_actual_velocity()) <= 15 && (isOuttakeOn || isIntakeOn)) {
+    } else if (abs(intake.get_actual_velocity()) <= 10 && abs(intake2.get_actual_velocity()) <= 10 && (isOuttakeOn || isIntakeOn)) {
 
       jamCounter += ez::util::DELAY_TIME;
       if (jamCounter > waitTime) {
@@ -98,28 +134,27 @@ void intakeControl(){
   if (stop){
     setIntake(0);
   }
-
   // Toggle indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_UP)){
-    if (indexState == false){
-      indexer.set_value(indexState);
-      indexState = true;
-    } else if (indexState == true){
+    if (indexState == true){
+      if (numDisc > 0){
+        numDisc--;
+      }
       indexer.set_value(indexState);
       indexState = false;
     }
-    delay(250);
+    delay(500);
+    if (indexState == false){
+      indexer.set_value(indexState);
+      indexState = true;
+    }
   }
 
   // Toggle triple indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
-    if (tripIndexState == false){
-      tripleIndexer.set_value(tripIndexState);
-      tripIndexState = true;
-    } else if (tripIndexState == true){
-      tripleIndexer.set_value(tripIndexState);
-      tripIndexState = false;
-    }
-    delay(250);
+    tripleIndexer.set_value(true);
+    numDisc = 0;
+    delay(500);
+    tripleIndexer.set_value(false);
   }
 }
