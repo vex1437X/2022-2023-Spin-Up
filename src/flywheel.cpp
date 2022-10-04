@@ -38,10 +38,10 @@ void flywheelControl(){
     }
     delay(250);
   }
-  // Flywheel toggle 90%
+  // Flywheel toggle 80%
   if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
     if (flytoggle1 == false){
-        flypct = 90;
+        flypct = 80;
         flytoggle1 = true;
     } else if (flytoggle1 == true){
         // set back to idle

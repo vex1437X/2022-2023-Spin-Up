@@ -4,6 +4,8 @@
 
 extern Drive chassis;
 
+double conv(double i);
+
 void default_constants();
 void tuning_constants();
 void tune_PID();

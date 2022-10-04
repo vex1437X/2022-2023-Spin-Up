@@ -49,8 +49,8 @@ void limitS(void*){
 
   while(true){
     intakeControl();
-    printf("limit: %d \n", limitswitch.get_new_press());
-    printf("numDisc: %d \n", numDisc);
+    // printf("limit: %d \n", limitswitch.get_new_press());
+    // printf("numDisc: %d \n", numDisc);
     // numDisc += limitswitch.get_new_press();
     if(limitswitch.get_value() && !cringe){
       numDisc++;
@@ -82,11 +82,14 @@ void anti_jam(void*) {
     if (isJammed) {
       stop = true;
       setIntake(-100);
+      isOuttakeOn = true;
       jamCounter++;
       if (jamCounter > waitTime) {
         isJammed = false;
         jamCounter = 0;
         stop = false;
+        setIntake(0);
+        isOuttakeOn = false;
       }
     } else if (abs(intake.get_actual_velocity()) <= 10 && abs(intake2.get_actual_velocity()) <= 10 && (isOuttakeOn || isIntakeOn)) {
 
@@ -133,6 +136,8 @@ void intakeControl(){
   
   if (stop){
     setIntake(0);
+    isOuttakeOn = false;
+    isIntakeOn = false;
   }
   // Toggle indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_UP)){
@@ -154,7 +159,11 @@ void intakeControl(){
   if (master.get_digital(E_CONTROLLER_DIGITAL_R2)){
     tripleIndexer.set_value(true);
     numDisc = 0;
+    delay(50);
+    indexer.set_value(true);
     delay(500);
+    indexer.set_value(false);
     tripleIndexer.set_value(false);
+    setFly(30);
   }
 }
