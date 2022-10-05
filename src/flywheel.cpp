@@ -9,7 +9,7 @@ int flypct = 0;
 bool flytoggle = false;
 bool flytoggle1 = false;
 
-void setFly(int percent){
+void setFly(double percent){
   // percent to voltage
   int voltage = percent*1.27;
   // -127 to +127

@@ -62,8 +62,9 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
     Auton("PID Tuner\n", tune_PID),
-    Auton("RED Winpoint\n", winpointRED),
-    Auton("BLUE Winpoint\n", winpointBLUE)
+    Auton("Winpoint\n", winpoint),
+    Auton("Half WP Right\n", halfWPright),
+    Auton("Half WP Left\n", halfWPleft)
   });
 
   // Initialize chassis and auton selector
@@ -96,7 +97,8 @@ void autonomous() {
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
 
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
-  tune_PID();
+  // tune_PID();
+  winpoint();
 }
 
 void opcontrol() {

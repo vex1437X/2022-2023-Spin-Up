@@ -43,6 +43,10 @@ bool getIndexState(){
   return indexState;
 }
 
+void setDisc(int num){
+  numDisc = num;
+}
+
 void limitS(void*){
   bool cringe = false;
   bool cringe2 = false;

@@ -5,7 +5,7 @@ extern Motor flymotor1;
 extern Motor flymotor2;
 
 
-void setFly(int percent);
+void setFly(double percent);
 
 int getFlyVolt();
 
