@@ -8,8 +8,8 @@ extern ADIDigitalOut indexer;
 extern ADIDigitalOut tripleIndexer;
 extern ADIDigitalIn limitswitch;
 
-extern Task anti_jam_task;
-extern Task limit;
+// extern Task anti_jam_task;
+// extern Task limit;
 
 extern bool isJammed;
 

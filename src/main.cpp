@@ -102,14 +102,17 @@ void autonomous() {
 }
 
 void opcontrol() {
+  Task anti_jam_task(anti_jam, nullptr);
+  Task limit(limitS, nullptr);
 
   // idle the flywheel @ 30%
 	setflypct(30);
 
 	// set drive motors to coast
-
 	bool braketoggle = true;
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
+
+
   while (true) {
 
     flywheelControl();

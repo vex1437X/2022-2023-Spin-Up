@@ -12,9 +12,6 @@ ADIDigitalOut indexer(1, false);
 ADIDigitalOut tripleIndexer(8, false);
 ADIDigitalIn limitswitch(2);
 
-Task anti_jam_task(anti_jam, nullptr);
-Task limit(limitS, nullptr);
-
 bool indexState = false;
 bool tripIndexState = false;
 bool isJammed = false;
@@ -168,6 +165,6 @@ void intakeControl(){
     delay(500);
     indexer.set_value(false);
     tripleIndexer.set_value(false);
-    setFly(30);
+    setflypct(30);
   }
 }
