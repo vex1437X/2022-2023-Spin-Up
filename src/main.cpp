@@ -130,8 +130,7 @@ void opcontrol() {
 			}
       delay(250);
   	}
-
-    master.print(0, 0, "Fly: %d", getFly());
+    master.print(0, 0, "Fly: %f", getFly());
     delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }

@@ -10,19 +10,20 @@ bool flytoggle = false;
 bool flytoggle1 = false;
 
 void setFly(double percent){
-  /*
+  // * move voltage *
   // percent to voltage
   int voltage = percent*1.27;
   // -127 to +127
   flymotor1.move(voltage);
   flymotor2.move(voltage);
+
+  /* move velocity PID
+  // percent to RPM
+  double RPM = percent * 6;
+  // -600 to +600 RPM
+  flymotor1.move_velocity(RPM);
+  flymotor2.move_velocity(RPM);
   */
- 
-  // percent to turbo motor gearset (600rpm)
-  int tb = percent*6;
-  // -600 to 600
-  flymotor1.move_velocity(tb);
-  flymotor2.move_velocity(tb);
 }
 
 int getFlyVolt(){
@@ -61,6 +62,6 @@ void flywheelControl(){
   setFly(flypct);
 }
 
-int getFly(){
+double getFly(){
   return flypct;
 }

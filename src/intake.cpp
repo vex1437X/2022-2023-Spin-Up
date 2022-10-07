@@ -16,7 +16,7 @@ bool indexState = false;
 bool tripIndexState = false;
 bool isJammed = false;
 bool isIntakeOn = false;
-bool isOuttakeOn = false;
+// bool isOuttakeOn = false;
 bool stop = false;
 
 int numDisc = 0;
@@ -64,7 +64,7 @@ void limitS(void*){
       delay(500);
       setIntake(0);
       isIntakeOn = false;
-      isOuttakeOn = false;
+      // isOuttakeOn = false;
       cringe2 = true;
     }
     if (numDisc != 3){
@@ -77,27 +77,32 @@ void limitS(void*){
 void anti_jam(void*) {
   isJammed = false;
   int jamCounter = 0;
-  int waitTime = 1000;
+  int jamCheck = 0;
+  int waitTime = 2000;
 
   while (true) {
     if (isJammed) {
       stop = true;
       setIntake(-100);
-      isOuttakeOn = true;
+      // isOuttakeOn = true;
+      isIntakeOn = true;
       jamCounter++;
       if (jamCounter > waitTime) {
         isJammed = false;
         jamCounter = 0;
         stop = false;
         setIntake(0);
-        isOuttakeOn = false;
-      }
-    } else if (abs(intake.get_actual_velocity()) <= 10 && abs(intake2.get_actual_velocity()) <= 10 && (isOuttakeOn || isIntakeOn)) {
+        isIntakeOn = false;
+        // isOuttakeOn = false;
 
-      jamCounter += ez::util::DELAY_TIME;
-      if (jamCounter > waitTime) {
+      }
+    } else if (abs(intake.get_actual_velocity()) <= 10 && abs(intake2.get_actual_velocity()) <= 10 && isIntakeOn) {
+
+      jamCheck++;
+      if (jamCheck > 500) {
       //   jamCounter = 0;
         isJammed = true;
+        jamCheck = 0;
       }
     }
     pros::delay(ez::util::DELAY_TIME);
@@ -125,19 +130,21 @@ void intakeControl(){
     if (intaketoggle1 == false){
       setIntake(-100);
       intaketoggle1 = true;
-        isOuttakeOn = true;
+        // isOuttakeOn = true;
+        isIntakeOn = true;
     } else if (intaketoggle1 == true){
       // set back to idle
       setIntake(0);
       intaketoggle1 = false;
-      isOuttakeOn = false;
+      // isOuttakeOn = false;
+      isIntakeOn = false;
     }
     delay(250);
   }
   
   if (stop){
     setIntake(0);
-    isOuttakeOn = false;
+    // isOuttakeOn = false;
     isIntakeOn = false;
   }
   // Toggle indexer

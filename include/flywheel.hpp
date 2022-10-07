@@ -13,4 +13,4 @@ void setflypct(int set);
 
 void flywheelControl();
 
-int getFly();
+double getFly();
