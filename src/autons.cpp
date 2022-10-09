@@ -1,5 +1,6 @@
 #include "intake.hpp"
 #include "main.h"
+#include "pros/imu.h"
 
 
 /////
@@ -173,18 +174,16 @@ void winpoint(){
 
 
   delay(2500);
+
   // shoot 1st disc
+  fireOneDisc();
   setDisc(1);
-  indexer.set_value(true);
-  delay(300);
-  indexer.set_value(false);
   setFly(96.5);
+
   delay(2700); // wait for flywheel to get up to speed again
   // shoot 2nd disc
+  fireOneDisc();
   setDisc(0);
-  indexer.set_value(true);
-  delay(300);
-  indexer.set_value(false);
   setFly(30);
 
 
@@ -226,15 +225,10 @@ void halfWPright(){
   chassis.set_drive_pid(45, 70); // drive closer to the centre line to shoot
   chassis.wait_drive();
 
-  // shoot 1st disc
-  indexer.set_value(true);
-  delay(300);
-  indexer.set_value(false);
+  fireOneDisc();
   delay(3000); // wait for flywheel to get up to speed
   // shoot 2nd disc
-  indexer.set_value(true);
-  delay(300);
-  indexer.set_value(false);
+  fireOneDisc();
   setFly(30); //idle flywheel; easier to ramp up speed for next shot
 
   chassis.set_turn_pid(90, 40); // turn to be parallel to the centre line
@@ -244,7 +238,64 @@ void halfWPright(){
   // turn right
   // spin wheel
 }
+
 void halfWPleft(){
   tuning_constants();
 
+}
+
+// imu_calibrate();
+
+void skills(){
+  tuning_constants();
+  setDisc(2);
+
+  // spin colour wheel
+  setIntake(-100);
+  delay(75);
+  setIntake(0);
+
+  // drive away from wall
+  chassis.set_drive_pid(conv(-10), 70);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(105, 70);
+  chassis.wait_drive();
+
+  setIntake(100);
+  chassis.set_drive_pid(conv(20), 40);
+  chassis.wait_drive();
+  setIntake(0);
+  setDisc(3);
+
+  // turn to face colour wheel
+  chassis.set_turn_pid(70, 70);
+  chassis.wait_drive();
+
+  // drive into colour wheel
+  chassis.set_drive_pid(conv(30), 55);
+  chassis.wait_drive();
+
+  // spin colour wheel
+  setIntake(-100); // turn colour wheel
+  delay(75);
+  setIntake(0);
+
+  // drive away from wall
+  chassis.set_drive_pid(conv(-20), 70);
+  chassis.wait_drive();
+
+  setFly(84);
+  // turn to face goal
+  chassis.set_turn_pid(130, 70);
+  chassis.wait_drive();
+
+  // drive towards goal
+  chassis.set_drive_pid(conv(60), 80);
+  chassis.wait_drive();
+
+  fireThreeDiscs();
+  setDisc(0);
+  delay(300);
+  setFly(0);
 }

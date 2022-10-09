@@ -12,4 +12,5 @@ void tune_PID();
 void winpoint();
 void halfWPright();
 void halfWPleft();
+void skills();
 void intaketask(void*);
