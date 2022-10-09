@@ -1,6 +1,7 @@
 #include "intake.hpp"
 #include "EZ-Template/sdcard.hpp"
 #include "EZ-Template/util.hpp"
+#include "flywheel.hpp"
 #include "main.h"
 #include "pros/adi.hpp"
 #include "pros/misc.h"
@@ -9,6 +10,7 @@ using namespace ez;
 Motor intake(6, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 Motor intake2(16, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 ADIDigitalOut indexer(1, false);
+ADIDigitalOut toggleSingle(7, false);
 ADIDigitalOut tripleIndexer(8, false);
 ADIDigitalIn limitswitch(2);
 
@@ -23,6 +25,28 @@ int numDisc = 0;
 
 bool intaketoggle = false;
 bool intaketoggle1 = false;
+
+void fireOneDisc(){
+  // fire
+  indexer.set_value(true);
+  delay(500);
+  // retract
+  indexer.set_value(false);
+  toggleSingle.set_value(true);
+}
+
+
+void fireThreeDiscs(){
+  // fire
+  indexer.set_value(false);
+  toggleSingle.set_value(false);
+  tripleIndexer.set_value(true);
+  delay(500);
+  // retract
+  indexer.set_value(false);
+  toggleSingle.set_value(true);
+  tripleIndexer.set_value(false); 
+}
 
 void setIntake(int percent){
   // percent to voltage
@@ -91,8 +115,8 @@ void anti_jam(void*) {
         isJammed = false;
         jamCounter = 0;
         stop = false;
-        setIntake(0);
-        isIntakeOn = false;
+        setIntake(100);
+        isIntakeOn = true;
         // isOuttakeOn = false;
 
       }
@@ -149,6 +173,7 @@ void intakeControl(){
   }
   // Toggle indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_DOWN)){
+    /*
     if (indexState == true){
       if (numDisc > 0){
         numDisc--;
@@ -161,10 +186,20 @@ void intakeControl(){
       indexer.set_value(indexState);
       indexState = true;
     }
+    */
+    fireOneDisc();
+    delay(20);
+    if (numDisc > 0){
+      numDisc--;
+    }
+    if (numDisc == 0){
+      setflypct(30);
+    }
   }
 
   // Toggle triple indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_B)){
+    /*
     tripleIndexer.set_value(true);
     numDisc = 0;
     delay(100);
@@ -172,6 +207,11 @@ void intakeControl(){
     delay(500);
     indexer.set_value(false);
     tripleIndexer.set_value(false);
+    setflypct(30);
+    */
+    fireThreeDiscs();
+    delay(20);
+    numDisc = 0;
     setflypct(30);
   }
 }

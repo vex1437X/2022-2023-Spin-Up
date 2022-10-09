@@ -5,6 +5,7 @@
 extern Motor intake;
 extern Motor intake2;
 extern ADIDigitalOut indexer;
+extern ADIDigitalOut toggleSingle;
 extern ADIDigitalOut tripleIndexer;
 extern ADIDigitalIn limitswitch;
 
@@ -13,6 +14,8 @@ extern ADIDigitalIn limitswitch;
 
 extern bool isJammed;
 
+void fireThreeDiscs();
+void fireOneDisc();
 
 void setIntake(int percent);
 

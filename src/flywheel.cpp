@@ -36,6 +36,7 @@ void setflypct(int set){
 
 void flywheelControl(){
   // flywheel toggle 85%
+  // single
   if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
     if (flytoggle == false){
         flypct = 85;
@@ -47,10 +48,11 @@ void flywheelControl(){
     }
     delay(250);
   }
-  // flywheel toggle 85%
+  // flywheel toggle 84%
+  // triple
   if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
     if (flytoggle1 == false){
-        flypct = 85;
+        flypct = 84;
         flytoggle1 = true;
     } else if (flytoggle1 == true){
         // set back to idle
@@ -60,6 +62,7 @@ void flywheelControl(){
     delay(250);
   }
   setFly(flypct);
+  master.print(0, 0, "Fly: %f", flypct);
 }
 
 double getFly(){
