@@ -73,10 +73,9 @@ void limitS(void*){
   bool cringe2 = false;
 
   while(true){
-    intakeControl();
+    // intakeControl();
     // printf("limit: %d \n", limitswitch.get_new_press());
     // printf("numDisc: %d \n", numDisc);
-    // numDisc += limitswitch.get_new_press();
     if(limitswitch.get_value() && !cringe){
       numDisc++;
       cringe = true;
@@ -85,7 +84,7 @@ void limitS(void*){
       cringe = false;
     }
     if (numDisc == 3 && !cringe2){
-      delay(500);
+      delay(230);
       setIntake(0);
       isIntakeOn = false;
       // isOuttakeOn = false;
@@ -94,7 +93,7 @@ void limitS(void*){
     if (numDisc != 3){
       cringe2 = false;
     }
-    delay(10);
+    delay(20);
   }
 }
 

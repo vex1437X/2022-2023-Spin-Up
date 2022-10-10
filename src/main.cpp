@@ -64,7 +64,8 @@ void initialize() {
     Auton("PID Tuner\n", tune_PID),
     Auton("Winpoint\n", winpoint),
     Auton("Half WP Right\n", halfWPright),
-    Auton("Half WP Left\n", halfWPleft)
+    Auton("Half WP Left\n", halfWPleft),
+    Auton("Half WP Left\n", skills)
   });
 
   // Initialize chassis and auton selector
@@ -102,7 +103,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-  Task anti_jam_task(anti_jam, nullptr);
+  // Task anti_jam_task(anti_jam, nullptr);
   Task limit(limitS, nullptr);
 
   // idle the flywheel @ 30%
@@ -116,7 +117,7 @@ void opcontrol() {
   while (true) {
 
     flywheelControl();
-    // intakeControl();
+    intakeControl();
     chassis.tank();
 
     // Coast/Brake drive toggle

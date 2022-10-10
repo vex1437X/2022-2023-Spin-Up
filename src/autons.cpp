@@ -8,6 +8,7 @@
 // https://ez-robotics.github.io/EZ-Template/
 /////
 
+Imu imu(13);
 
 const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
                              // If this is 127 and the robot tries to heading correct, it's only correcting by
@@ -15,15 +16,6 @@ const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We d
                              // faster and one side slower, giving better heading correction.
 const int TURN_SPEED  = 90;
 const int SWING_SPEED = 90;
-
-
-
-///
-// Constants
-///
-
-// It's best practice to tune constants when the robot is empty and with heavier game objects, or with lifts up vs down.
-// If the objects are light or the cog doesn't change much, then there isn't a concern here.
 
 Task intakeT(intaketask, nullptr);
 bool cringer = false;
@@ -159,7 +151,7 @@ void winpoint(){
   tuning_constants();
   setDisc(2);
 
-  setFly(96);
+  setFly(79);
   setIntake(-100); // turn colour wheel
   delay(75);
   setIntake(0);
@@ -169,16 +161,16 @@ void winpoint(){
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(164, 75);
+  chassis.set_turn_pid(174, 75);
   chassis.wait_drive();
 
 
-  delay(2500);
+  delay(2000);
 
   // shoot 1st disc
   fireOneDisc();
   setDisc(1);
-  setFly(96.5);
+  setFly(79);
 
   delay(2700); // wait for flywheel to get up to speed again
   // shoot 2nd disc
@@ -195,12 +187,17 @@ void winpoint(){
   chassis.set_drive_pid(conv(38), 127, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(220, 50);
+  chassis.set_turn_pid(210, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(110), 127, false, true);
+  chassis.set_drive_pid(conv(55), 127, false, true);
   chassis.wait_drive();
- 
+
+  chassis.set_turn_pid(245, 50);
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(50), 127, false, true);
+  chassis.wait_drive();
   
   chassis.set_turn_pid(295, 50);
   chassis.wait_drive();
@@ -208,7 +205,7 @@ void winpoint(){
   setIntake(0);
   
   // drive into colour wheel
-  chassis.set_drive_pid(conv(20), 70);
+  chassis.set_drive_pid(conv(23), 70);
   chassis.wait_drive();
 
   // spin colour wheel
@@ -231,7 +228,7 @@ void halfWPright(){
   fireOneDisc();
   setFly(30); //idle flywheel; easier to ramp up speed for next shot
 
-  chassis.set_turn_pid(90, 40); // turn to be parallel to the centre line
+  chassis.set_turn_pid(90, 40); // turn to be parallel with the centre line
   chassis.wait_drive();
 
   // drive forwards
@@ -244,11 +241,12 @@ void halfWPleft(){
 
 }
 
-// imu_calibrate();
-
 void skills(){
   tuning_constants();
   setDisc(2);
+
+  imu.reset();
+  delay(1500);
 
   // spin colour wheel
   setIntake(-100);
