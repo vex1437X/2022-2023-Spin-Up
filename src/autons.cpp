@@ -150,8 +150,11 @@ void winpoint(){
 void winpoint(){
   tuning_constants();
   setDisc(2);
+  setFly(80.5);
 
-  setFly(79);
+  chassis.set_drive_pid(conv(2.5), 50);
+  chassis.wait_drive(); 
+
   setIntake(-100); // turn colour wheel
   delay(75);
   setIntake(0);
@@ -161,18 +164,18 @@ void winpoint(){
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(174, 75);
+  chassis.set_turn_pid(172.5, 75);
   chassis.wait_drive();
 
 
-  delay(2000);
+  delay(1500);
 
   // shoot 1st disc
   fireOneDisc();
   setDisc(1);
-  setFly(79);
+  setFly(80.5);
 
-  delay(2700); // wait for flywheel to get up to speed again
+  delay(2000); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();
   setDisc(0);
