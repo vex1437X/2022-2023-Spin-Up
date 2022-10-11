@@ -103,6 +103,7 @@ void autonomous() {
 }
 
 void opcontrol() {
+  setIntake(0);
   // Task anti_jam_task(anti_jam, nullptr);
   Task limit(limitS, nullptr);
 

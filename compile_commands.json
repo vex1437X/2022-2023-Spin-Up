@@ -163,11 +163,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/main.cpp.o",
-            "src/main.cpp"
+            "bin/intake.cpp.o",
+            "src/intake.cpp"
         ],
         "directory": "/Users/mahdi/Documents/VEX/1437X/2022-2023/EzDumbo",
-        "file": "src/main.cpp"
+        "file": "src/intake.cpp"
     },
     {
         "arguments": [
@@ -197,11 +197,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/intake.cpp.o",
-            "src/intake.cpp"
+            "bin/main.cpp.o",
+            "src/main.cpp"
         ],
         "directory": "/Users/mahdi/Documents/VEX/1437X/2022-2023/EzDumbo",
-        "file": "src/intake.cpp"
+        "file": "src/main.cpp"
     },
     {
         "arguments": [

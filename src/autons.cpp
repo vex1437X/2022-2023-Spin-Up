@@ -164,7 +164,7 @@ void winpoint(){
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(172.5, 75);
+  chassis.set_turn_pid(177, 75);
   chassis.wait_drive();
 
 
@@ -173,7 +173,7 @@ void winpoint(){
   // shoot 1st disc
   fireOneDisc();
   setDisc(1);
-  setFly(80.5);
+  setFly(80);
 
   delay(2000); // wait for flywheel to get up to speed again
   // shoot 2nd disc
@@ -187,22 +187,22 @@ void winpoint(){
 
   setIntake(100);
 
-  chassis.set_drive_pid(conv(38), 127, false, true);
+  chassis.set_drive_pid(conv(34), 110, false, true);
   chassis.wait_drive();
 
   chassis.set_turn_pid(210, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(55), 127, false, true);
+  chassis.set_drive_pid(conv(55), 100, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(245, 50);
+  chassis.set_turn_pid(235, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(50), 127, false, true);
+  chassis.set_drive_pid(conv(76), 110, false, false);
   chassis.wait_drive();
   
-  chassis.set_turn_pid(295, 50);
+  chassis.set_turn_pid(282, 50);
   chassis.wait_drive();
 
   setIntake(0);
