@@ -83,7 +83,7 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(175.5, 75);
+  chassis.set_turn_pid(175, 75);
   chassis.wait_drive();
 
 
@@ -92,7 +92,7 @@ void winpoint(){ // both colour wheels; shoot 2
   // shoot 1st disc
   fireOneDisc();
   setDisc(1);
-  setFly(81.5);
+  setFly(79);
 
   delay(1900); // wait for flywheel to get up to speed again
   // shoot 2nd disc
@@ -133,7 +133,6 @@ void winpoint(){ // both colour wheels; shoot 2
   // spin colour wheel
   setIntake(-100);
   delay(150);
-  setIntake(0);
 }
 
 void halfWPright(){ // right colour wheel; shoot 3
@@ -168,7 +167,7 @@ void halfWPright(){ // right colour wheel; shoot 3
   chassis.set_turn_pid(135, 40); // turn to be parallel with the centre line
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(28), 70);
+  chassis.set_drive_pid(conv(36), 70);
   chassis.wait_drive();
 
   chassis.set_turn_pid(180, 40); // turn to be perpendicular with the colour wheel

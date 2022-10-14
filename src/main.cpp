@@ -97,19 +97,21 @@ void autonomous() {
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
 
-  ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
+  // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
   // tune_PID();
-  // winpoint();
+  winpoint();
   // halfWPright();
 }
 
 void opcontrol() {
-  setIntake(0);
   // Task anti_jam_task(anti_jam, nullptr);
   Task limit(limitS, nullptr);
 
   // idle the flywheel @ 30%
 	setflypct(30);
+
+  // reset intake
+  setIntake(0);
 
 	// set drive motors to coast
 	bool braketoggle = true;
@@ -117,12 +119,11 @@ void opcontrol() {
 
 
   while (true) {
-
     flywheelControl();
     intakeControl();
     chassis.tank();
 
-    // Coast/Brake drive toggle
+    // Coast/Brake drive toggle 
 		if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
     		if (braketoggle == true){
           chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
