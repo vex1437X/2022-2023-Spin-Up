@@ -99,8 +99,9 @@ void autonomous() {
 
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
   // tune_PID();
-  winpoint();
+  // winpoint();
   // halfWPright();
+  halfWPleft();
 }
 
 void opcontrol() {
