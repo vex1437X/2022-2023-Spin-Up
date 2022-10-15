@@ -219,7 +219,7 @@ void Drive::tank() {
 
 
   // Toggle Drive Speed
-  if (master.get_digital(E_CONTROLLER_DIGITAL_UP)){
+  if (master.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
     if (dspeedToggle == false){
         multFac = .15;
         dspeedToggle = true;

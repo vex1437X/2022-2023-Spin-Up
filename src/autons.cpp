@@ -193,7 +193,7 @@ void halfWPright(){ // right colour wheel; shoot 5
   chassis.set_drive_pid(conv(30), 70); // drive closer to the centre line to shoot
   chassis.wait_drive();
 
-  chassis.set_turn_pid(18.5, 40); // turn to be parallel with the centre line
+  chassis.set_turn_pid(18.7, 40); // turn to be parallel with the centre line
   chassis.wait_drive();
 
   delay(1000);
@@ -213,31 +213,31 @@ void halfWPright(){ // right colour wheel; shoot 5
   setDisc(0);
   setIntake(0);
 
-  chassis.set_turn_pid(315, 40); // turn to be parallel with the centre line
-  chassis.wait_drive();
+  // chassis.set_turn_pid(-45, 40); // turn to be parallel with the centre line
+  // chassis.wait_drive();
 
-  setIntake(100);
+  // setIntake(100);
 
-  chassis.set_drive_pid(conv(36), 70); // drive to intake 2 discs
-  chassis.wait_drive();
+  // chassis.set_drive_pid(conv(36), 70); // drive to intake 2 discs
+  // chassis.wait_drive();
 
-  chassis.set_turn_pid(20.5, 40); // turn to aligned with goal
-  chassis.wait_drive();
+  // chassis.set_turn_pid(20.5, 40); // turn to aligned with goal
+  // chassis.wait_drive();
   
-  // shoot 4th disc
-  fireOneDisc();
-  delay(1600); // wait for flywheel to get up to speed
-  setFly(74.5);
+  // // shoot 4th disc
+  // fireOneDisc();
+  // delay(1600); // wait for flywheel to get up to speed
+  // setFly(74.5);
 
-  // shoot 5nd disc
-  fireOneDisc();
-  delay(1600); // wait for flywheel to get up to speed
-  setFly(74.5);
+  // // shoot 5nd disc
+  // fireOneDisc();
+  // delay(1600); // wait for flywheel to get up to speed
+  // setFly(74.5);
 
   chassis.set_turn_pid(135, 40); // turn to be parallel with the centre line
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(72), 70);
+  chassis.set_drive_pid(conv(36), 70);
   chassis.wait_drive();
 
   chassis.set_turn_pid(180, 40); // turn to be perpendicular with the colour wheel

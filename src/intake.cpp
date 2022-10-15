@@ -12,6 +12,7 @@ Motor intake2(16, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 ADIDigitalOut indexer(1, false);
 ADIDigitalOut toggleSingle(7, false);
 ADIDigitalOut tripleIndexer(8, false);
+ADIDigitalOut expand(3, false);
 ADIDigitalIn limitswitch(2);
 
 bool indexState = false;
@@ -133,6 +134,11 @@ void anti_jam(void*) {
 }
 
 void intakeControl(){
+  // expansion
+  if (master.get_digital(E_CONTROLLER_DIGITAL_X)){
+    expand.set_value(true);
+  }
+
   // Toggle intake
   if (master.get_digital(E_CONTROLLER_DIGITAL_R1) && !stop){
     if (intaketoggle == false){
