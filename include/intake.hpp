@@ -8,7 +8,8 @@ extern ADIDigitalOut indexer;
 extern ADIDigitalOut toggleSingle;
 extern ADIDigitalOut tripleIndexer;
 extern ADIDigitalIn limitswitch;
-extern ADIDigitalOut expand;
+extern ADIDigitalOut expand1;
+extern ADIDigitalOut expand2;
 
 // extern Task anti_jam_task;
 // extern Task limit;
