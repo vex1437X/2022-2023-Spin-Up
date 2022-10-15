@@ -79,27 +79,27 @@ void winpoint(){ // both colour wheels; shoot 2
   setIntake(0);
 
   // drive backwards so turn doesnt collide with the wall
-  chassis.set_drive_pid(conv(-7), 80);
+  chassis.set_drive_pid(conv(-6), 80);
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(175, 75);
+  chassis.set_turn_pid(176.3, 75);
   chassis.wait_drive();
 
-
-  delay(1500);
+  delay(1200);
 
   // shoot 1st disc
+  tripleIndexer.set_value(false);
   fireOneDisc();
+  tripleIndexer.set_value(false);
   setDisc(1);
   setFly(79);
 
-  delay(1900); // wait for flywheel to get up to speed again
+  delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();
   setDisc(0);
   setFly(30);
-
 
   chassis.set_turn_pid(270, 70);
   chassis.wait_drive();
@@ -198,7 +198,9 @@ void halfWPright(){ // right colour wheel; shoot 5
 
   delay(1000);
 
+  tripleIndexer.set_value(false);
   fireOneDisc();
+  tripleIndexer.set_value(false);
   delay(1600); // wait for flywheel to get up to speed
   setFly(74.5);
 
@@ -269,13 +271,15 @@ void halfWPleft(){ // left colour wheel; shoot 5
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(176.3, 75);
+  chassis.set_turn_pid(173.8, 75);
   chassis.wait_drive();
 
   delay(1200);
 
   // shoot 1st disc
+  tripleIndexer.set_value(false);
   fireOneDisc();
+  tripleIndexer.set_value(false);
   setDisc(1);
   setFly(79);
 
@@ -302,7 +306,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
   chassis.set_drive_pid(conv(25), 70, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(147, 70);
+  chassis.set_turn_pid(144, 70);
   chassis.wait_drive();
   delay(500);
 
