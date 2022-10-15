@@ -192,7 +192,7 @@ void intakeControl(){
       numDisc--;
     }
     if (numDisc == 0){
-      setflypct(30);
+      // setflypct(30);
     }
   }
 
@@ -211,6 +211,6 @@ void intakeControl(){
     fireThreeDiscs();
     delay(20);
     numDisc = 0;
-    setflypct(30);
+    // setflypct(30);
   }
 }

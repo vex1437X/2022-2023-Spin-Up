@@ -269,7 +269,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(174, 75);
+  chassis.set_turn_pid(176.3, 75);
   chassis.wait_drive();
 
   delay(1200);
@@ -285,7 +285,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
   setDisc(0);
   setFly(30);
 
-  chassis.set_turn_pid(230, 70);
+  chassis.set_turn_pid(233, 70);
   chassis.wait_drive();
 
   setIntake(100);
@@ -297,12 +297,12 @@ void halfWPleft(){ // left colour wheel; shoot 5
   chassis.wait_drive();
 
   setIntake(100);
-  setFly(79);
+  setFly(76);
 
-  chassis.set_drive_pid(conv(15), 70, false, true);
+  chassis.set_drive_pid(conv(25), 70, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(159, 70);
+  chassis.set_turn_pid(147, 70);
   chassis.wait_drive();
   delay(500);
 
