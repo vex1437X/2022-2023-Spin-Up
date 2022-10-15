@@ -135,65 +135,16 @@ void winpoint(){ // both colour wheels; shoot 2
   delay(150);
 }
 
-/*
-void halfWPright(){ // right colour wheel; shoot 3
-  tuning_constants();
-
-  setIntake(100);
-  setFly(74.5); // spin up flywheel instantly
-
-  chassis.set_drive_pid(conv(30), 70); // drive closer to the centre line to shoot
-  chassis.wait_drive();
-
-  chassis.set_turn_pid(18.5, 40); // turn to be parallel with the centre line
-  chassis.wait_drive();
-
-  delay(1000);
-
-  fireOneDisc();
-  delay(2000); // wait for flywheel to get up to speed
-  setFly(74.5);
-
-  // shoot 2nd disc
-  fireOneDisc();
-  delay(2000); // wait for flywheel to get up to speed
-  setFly(74.5);
-
-  // shoot 3nd disc
-  fireOneDisc();
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
-  setDisc(0);
-  setIntake(0);
-
-  chassis.set_turn_pid(135, 40); // turn to be parallel with the centre line
-  chassis.wait_drive();
-
-  chassis.set_drive_pid(conv(36), 70);
-  chassis.wait_drive();
-
-  chassis.set_turn_pid(180, 40); // turn to be perpendicular with the colour wheel
-  chassis.wait_drive();
-
-  setIntake(-100);
-  chassis.set_drive_pid(conv(30), 70); // drive into colour wheel
-  chassis.wait_drive();
-
-  setIntake(-100);
-  delay(600);
-  setIntake(0);
-}
-*/
-
 void halfWPright(){ // right colour wheel; shoot 5
   tuning_constants();
 
   setIntake(100);
-  setFly(74.5); // spin up flywheel instantly
+  setFly(75); // spin up flywheel instantly
 
   chassis.set_drive_pid(conv(30), 70); // drive closer to the centre line to shoot
   chassis.wait_drive();
 
-  chassis.set_turn_pid(18.7, 40); // turn to be parallel with the centre line
+  chassis.set_turn_pid(19.3, 40); // turn to be parallel with the centre line
   chassis.wait_drive();
 
   delay(1000);
@@ -202,12 +153,12 @@ void halfWPright(){ // right colour wheel; shoot 5
   fireOneDisc();
   tripleIndexer.set_value(false);
   delay(1600); // wait for flywheel to get up to speed
-  setFly(74.5);
+  setFly(75.2);
 
   // shoot 2nd disc
   fireOneDisc();
   delay(1600); // wait for flywheel to get up to speed
-  setFly(74.5);
+  setFly(75.2);
 
   // shoot 3nd disc
   fireOneDisc();
@@ -215,43 +166,25 @@ void halfWPright(){ // right colour wheel; shoot 5
   setDisc(0);
   setIntake(0);
 
-  // chassis.set_turn_pid(-45, 40); // turn to be parallel with the centre line
-  // chassis.wait_drive();
-
-  // setIntake(100);
-
-  // chassis.set_drive_pid(conv(36), 70); // drive to intake 2 discs
-  // chassis.wait_drive();
-
-  // chassis.set_turn_pid(20.5, 40); // turn to aligned with goal
-  // chassis.wait_drive();
-  
-  // // shoot 4th disc
-  // fireOneDisc();
-  // delay(1600); // wait for flywheel to get up to speed
-  // setFly(74.5);
-
-  // // shoot 5nd disc
-  // fireOneDisc();
-  // delay(1600); // wait for flywheel to get up to speed
-  // setFly(74.5);
-
   chassis.set_turn_pid(135, 40); // turn to be parallel with the centre line
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(36), 70);
+  chassis.set_drive_pid(conv(35), 70);
   chassis.wait_drive();
 
   chassis.set_turn_pid(180, 40); // turn to be perpendicular with the colour wheel
   chassis.wait_drive();
 
   setIntake(-100);
-  chassis.set_drive_pid(conv(30), 70); // drive into colour wheel
+  chassis.set_drive_pid(conv(23), 70); // drive into colour wheel
   chassis.wait_drive();
 
   setIntake(-100);
-  delay(600);
+  delay(650);
   setIntake(0);
+
+  chassis.set_drive_pid(conv(-3), 70); // drive out of colour wheel
+  chassis.wait_drive();
 }
 
 void halfWPleft(){ // left colour wheel; shoot 5
@@ -263,12 +196,14 @@ void halfWPleft(){ // left colour wheel; shoot 5
   chassis.wait_drive(); 
 
   setIntake(-100); // turn colour wheel
-  delay(75);
+  delay(150);
   setIntake(0);
 
   // drive backwards so turn doesnt collide with the wall
   chassis.set_drive_pid(conv(-6), 80);
   chassis.wait_drive(); 
+
+  setIntake(100);
 
   // turn to goal
   chassis.set_turn_pid(173.8, 75);
@@ -283,6 +218,8 @@ void halfWPleft(){ // left colour wheel; shoot 5
   setDisc(1);
   setFly(79);
 
+  setIntake(0);
+  
   delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();
@@ -325,58 +262,50 @@ void halfWPleft(){ // left colour wheel; shoot 5
 }
 
 void skills(){
-  tuning_constants();
-  setDisc(2);
+  halfWPleft();
 
-  imu.reset();
-  delay(1500);
-
-  // spin colour wheel
-  setIntake(-100);
-  delay(75);
-  setIntake(0);
-
-  // drive away from wall
-  chassis.set_drive_pid(conv(-10), 70);
+  chassis.set_turn_pid(233, 70);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(105, 70);
+  chassis.set_drive_pid(conv(45), 70, false, true);
   chassis.wait_drive();
 
-  setIntake(100);
-  chassis.set_drive_pid(conv(20), 40);
+  chassis.set_turn_pid(132, 70);
   chassis.wait_drive();
-  setIntake(0);
-  setDisc(3);
+  delay(500);
 
-  // turn to face colour wheel
-  chassis.set_turn_pid(70, 70);
-  chassis.wait_drive();
+  // shoot 6rd disc
+  fireOneDisc();
 
-  // drive into colour wheel
-  chassis.set_drive_pid(conv(30), 55);
-  chassis.wait_drive();
+  delay(1000); // wait for flywheel to get up to speed again
+  // shoot 7th disc
+  fireOneDisc();
 
-  // spin colour wheel
-  setIntake(-100); // turn colour wheel
-  delay(75);
-  setIntake(0);
+  delay(1000); // wait for flywheel to get up to speed again
+  // shoot 8th disc
 
-  // drive away from wall
-  chassis.set_drive_pid(conv(-20), 70);
-  chassis.wait_drive();
+  fireOneDisc();
+  // shoot 6rd disc
+  fireOneDisc();
 
-  setFly(84);
-  // turn to face goal
-  chassis.set_turn_pid(130, 70);
-  chassis.wait_drive();
+  delay(1000); // wait for flywheel to get up to speed again
+  // shoot 7th disc
+  fireOneDisc();
 
-  // drive towards goal
-  chassis.set_drive_pid(conv(60), 80);
-  chassis.wait_drive();
+  delay(1000); // wait for flywheel to get up to speed again
+  // shoot 8th disc
+  fireOneDisc();
 
-  fireThreeDiscs();
-  setDisc(0);
-  delay(300);
-  setFly(0);
+  // shoot 6rd disc
+  fireOneDisc();
+
+  delay(1000); // wait for flywheel to get up to speed again
+  // shoot 7th disc
+  fireOneDisc();
+
+  delay(1000); // wait for flywheel to get up to speed again
+  // shoot 8th disc
+  fireOneDisc();
+  // setDisc(0);
+  // setFly(30);
 }

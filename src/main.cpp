@@ -1,5 +1,6 @@
 #include "main.h"
 #include "autons.hpp"
+#include "intake.hpp"
 #include "pros/misc.h"
 
 Drive chassis (
@@ -62,8 +63,9 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
     // Auton("PID Tuner\n", tune_PID),
-    Auton("Half WP Right\n", halfWPright),
+    // Auton("Skills Auton\n", skills),
     Auton("Half WP Left\n", halfWPleft),
+    Auton("Half WP Right\n", halfWPright),
     Auton("Winpoint\n", winpoint),
     Auton("Skills Auton\n", skills)
   });
@@ -75,6 +77,7 @@ void initialize() {
   tripleIndexer.set_value(false);
   indexer.set_value(false);
   toggleSingle.set_value(true);
+  fireOneDisc();
 }
 
 void disabled() {
