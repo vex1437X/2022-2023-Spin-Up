@@ -261,51 +261,70 @@ void halfWPleft(){ // left colour wheel; shoot 5
   setFly(30);
 }
 
+void skillsPID1() {
+  chassis.set_slew_min_power(70, 70);
+  chassis.set_slew_distance(10, 10);
+  chassis.set_pid_constants(&chassis.headingPID, 0, 0, 0, 0);
+  chassis.set_pid_constants(&chassis.forward_drivePID, 0.24, 0.05, 0, 0);
+  chassis.set_pid_constants(&chassis.backward_drivePID, 0.24, 0.05, 0, 0);
+  chassis.set_pid_constants(&chassis.turnPID, 5.6, 0.002, 32, 0);
+  chassis.set_pid_constants(&chassis.swingPID, 0, 0, 0, 0);
+}
+
 void skills(){
-  halfWPleft();
+  double o = 0; // starting orientation offset
+  skillsPID1();
 
-  chassis.set_turn_pid(233, 70);
+  setFly(30);
+
+  chassis.set_drive_pid(conv(2.5), 80); // drive into colour wheel
+  chassis.wait_drive(); 
+
+  setIntake(-100); // turn colour wheel
+  delay(350);
+  setIntake(0);
+  
+  chassis.set_drive_pid(conv(-3), 90); // drive away from wall
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(45), 70, false, true);
+  setIntake(100);
+
+  chassis.set_turn_pid(115+o, 80); // turn towards single disc / second colour wheel
   chassis.wait_drive();
 
-  chassis.set_turn_pid(132, 70);
+  chassis.set_drive_pid(conv(20), 80); // intake one disc
   chassis.wait_drive();
-  delay(500);
 
-  // shoot 6rd disc
+  chassis.set_turn_pid(90+o, 80); // turn to be perpendicular to colour wheel
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(2.5), 80); // drive into colour wheel
+  chassis.wait_drive(); 
+
+  setFly(76);
+
+  setIntake(-100); // turn colour wheel
+  delay(600);
+  setIntake(0);
+
+  chassis.set_drive_pid(conv(-5), 80); // drive away from colour wheel
+  chassis.wait_drive(); 
+
+  chassis.set_turn_pid(175.5+o, 80); // turn to shooting position
+  chassis.wait_drive();
+
+  delay(600);
+
+  // shoot 1st disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+
+  // shoot 2nd disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+
+  // shoot 3nd disc
   fireOneDisc();
 
-  delay(1000); // wait for flywheel to get up to speed again
-  // shoot 7th disc
-  fireOneDisc();
-
-  delay(1000); // wait for flywheel to get up to speed again
-  // shoot 8th disc
-
-  fireOneDisc();
-  // shoot 6rd disc
-  fireOneDisc();
-
-  delay(1000); // wait for flywheel to get up to speed again
-  // shoot 7th disc
-  fireOneDisc();
-
-  delay(1000); // wait for flywheel to get up to speed again
-  // shoot 8th disc
-  fireOneDisc();
-
-  // shoot 6rd disc
-  fireOneDisc();
-
-  delay(1000); // wait for flywheel to get up to speed again
-  // shoot 7th disc
-  fireOneDisc();
-
-  delay(1000); // wait for flywheel to get up to speed again
-  // shoot 8th disc
-  fireOneDisc();
-  // setDisc(0);
-  // setFly(30);
+  setFly(30); //idle flywheel; easier to ramp up speed for next shot
 }
