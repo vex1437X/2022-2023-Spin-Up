@@ -203,11 +203,11 @@ void halfWPleft(){ // left colour wheel; shoot 5
   chassis.set_drive_pid(conv(-6), 80);
   chassis.wait_drive(); 
 
-  setIntake(100);
 
   // turn to goal
-  chassis.set_turn_pid(173.8, 75);
+  chassis.set_turn_pid(173, 75);
   chassis.wait_drive();
+  setIntake(100);
 
   delay(1200);
 
@@ -219,7 +219,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
   setFly(79);
 
   setIntake(0);
-  
+
   delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();

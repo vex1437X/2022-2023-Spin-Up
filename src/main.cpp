@@ -77,7 +77,7 @@ void initialize() {
   tripleIndexer.set_value(false);
   indexer.set_value(false);
   toggleSingle.set_value(true);
-  fireOneDisc();
+  // fireOneDisc();
 }
 
 void disabled() {
