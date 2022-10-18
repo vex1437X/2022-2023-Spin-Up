@@ -307,11 +307,14 @@ void skills(){
   delay(600);
   setIntake(0);
 
-  chassis.set_drive_pid(conv(-5), 80); // drive away from colour wheel
+  chassis.set_drive_pid(conv(-6), 80); // drive away from colour wheel
   chassis.wait_drive(); 
 
-  chassis.set_turn_pid(175.5+o, 80); // turn to shooting position
+  chassis.set_turn_pid(175.5+o, 80); // aim to first net
   chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(11), 80); // drive closer to goal
+  chassis.wait_drive(); 
 
   delay(600);
 
@@ -327,4 +330,112 @@ void skills(){
   fireOneDisc();
 
   setFly(30); //idle flywheel; easier to ramp up speed for next shot
+
+  chassis.set_turn_pid(270+o, 80); // turn to triple stack
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(11), 80); // knock over the triple stack
+  chassis.wait_drive(); 
+
+  chassis.set_drive_pid(conv(-2), 40); // back up a little
+  chassis.wait_drive(); 
+
+  setIntake(100);
+
+  setFly(76);
+
+  chassis.set_drive_pid(conv(20), 75); // intake triple stack
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(305+o, 80); // aim to second net
+  chassis.wait_drive();
+
+  delay(500);
+
+  // shoot 1st disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+
+  // shoot 2nd disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+  setIntake(0);
+
+  // shoot 3nd disc
+  fireOneDisc();
+
+  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+
+  chassis.set_turn_pid(270+o, 80); // turn to other triple stack
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(11), 80); // knock over the triple stack
+  chassis.wait_drive(); 
+
+  chassis.set_drive_pid(conv(-2), 40); // back up a little
+  chassis.wait_drive(); 
+
+  setIntake(100);
+
+  setFly(75);
+
+  chassis.set_drive_pid(conv(20), 75); // intake triple stack
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(308+o, 80); // aim to second net
+  chassis.wait_drive();
+
+  delay(500);
+
+  // shoot 1st disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+
+  // shoot 2nd disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+  setIntake(0);
+
+  // shoot 3nd disc
+  fireOneDisc();
+
+  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+
+  chassis.set_turn_pid(230+o, 80); // turn towards three lined up discs and colour wheel-ish
+  chassis.wait_drive();
+
+  setIntake(100);
+
+  setFly(76);
+
+  chassis.set_drive_pid(conv(50), 75); // intake the three consecutive discs
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(328+o, 80); // turn towards second net
+  chassis.wait_drive();
+
+  delay(500);
+
+  // shoot 1st disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+
+  // shoot 2nd disc
+  fireOneDisc();
+  delay(1500); // wait for flywheel to get up to speed
+  setIntake(0);
+
+  // shoot 3nd disc
+  fireOneDisc();
+
+  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+
+  chassis.set_turn_pid(230+o, 80); // turn towards colour wheel-ish
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(25), 75); // intake the three consecutive discs
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(270+o, 80); // turn to be perpendicular to colour wheel
+  chassis.wait_drive();
 }
