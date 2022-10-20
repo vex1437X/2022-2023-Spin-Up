@@ -436,4 +436,6 @@ void skills(){
 
   chassis.set_turn_pid(270+o, 80); // turn to be perpendicular to colour wheel
   chassis.wait_drive();
+
+  // AT THIS POINT SHOULD HAVE 12 DISCS AND 2 COLOUR WHEELS 
 }
