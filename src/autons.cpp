@@ -270,7 +270,7 @@ void skillsPID1() {
 }
 
 void skills(){
-  double o = 4; // starting orientation offset
+  double o = 3; // starting orientation offset
   skillsPID1();
 
   setFly(30);
@@ -279,39 +279,35 @@ void skills(){
   chassis.wait_drive(); 
 
   setIntake(-100); // turn colour wheel
-  delay(350);
+  delay(150);
   setIntake(0);
   
-  chassis.set_drive_pid(conv(-3), 90); // drive away from wall
+  chassis.set_drive_pid(conv(-4), 90); // drive away from wall
   chassis.wait_drive();
 
-  chassis.set_turn_pid(210+o, 80); // turn towards single disc / second colour wheel
+  chassis.set_turn_pid(215+o, 80);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(13), 80); // intake one disc
+  chassis.set_drive_pid(conv(9.5), 80);
   chassis.wait_drive();
 
   setIntake(100);
 
-  chassis.set_turn_pid(90+o, 80); // turn towards single disc / second colour wheel
+  chassis.set_turn_pid(93+o, 80); // turn towards single disc / second colour wheel
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(35), 80); // intake one disc
+  chassis.set_drive_pid(conv(33), 80); // intake one disc // and go to colour wheel
   chassis.wait_drive();
-
-  // chassis.set_turn_pid(90+o, 80); // turn to be perpendicular to colour wheel
-  // chassis.wait_drive();
-
-  chassis.set_drive_pid(conv(2.5), 80); // drive into colour wheel
-  chassis.wait_drive(); 
 
   setFly(76);
 
   setIntake(-100); // turn colour wheel
-  delay(600);
+  delay(100);
 
   chassis.set_drive_pid(conv(-6), 80); // drive away from colour wheel
   chassis.wait_drive(); 
+
+  setIntake(100);
 
   chassis.set_turn_pid(175.5+o, 80); // aim to first net
   chassis.wait_drive();
@@ -338,20 +334,19 @@ void skills(){
   chassis.set_turn_pid(270+o, 80); // turn to triple stack
   chassis.wait_drive();
 
+  setIntake(100);
   chassis.set_drive_pid(conv(11), 80); // knock over the triple stack
   chassis.wait_drive(); 
 
   chassis.set_drive_pid(conv(-2), 40); // back up a little
   chassis.wait_drive(); 
 
-  setIntake(100);
-
-  setFly(76);
+  setFly(75);
 
   chassis.set_drive_pid(conv(20), 75); // intake triple stack
   chassis.wait_drive();
 
-  chassis.set_turn_pid(305+o, 80); // aim to second net
+  chassis.set_turn_pid(277+o, 80); // aim to second net
   chassis.wait_drive();
 
   delay(500);
@@ -386,7 +381,7 @@ void skills(){
   chassis.set_drive_pid(conv(20), 75); // intake triple stack
   chassis.wait_drive();
 
-  chassis.set_turn_pid(308+o, 80); // aim to second net
+  chassis.set_turn_pid(277+o, 80); // aim to second net
   chassis.wait_drive();
 
   delay(500);
