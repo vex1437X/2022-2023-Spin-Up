@@ -270,7 +270,7 @@ void skillsPID1() {
 }
 
 void skills(){
-  double o = 0; // starting orientation offset
+  double o = 4; // starting orientation offset
   skillsPID1();
 
   setFly(30);
@@ -285,16 +285,22 @@ void skills(){
   chassis.set_drive_pid(conv(-3), 90); // drive away from wall
   chassis.wait_drive();
 
+  chassis.set_turn_pid(210+o, 80); // turn towards single disc / second colour wheel
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(13), 80); // intake one disc
+  chassis.wait_drive();
+
   setIntake(100);
 
-  chassis.set_turn_pid(115+o, 80); // turn towards single disc / second colour wheel
+  chassis.set_turn_pid(90+o, 80); // turn towards single disc / second colour wheel
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(20), 80); // intake one disc
+  chassis.set_drive_pid(conv(35), 80); // intake one disc
   chassis.wait_drive();
 
-  chassis.set_turn_pid(90+o, 80); // turn to be perpendicular to colour wheel
-  chassis.wait_drive();
+  // chassis.set_turn_pid(90+o, 80); // turn to be perpendicular to colour wheel
+  // chassis.wait_drive();
 
   chassis.set_drive_pid(conv(2.5), 80); // drive into colour wheel
   chassis.wait_drive(); 
@@ -303,7 +309,6 @@ void skills(){
 
   setIntake(-100); // turn colour wheel
   delay(600);
-  setIntake(0);
 
   chassis.set_drive_pid(conv(-6), 80); // drive away from colour wheel
   chassis.wait_drive(); 
@@ -319,7 +324,8 @@ void skills(){
   // shoot 1st disc
   fireOneDisc();
   delay(1500); // wait for flywheel to get up to speed
-
+  setIntake(0);
+  
   // shoot 2nd disc
   fireOneDisc();
   delay(1500); // wait for flywheel to get up to speed
