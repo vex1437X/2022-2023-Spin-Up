@@ -69,13 +69,13 @@ void tune_PID() {
 void winpoint(){ // both colour wheels; shoot 2
   tuning_constants();
   setDisc(2);
-  setFly(81);
+  setFly(80.5);
 
   chassis.set_drive_pid(conv(2.5), 50);
   chassis.wait_drive(); 
 
   setIntake(-100); // turn colour wheel
-  delay(75);
+  delay(150);
   setIntake(0);
 
   // drive backwards so turn doesnt collide with the wall
@@ -83,7 +83,7 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(176.3, 75);
+  chassis.set_turn_pid(168.75, 75);
   chassis.wait_drive();
 
   delay(1200);
@@ -109,16 +109,16 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.set_drive_pid(conv(34), 110, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(210, 50);
+  chassis.set_turn_pid(195, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(55), 100, false, true);
+  chassis.set_drive_pid(conv(48.5), 100, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(235, 50);
+  chassis.set_turn_pid(222, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(62), 110, false, false);
+  chassis.set_drive_pid(conv(85), 110, false, false);
   chassis.wait_drive();
   
   chassis.set_turn_pid(282, 50);
@@ -127,15 +127,17 @@ void winpoint(){ // both colour wheels; shoot 2
   setIntake(0);
   
   // drive into colour wheel
-  chassis.set_drive_pid(conv(25), 70);
+  chassis.set_drive_pid(conv(12), 70);
   chassis.wait_drive();
 
   // spin colour wheel
   setIntake(-100);
-  delay(150);
+  delay(600);
+  setIntake(0);
 }
 
-void halfWPright(){ // right colour wheel; shoot 5
+/*
+void halfWPright(){ // right colour wheel; shoot 3
   tuning_constants();
 
   setFly(75.5); // spin up flywheel instantly
@@ -179,6 +181,80 @@ void halfWPright(){ // right colour wheel; shoot 5
 
   setIntake(-100);
   delay(500);
+  setIntake(0);
+
+  chassis.set_drive_pid(conv(-3), 70); // drive out of colour wheel
+  chassis.wait_drive();
+}
+*/
+
+void halfWPright(){ // right colour wheel; shoot 5
+  tuning_constants();
+
+  setFly(77.5); // spin up flywheel instantly
+
+  setIntake(100);
+  chassis.set_drive_pid(conv(30), 90); // drive closer to the centre line to shoot
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(19.3, 65); // turn to be parallel with the centre line
+  chassis.wait_drive();
+
+  delay(800);
+
+  setIntake(100);
+  tripleIndexer.set_value(false);
+  fireOneDisc();
+  tripleIndexer.set_value(false);
+  delay(850); // wait for flywheel to get up to speed
+
+  // shoot 2nd disc
+  fireOneDisc();
+  delay(850); // wait for flywheel to get up to speed
+
+  // shoot 3nd disc
+  fireOneDisc();
+  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setDisc(0);
+  setIntake(100);
+
+  chassis.set_turn_pid(-46.5, 70); // turn to be parallel with the centre line
+  chassis.wait_drive();
+
+  setFly(76.6);
+
+  chassis.set_pid_constants(&chassis.forward_drivePID, 0.22, 0.02, 0, 0);
+  chassis.set_drive_pid(conv(44), 105);
+  chassis.wait_drive();
+  tuning_constants();
+
+  chassis.set_turn_pid(39, 80); // turn to goal
+  chassis.wait_drive();
+
+  // shoot 4th disc
+  fireOneDisc();
+  delay(1100); // wait for flywheel to get up to speed
+
+  // shoot 5th disc
+  fireOneDisc();
+  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setDisc(0);
+  setIntake(0);
+
+  chassis.set_turn_pid(135, 70); // turn to be parallel with the centre line
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(62), 127);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(180, 70); // turn to be perpendicular with the colour wheel
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(25), 90); // drive into colour wheel
+  chassis.wait_drive();
+
+  setIntake(-100);
+  delay(650);
   setIntake(0);
 
   chassis.set_drive_pid(conv(-3), 70); // drive out of colour wheel
