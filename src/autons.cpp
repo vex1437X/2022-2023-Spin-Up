@@ -118,7 +118,7 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.set_turn_pid(222, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(77), 110, false, false);
+  chassis.set_drive_pid(conv(77), 110, false, true);
   chassis.wait_drive();
   
   chassis.set_turn_pid(282, 50);
