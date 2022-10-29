@@ -27,6 +27,7 @@ int numDisc = 0;
 
 bool intaketoggle = false;
 bool intaketoggle1 = false;
+bool expandtoggle = false;
 
 void fireOneDisc(){
   // fire
@@ -137,9 +138,17 @@ void anti_jam(void*) {
 void intakeControl(){
   // expansion
   if (master.get_digital(E_CONTROLLER_DIGITAL_X)){
-    expand1.set_value(true);
-    expand2.set_value(true);
-  }
+    if(expandtoggle == false){
+      expand1.set_value(true);
+      expand2.set_value(true);
+      expandtoggle = true;
+    } else if (expandtoggle == true){
+      expand1.set_value(false);
+      expand2.set_value(false);
+      expandtoggle = false;
+    }
+    delay(300);
+    }
 
   // Toggle intake
   if (master.get_digital(E_CONTROLLER_DIGITAL_R1) && !stop){

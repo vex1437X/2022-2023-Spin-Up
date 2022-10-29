@@ -63,9 +63,9 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
     // Auton("PID Tuner\n", tune_PID),
+    Auton("Half WP Right\n", halfWPright),
     Auton("Winpoint\n", winpoint),
     Auton("Half WP Left\n", halfWPleft),
-    Auton("Half WP Right\n", halfWPright),
     Auton("Skills Auton\n", skills)
   });
 
@@ -102,8 +102,10 @@ void autonomous() {
   chassis.reset_gyro(); // Reset gyro position to 0
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
+  // Task sinCalc1(sinCalc, nullptr);
 
   ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
+
   // tune_PID();
   // winpoint();
   // halfWPright();

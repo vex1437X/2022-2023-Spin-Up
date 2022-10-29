@@ -42,6 +42,34 @@ double conv(double i){
   return i * 3.8;
 }
 
+double sinSpeed;
+
+
+void sinCalc(void*){
+  int t = 0;
+  while(true){
+    sinSpeed = sin(2.5*t);
+    t+=0.1;
+  }
+}
+
+Motor L1(17, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+Motor L2(18, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
+Motor R1(19, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
+Motor R2(20, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
+
+void jiggle(double sec){
+  L1.move(sinSpeed*127);
+  L2.move(sinSpeed*127);
+  R1.move(-sinSpeed*127);
+  R2.move(-sinSpeed*127);
+  delay(sec*1000);
+  L1.move(0);
+  L2.move(0);
+  R1.move(0);
+  R2.move(-sinSpeed*1.27);
+}
+
 void tune_PID() {
   // The first parameter is target inches
   // The second parameter is max speed the robot will drive at
@@ -260,20 +288,6 @@ void halfWPright(){ // right colour wheel; shoot 5
 
   chassis.set_drive_pid(conv(-3), 70); // drive out of colour wheel
   chassis.wait_drive();
-}
-
-void jiggle(double speedPCT, int msec){
-  int voltage = speedPCT * 1.27;
-  chassis.left_motors[0].move(voltage);
-  chassis.left_motors[1].move(voltage);
-  delay(msec);
-  chassis.left_motors[0].move(0);
-  chassis.left_motors[1].move(0);
-  chassis.right_motors[0].move(voltage);
-  chassis.right_motors[1].move(voltage);
-  delay(msec);
-  chassis.right_motors[0].move(0);
-  chassis.right_motors[1].move(0);
 }
 
 void halfWPleft(){ // left colour wheel; shoot 5
