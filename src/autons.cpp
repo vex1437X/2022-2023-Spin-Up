@@ -262,6 +262,20 @@ void halfWPright(){ // right colour wheel; shoot 5
   chassis.wait_drive();
 }
 
+void jiggle(double speedPCT, int msec){
+  int voltage = speedPCT * 1.27;
+  chassis.left_motors[0].move(voltage);
+  chassis.left_motors[1].move(voltage);
+  delay(msec);
+  chassis.left_motors[0].move(0);
+  chassis.left_motors[1].move(0);
+  chassis.right_motors[0].move(voltage);
+  chassis.right_motors[1].move(voltage);
+  delay(msec);
+  chassis.right_motors[0].move(0);
+  chassis.right_motors[1].move(0);
+}
+
 void halfWPleft(){ // left colour wheel; shoot 5
   tuning_constants();
   setDisc(2);
@@ -280,15 +294,13 @@ void halfWPleft(){ // left colour wheel; shoot 5
 
 
   // turn to goal
-  chassis.set_turn_pid(168.8, 75);
+  chassis.set_turn_pid(169, 75);
   chassis.wait_drive();
 
   delay(1200);
 
   // shoot 1st disc
-  tripleIndexer.set_value(false);
   fireOneDisc();
-  tripleIndexer.set_value(false);
   setDisc(1);
 
 
@@ -303,14 +315,13 @@ void halfWPleft(){ // left colour wheel; shoot 5
 
   setIntake(100);
 
-  chassis.set_drive_pid(conv(35), 120, false, true);
+  chassis.set_drive_pid(conv(35), 90, false, true);
   chassis.wait_drive();
 
   chassis.set_drive_pid(conv(-5), 60, false, true);
   chassis.wait_drive();
 
-  setIntake(100);
-  setFly(76);
+  setFly(75);
 
   chassis.set_drive_pid(conv(33), 70, false, true);
   chassis.wait_drive();
