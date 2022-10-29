@@ -69,7 +69,7 @@ void tune_PID() {
 void winpoint(){ // both colour wheels; shoot 2
   tuning_constants();
   setDisc(2);
-  setFly(80.5);
+  setFly(80);
 
   chassis.set_drive_pid(conv(2.5), 50);
   chassis.wait_drive(); 
@@ -83,7 +83,7 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.wait_drive(); 
 
   // turn to goal
-  chassis.set_turn_pid(168, 75);
+  chassis.set_turn_pid(167.6, 75);
   chassis.wait_drive();
 
   delay(1200);
@@ -112,13 +112,13 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.set_turn_pid(195, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(48.5), 100, false, true);
+  chassis.set_drive_pid(conv(46.5), 100, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(222, 50);
+  chassis.set_turn_pid(225, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(77), 110, false, true);
+  chassis.set_drive_pid(conv(71), 110, false, true);
   chassis.wait_drive();
   
   chassis.set_turn_pid(282, 50);
@@ -279,7 +279,7 @@ void jiggle(double speedPCT, int msec){
 void halfWPleft(){ // left colour wheel; shoot 5
   tuning_constants();
   setDisc(2);
-  setFly(79.5);
+  setFly(80);
 
   chassis.set_drive_pid(conv(2.5), 50);
   chassis.wait_drive(); 
