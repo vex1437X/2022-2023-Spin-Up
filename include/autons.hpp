@@ -9,6 +9,7 @@ double conv(double i);
 void default_constants();
 void tuning_constants();
 void sinCalc(void*);
+void none();
 void tune_PID();
 void winpoint();
 void halfWPright();

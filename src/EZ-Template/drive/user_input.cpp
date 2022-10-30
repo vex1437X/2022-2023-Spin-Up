@@ -219,16 +219,16 @@ void Drive::tank() {
 
 
   // Toggle Drive Speed
-  if (master.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
-    if (dspeedToggle == false){
-        multFac = .15;
-        dspeedToggle = true;
-    } else if (dspeedToggle == true){
-        multFac = 1;
-        dspeedToggle = false;
-    }
-    delay(200);
-  }
+  // if (master.get_digital(E_CONTROLLER_DIGITAL_LEFT)){
+  //   if (dspeedToggle == false){
+  //       multFac = .15;
+  //       dspeedToggle = true;
+  //   } else if (dspeedToggle == true){
+  //       multFac = 1;
+  //       dspeedToggle = false;
+  //   }
+  //   delay(200);
+  // }
 
   // Set robot to l_stick and r_stick, check joystick threshold, set active brake
   joy_thresh_opcontrol(l_stick*multFac, r_stick*multFac);

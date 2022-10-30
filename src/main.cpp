@@ -64,8 +64,9 @@ void initialize() {
   ez::as::auton_selector.add_autons({
     // Auton("PID Tuner\n", tune_PID),
     Auton("Half WP Right\n", halfWPright),
-    Auton("Winpoint\n", winpoint),
     Auton("Half WP Left\n", halfWPleft),
+    Auton("Winpoint\n", winpoint),
+    Auton("None\n", none),
     Auton("Skills Auton\n", skills)
   });
 
@@ -133,16 +134,16 @@ void opcontrol() {
     chassis.tank();
 
     // Coast/Brake drive toggle 
-		if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
-    		if (braketoggle == true){
-          chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
-          braketoggle = false;
-			} else if (braketoggle == false){
-          chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-          braketoggle = true;
-			}
-      delay(250);
-  	}
+		// if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
+    // 		if (braketoggle == true){
+    //       chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
+    //       braketoggle = false;
+		// 	} else if (braketoggle == false){
+    //       chassis.set_drive_brake(MOTOR_BRAKE_COAST);
+    //       braketoggle = true;
+		// 	}
+    //   delay(250);
+  	// }
     delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }

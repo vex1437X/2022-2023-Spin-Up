@@ -165,6 +165,21 @@ void intakeControl(){
       delay(250);
   }
 
+  // Toggle colour wheel intake (SLOW)
+  if (master.get_digital(E_CONTROLLER_DIGITAL_UP) && !stop){
+    if (intaketoggle == false){
+      setIntake(-50);
+      intaketoggle = true;
+      isIntakeOn = true;
+    } else if (intaketoggle == true){
+      // set back to idle
+      setIntake(0);
+      intaketoggle = false;
+      isIntakeOn = false;
+    }
+      delay(250);
+  }
+
   // Toggle intake reverse
   if (master.get_digital(E_CONTROLLER_DIGITAL_R2) && !stop){
     if (intaketoggle1 == false){

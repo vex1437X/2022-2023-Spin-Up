@@ -10,6 +10,8 @@
 
 Imu imu(13);
 
+void none(){}
+
 const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
                              // If this is 127 and the robot tries to heading correct, it's only correcting by
                              // making one side slower.  When this is 87%, it's correcting by making one side
@@ -97,7 +99,7 @@ void tune_PID() {
 void winpoint(){ // both colour wheels; shoot 2
   tuning_constants();
   setDisc(2);
-  setFly(80);
+  setFly(82);
 
   chassis.set_drive_pid(conv(2.5), 50);
   chassis.wait_drive(); 
@@ -121,7 +123,7 @@ void winpoint(){ // both colour wheels; shoot 2
   fireOneDisc();
   tripleIndexer.set_value(false);
   setDisc(1);
-  setFly(79);
+  setFly(79.5);
 
   delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
@@ -143,10 +145,10 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.set_drive_pid(conv(46.5), 100, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(225, 50);
+  chassis.set_turn_pid(228, 50);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(71), 110, false, true);
+  chassis.set_drive_pid(conv(68), 110, false, true);
   chassis.wait_drive();
   
   chassis.set_turn_pid(282, 50);
@@ -220,19 +222,20 @@ void halfWPright(){ // right colour wheel; shoot 3
 void halfWPright(){ // right colour wheel; shoot 5
   tuning_constants();
 
-  setFly(77.5); // spin up flywheel instantly
+  setFly(80); // spin up flywheel instantly
 
   setIntake(100);
   chassis.set_drive_pid(conv(30), 90); // drive closer to the centre line to shoot
   chassis.wait_drive();
 
-  chassis.set_turn_pid(19.3, 65); // turn to be parallel with the centre line
+  chassis.set_turn_pid(22.3, 65); // turn to be parallel with the centre line
   chassis.wait_drive();
 
   delay(800);
 
   setIntake(100);
   tripleIndexer.set_value(false);
+  // shoot first
   fireOneDisc();
   tripleIndexer.set_value(false);
   delay(850); // wait for flywheel to get up to speed
@@ -247,17 +250,17 @@ void halfWPright(){ // right colour wheel; shoot 5
   setDisc(0);
   setIntake(100);
 
-  chassis.set_turn_pid(-46.5, 70); // turn to be parallel with the centre line
+  chassis.set_turn_pid(-46, 85); // turn to be parallel with the centre line
   chassis.wait_drive();
 
-  setFly(76.6);
+  setFly(77.5);
 
   chassis.set_pid_constants(&chassis.forward_drivePID, 0.22, 0.02, 0, 0);
-  chassis.set_drive_pid(conv(44), 105);
+  chassis.set_drive_pid(conv(39.3), 105);
   chassis.wait_drive();
   tuning_constants();
 
-  chassis.set_turn_pid(39, 80); // turn to goal
+  chassis.set_turn_pid(47, 80); // turn to goal
   chassis.wait_drive();
 
   // shoot 4th disc
@@ -270,20 +273,21 @@ void halfWPright(){ // right colour wheel; shoot 5
   setDisc(0);
   setIntake(0);
 
-  chassis.set_turn_pid(135, 70); // turn to be parallel with the centre line
+  chassis.set_turn_pid(135, 90); // turn to be parallel with the centre line
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(62), 127);
+  chassis.set_drive_pid(conv(72), 127);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(180, 70); // turn to be perpendicular with the colour wheel
-  chassis.wait_drive();
-
-  chassis.set_drive_pid(conv(25), 90); // drive into colour wheel
+  chassis.set_turn_pid(180, 100); // turn to be perpendicular with the colour wheel
   chassis.wait_drive();
 
   setIntake(-100);
-  delay(650);
+  chassis.set_drive_pid(conv(27), 127); // drive into colour wheel
+  chassis.wait_drive();
+
+  
+  delay(550);
   setIntake(0);
 
   chassis.set_drive_pid(conv(-3), 70); // drive out of colour wheel
@@ -293,13 +297,13 @@ void halfWPright(){ // right colour wheel; shoot 5
 void halfWPleft(){ // left colour wheel; shoot 5
   tuning_constants();
   setDisc(2);
-  setFly(80);
+  setFly(80.7);
 
   chassis.set_drive_pid(conv(2.5), 50);
   chassis.wait_drive(); 
 
   setIntake(-100); // turn colour wheel
-  delay(200);
+  delay(130);
   setIntake(0);
 
   // drive backwards so turn doesnt collide with the wall
@@ -308,7 +312,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
 
 
   // turn to goal
-  chassis.set_turn_pid(169, 75);
+  chassis.set_turn_pid(167.8, 75);
   chassis.wait_drive();
 
   delay(1200);
@@ -329,18 +333,18 @@ void halfWPleft(){ // left colour wheel; shoot 5
 
   setIntake(100);
 
-  chassis.set_drive_pid(conv(35), 90, false, true);
+  chassis.set_drive_pid(conv(32), 90, false, true);
   chassis.wait_drive();
 
   chassis.set_drive_pid(conv(-5), 60, false, true);
   chassis.wait_drive();
 
-  setFly(75);
+  setFly(76.8);
 
-  chassis.set_drive_pid(conv(33), 70, false, true);
+  chassis.set_drive_pid(conv(29), 70, false, true);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(134.5, 70);
+  chassis.set_turn_pid(134.3, 70);
   chassis.wait_drive();
   delay(500);
 
