@@ -2,22 +2,9 @@
 #include "main.h"
 #include "pros/imu.h"
 
-
-/////
-// For instalattion, upgrading, documentations and tutorials, check out website!
-// https://ez-robotics.github.io/EZ-Template/
-/////
-
 Imu imu(13);
 
 void none(){}
-
-const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
-                             // If this is 127 and the robot tries to heading correct, it's only correcting by
-                             // making one side slower.  When this is 87%, it's correcting by making one side
-                             // faster and one side slower, giving better heading correction.
-const int TURN_SPEED  = 90;
-const int SWING_SPEED = 90;
 
 void default_constants() {
   chassis.set_slew_min_power(80, 80);
@@ -45,13 +32,14 @@ double conv(double i){
 }
 
 double sinSpeed;
-
+double sinConst;
 
 void sinCalc(void*){
   int t = 0;
   while(true){
-    sinSpeed = sin(2.5*t);
+    sinSpeed = sin(sinConst*t);
     t+=0.1;
+    delay(100);
   }
 }
 
@@ -60,16 +48,27 @@ Motor L2(18, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
 Motor R1(19, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 Motor R2(20, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 
-void jiggle(double sec){
-  L1.move(sinSpeed*127);
-  L2.move(sinSpeed*127);
-  R1.move(-sinSpeed*127);
-  R2.move(-sinSpeed*127);
-  delay(sec*1000);
-  L1.move(0);
-  L2.move(0);
-  R1.move(0);
-  R2.move(-sinSpeed*1.27);
+void jiggle(double sec, double sinConstant){
+  sinConst = sinConstant;
+  double msec = sec*1000;
+  double count = 0;
+  while(count*10 < msec){
+    L1.move(sinSpeed*127);
+    L2.move(sinSpeed*127);
+    R1.move(-sinSpeed*127);
+    R2.move(-sinSpeed*127);
+    delay(100);
+    L1.move(0);
+    L2.move(0);
+    R1.move(0);
+    R2.move(-sinSpeed*1.27);
+    count+=msec/120;
+    delay(20);
+  }
+}
+
+void jiggletest(){
+  jiggle(1, 2.5);
 }
 
 void tune_PID() {
@@ -98,7 +97,6 @@ void tune_PID() {
 
 void winpoint(){ // both colour wheels; shoot 2
   tuning_constants();
-  setDisc(2);
   setFly(82);
 
   chassis.set_drive_pid(conv(2.5), 50);
@@ -122,13 +120,11 @@ void winpoint(){ // both colour wheels; shoot 2
   tripleIndexer.set_value(false);
   fireOneDisc();
   tripleIndexer.set_value(false);
-  setDisc(1);
   setFly(79.5);
 
   delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();
-  setDisc(0);
   setFly(30);
 
   chassis.set_turn_pid(270, 70);
@@ -167,58 +163,6 @@ void winpoint(){ // both colour wheels; shoot 2
   chassis.set_drive_pid(conv(-4), 70);
 }
 
-/*
-void halfWPright(){ // right colour wheel; shoot 3
-  tuning_constants();
-
-  setFly(75.5); // spin up flywheel instantly
-
-  setIntake(100);
-  chassis.set_drive_pid(conv(30), 70); // drive closer to the centre line to shoot
-  chassis.wait_drive();
-
-  chassis.set_turn_pid(19.3, 65); // turn to be parallel with the centre line
-  chassis.wait_drive();
-
-  delay(1000);
-
-  setIntake(100);
-  tripleIndexer.set_value(false);
-  fireOneDisc();
-  tripleIndexer.set_value(false);
-  delay(1600); // wait for flywheel to get up to speed
-
-  // shoot 2nd disc
-  fireOneDisc();
-  delay(1600); // wait for flywheel to get up to speed
-
-  // shoot 3nd disc
-  fireOneDisc();
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
-  setDisc(0);
-  setIntake(0);
-
-  chassis.set_turn_pid(135, 70); // turn to be parallel with the centre line
-  chassis.wait_drive();
-
-  chassis.set_drive_pid(conv(35), 90);
-  chassis.wait_drive();
-
-  chassis.set_turn_pid(180, 70); // turn to be perpendicular with the colour wheel
-  chassis.wait_drive();
-
-  chassis.set_drive_pid(conv(25), 90); // drive into colour wheel
-  chassis.wait_drive();
-
-  setIntake(-100);
-  delay(500);
-  setIntake(0);
-
-  chassis.set_drive_pid(conv(-3), 70); // drive out of colour wheel
-  chassis.wait_drive();
-}
-*/
-
 void halfWPright(){ // right colour wheel; shoot 5
   tuning_constants();
 
@@ -247,7 +191,6 @@ void halfWPright(){ // right colour wheel; shoot 5
   // shoot 3nd disc
   fireOneDisc();
   setFly(30); //idle flywheel; easier to ramp up speed for next shot
-  setDisc(0);
   setIntake(100);
 
   chassis.set_turn_pid(-46, 85); // turn to be parallel with the centre line
@@ -270,7 +213,6 @@ void halfWPright(){ // right colour wheel; shoot 5
   // shoot 5th disc
   fireOneDisc();
   setFly(30); //idle flywheel; easier to ramp up speed for next shot
-  setDisc(0);
   setIntake(0);
 
   chassis.set_turn_pid(135, 90); // turn to be parallel with the centre line
@@ -296,7 +238,6 @@ void halfWPright(){ // right colour wheel; shoot 5
 
 void halfWPleft(){ // left colour wheel; shoot 5
   tuning_constants();
-  setDisc(2);
   setFly(80.7);
 
   chassis.set_drive_pid(conv(2.5), 50);
@@ -319,13 +260,10 @@ void halfWPleft(){ // left colour wheel; shoot 5
 
   // shoot 1st disc
   fireOneDisc();
-  setDisc(1);
-
 
   delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();
-  setDisc(0);
   setFly(30);
 
   chassis.set_turn_pid(229, 70);
@@ -358,7 +296,6 @@ void halfWPleft(){ // left colour wheel; shoot 5
   delay(1000); // wait for flywheel to get up to speed again
   // shoot 5th disc
   fireOneDisc();
-  setDisc(0);
   setFly(30);
 }
 

@@ -21,8 +21,6 @@ void fireOneDisc();
 
 void setIntake(int percent);
 
-void setDisc(int num);
-
 void setIndexState(bool state);
 
 bool getIndexState();

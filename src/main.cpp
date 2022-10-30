@@ -77,40 +77,21 @@ void initialize() {
   tripleIndexer.set_value(false);
   indexer.set_value(false);
   toggleSingle.set_value(true);
-  // fireOneDisc();
 }
 
-void disabled() {
-  // . . .
-}
+void disabled() {}
 
-
-/**
- * Runs after initialize(), and before autonomous when connected to the Field
- * Management System or the VEX Competition Switch. This is intended for
- * competition-specific initialization routines, such as an autonomous selector
- * on the LCD.
- *
- * This task will exit when the robot is enabled and autonomous or opcontrol
- * starts.
- */
-void competition_initialize() {
-  // . . .
-}
+void competition_initialize() {}
 
 void autonomous() {
   chassis.reset_pid_targets(); // Resets PID targets to 0
   chassis.reset_gyro(); // Reset gyro position to 0
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
-  // Task sinCalc1(sinCalc, nullptr);
+  Task sinCalc1(sinCalc, nullptr);
+  void jiggletest();
 
-  ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
-
-  // tune_PID();
-  // winpoint();
-  // halfWPright();
-  // halfWPleft();
+  // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
 
 void opcontrol() {
@@ -132,18 +113,7 @@ void opcontrol() {
     flywheelControl();
     intakeControl();
     chassis.tank();
-
-    // Coast/Brake drive toggle 
-		// if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
-    // 		if (braketoggle == true){
-    //       chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
-    //       braketoggle = false;
-		// 	} else if (braketoggle == false){
-    //       chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-    //       braketoggle = true;
-		// 	}
-    //   delay(250);
-  	// }
+    
     delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
