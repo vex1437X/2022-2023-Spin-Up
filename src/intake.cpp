@@ -204,20 +204,6 @@ void intakeControl(){
   }
   // Toggle indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_DOWN)){
-    /*
-    if (indexState == true){
-      if (numDisc > 0){
-        numDisc--;
-      }
-      indexer.set_value(indexState);
-      indexState = false;
-    }
-    delay(500);
-    if (indexState == false){
-      indexer.set_value(indexState);
-      indexState = true;
-    }
-    */
     fireOneDisc();
     delay(20);
     if (numDisc > 0){
@@ -230,16 +216,6 @@ void intakeControl(){
 
   // Toggle triple indexer
   if (master.get_digital(E_CONTROLLER_DIGITAL_B)){
-    /*
-    tripleIndexer.set_value(true);
-    numDisc = 0;
-    delay(100);
-    indexer.set_value(true);
-    delay(500);
-    indexer.set_value(false);
-    tripleIndexer.set_value(false);
-    setflypct(30);
-    */
     fireThreeDiscs();
     delay(20);
     numDisc = 0;
