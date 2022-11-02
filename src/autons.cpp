@@ -73,7 +73,12 @@ void jiggle(double sec, double sinConstant){
 }
 
 void jiggletest(){
-  jiggle(1, 2);
+  setIntake(100);
+  chassis.set_drive_pid(conv(15), 100);
+  chassis.wait_drive();
+  chassis.set_drive_pid(conv(-4), 100);
+  chassis.wait_drive();
+  jiggle(1, 1.5);
 }
 
 void tune_PID() {
