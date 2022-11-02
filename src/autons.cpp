@@ -1,6 +1,7 @@
 #include "intake.hpp"
 #include "main.h"
 #include "pros/imu.h"
+#include <cmath>
 
 Imu imu(13);
 
@@ -31,44 +32,48 @@ double conv(double i){
   return i * 3.8;
 }
 
-double sinSpeed;
-double sinConst;
+double sinSpeedL = 0;
+double sinSpeedR = 0;
+double sinConst = 2.5;
+double LRoffset = M_PI/2;
 
 void sinCalc(void*){
-  int t = 0;
+  double t = 0;
   while(true){
-    sinSpeed = sin(sinConst*t);
     t+=0.1;
-    delay(100);
+    sinSpeedL = sin(sinConst*t-LRoffset);
+    sinSpeedR = sin(sinConst*t+LRoffset);
+    if(fabs(sinSpeedL < 0.2))sinSpeedL = 0.2;
+    if(fabs(sinSpeedR < 0.2))sinSpeedR = 0.2;
+    printf("sinSpeedL: %f \n", sinSpeedL);
+    printf("sinSpeedR: %f \n", sinSpeedR);
+    printf("t: %f \n", t);
+    delay(10);
   }
 }
-
-Motor L1(17, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
-Motor L2(18, E_MOTOR_GEARSET_06, true, E_MOTOR_ENCODER_COUNTS);
-Motor R1(19, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
-Motor R2(20, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
 
 void jiggle(double sec, double sinConstant){
   sinConst = sinConstant;
   double msec = sec*1000;
   double count = 0;
-  while(count*10 < msec){
-    L1.move(sinSpeed*127);
-    L2.move(sinSpeed*127);
-    R1.move(-sinSpeed*127);
-    R2.move(-sinSpeed*127);
-    delay(100);
-    L1.move(0);
-    L2.move(0);
-    R1.move(0);
-    R2.move(-sinSpeed*1.27);
-    count+=msec/120;
-    delay(20);
+  printf("Msec: %f \n", msec);
+  while(count < msec){
+    chassis.left_motors[0].move_voltage(12000*sinSpeedL);
+    chassis.left_motors[1].move_voltage(12000*sinSpeedL);
+    chassis.right_motors[0].move_voltage(12000*sinSpeedR);
+    chassis.right_motors[1].move_voltage(12000*sinSpeedR);
+    count++;
+    printf("Count: %f \n", count);
+    delay(10);
   }
+  chassis.left_motors[0].move_voltage(0);
+  chassis.left_motors[1].move_voltage(0);
+  chassis.right_motors[0].move_voltage(0);
+  chassis.right_motors[1].move_voltage(0);
 }
 
 void jiggletest(){
-  jiggle(1, 2.5);
+  jiggle(1, 2);
 }
 
 void tune_PID() {

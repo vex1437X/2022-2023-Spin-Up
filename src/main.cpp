@@ -89,7 +89,8 @@ void autonomous() {
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
   Task sinCalc1(sinCalc, nullptr);
-  void jiggletest();
+
+  jiggletest();
 
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
@@ -97,6 +98,11 @@ void autonomous() {
 void opcontrol() {
   // Task anti_jam_task(anti_jam, nullptr);
   Task limit(limitS, nullptr);
+
+  chassis.left_motors[0].move_voltage(0);
+  chassis.left_motors[1].move_voltage(0);
+  chassis.right_motors[0].move_voltage(0);
+  chassis.right_motors[1].move_voltage(0);
 
   // idle the flywheel @ 30%
 	setflypct(30);

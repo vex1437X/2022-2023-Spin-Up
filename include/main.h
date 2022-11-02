@@ -43,6 +43,7 @@
 //#include "pros/api_legacy.h"
 #include "EZ-Template/api.hpp"
 #include "autons.hpp"
+#include "EZ-Template/drive/drive.hpp"
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
@@ -66,6 +67,7 @@ using namespace pros;
 #ifdef __cplusplus
 #include "flywheel.hpp"
 #include "intake.hpp"
+#include "EZ-Template/drive/drive.hpp"
 extern "C" {
 #endif
 void autonomous(void);
