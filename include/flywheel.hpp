@@ -7,6 +7,8 @@ extern Motor flymotor2;
 
 void setFly(double percent);
 
+double getActVolt();
+
 int getFlyVolt();
 
 void setflypct(int set);
