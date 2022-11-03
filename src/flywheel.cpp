@@ -9,6 +9,12 @@ double flypct = 0;
 bool flytoggle = false;
 bool flytoggle1 = false;
 
+bool canFire1 = false;
+
+bool canFire(){
+  return canFire;
+}
+
 void setFly(double percent){
   /* move voltage *
   // percent to voltage
@@ -23,7 +29,9 @@ void setFly(double percent){
   double targetRPM = 600*percent; // 600 is max internal rpm :: total rpm of system is 600*5/1 = 3000 rpm
   double mV = 12000*percent;       // 12000 is max mV          20 mV : 1 rpm
   double exMV = 0;
-  if (getActVolt() < targetRPM-10 || getActVolt() > targetRPM+10) exMV = 20*(targetRPM - getActVolt());
+  canFire1 = false;
+  if (getActVolt() < targetRPM-10 || getActVolt() > targetRPM+10) {exMV = 20*(targetRPM - getActVolt());}
+  else{canFire1 = true;}
 
   flymotor1.move_voltage(mV + exMV);
   flymotor2.move_voltage(mV + exMV);
