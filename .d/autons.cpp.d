@@ -1,4 +1,4 @@
-bin/autons.cpp.o: src/autons.cpp include/intake.hpp include/main.h \
+bin/autons.cpp.o: src/autons.cpp include/flywheel.hpp include/main.h \
  include/api.h include/pros/adi.h include/pros/colors.h \
  include/pros/distance.h include/pros/ext_adi.h include/pros/adi.h \
  include/pros/adi.h include/pros/gps.h include/pros/imu.h \
@@ -78,8 +78,8 @@ bin/autons.cpp.o: src/autons.cpp include/intake.hpp include/main.h \
  include/EZ-Template/util.hpp include/EZ-Template/auton.hpp \
  include/EZ-Template/auton_selector.hpp \
  include/EZ-Template/drive/drive.hpp include/EZ-Template/sdcard.hpp \
- include/autons.hpp include/flywheel.hpp include/main.h
-include/intake.hpp:
+ include/autons.hpp include/intake.hpp include/main.h
+include/flywheel.hpp:
 include/main.h:
 include/api.h:
 include/pros/adi.h:
@@ -236,5 +236,5 @@ include/EZ-Template/auton_selector.hpp:
 include/EZ-Template/drive/drive.hpp:
 include/EZ-Template/sdcard.hpp:
 include/autons.hpp:
-include/flywheel.hpp:
+include/intake.hpp:
 include/main.h:

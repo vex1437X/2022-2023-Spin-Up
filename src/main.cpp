@@ -90,7 +90,7 @@ void autonomous() {
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
   Task sinCalc1(sinCalc, nullptr);
 
-  jiggletest();
+  testCode();
 
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }

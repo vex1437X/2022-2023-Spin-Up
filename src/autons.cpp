@@ -1,3 +1,4 @@
+#include "flywheel.hpp"
 #include "intake.hpp"
 #include "main.h"
 #include "pros/imu.h"
@@ -72,7 +73,15 @@ void jiggle(double sec, double sinConstant){
   chassis.right_motors[1].move_voltage(0);
 }
 
-void jiggletest(){
+void tripleAuto(){       // shoot 3 in auton
+  for (int i = 0; i < 3; i++){
+    while(!canFire()){
+      delay(10);
+    } 
+    if(canFire()) fireOneDisc();
+  }
+}
+void testCode(){
   setIntake(100);
   chassis.set_drive_pid(conv(15), 100);
   chassis.wait_drive();

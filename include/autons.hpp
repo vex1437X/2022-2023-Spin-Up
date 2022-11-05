@@ -9,7 +9,7 @@ double conv(double i);
 void default_constants();
 void tuning_constants();
 void sinCalc(void*);
-void jiggletest();
+void testCode();
 void none();
 void tune_PID();
 void winpoint();
