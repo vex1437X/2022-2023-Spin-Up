@@ -116,7 +116,7 @@ void tune_PID() {
 
 void winpoint(){ // both colour wheels; shoot 2
   tuning_constants();
-  setFly(82);
+  setFlyAuto(82);
 
   chassis.set_drive_pid(conv(2.5), 50);
   chassis.wait_drive(); 
@@ -139,12 +139,12 @@ void winpoint(){ // both colour wheels; shoot 2
   tripleIndexer.set_value(false);
   fireOneDisc();
   tripleIndexer.set_value(false);
-  setFly(79.5);
+  setFlyAuto(79.5);
 
   delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();
-  setFly(30);
+  setFlyAuto(30);
 
   chassis.set_turn_pid(270, 70);
   chassis.wait_drive();
@@ -185,7 +185,7 @@ void winpoint(){ // both colour wheels; shoot 2
 void halfWPright(){ // right colour wheel; shoot 5
   tuning_constants();
 
-  setFly(80); // spin up flywheel instantly
+  setFlyAuto(80); // spin up flywheel instantly
 
   setIntake(100);
   chassis.set_drive_pid(conv(30), 90); // drive closer to the centre line to shoot
@@ -209,13 +209,13 @@ void halfWPright(){ // right colour wheel; shoot 5
 
   // shoot 3nd disc
   fireOneDisc();
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
   setIntake(100);
 
   chassis.set_turn_pid(-46, 85); // turn to be parallel with the centre line
   chassis.wait_drive();
 
-  setFly(77.5);
+  setFlyAuto(77.5);
 
   chassis.set_pid_constants(&chassis.forward_drivePID, 0.22, 0.02, 0, 0);
   chassis.set_drive_pid(conv(39.3), 105);
@@ -231,7 +231,7 @@ void halfWPright(){ // right colour wheel; shoot 5
 
   // shoot 5th disc
   fireOneDisc();
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
   setIntake(0);
 
   chassis.set_turn_pid(135, 90); // turn to be parallel with the centre line
@@ -257,7 +257,7 @@ void halfWPright(){ // right colour wheel; shoot 5
 
 void halfWPleft(){ // left colour wheel; shoot 5
   tuning_constants();
-  setFly(80.7);
+  setFlyAuto(80.7);
 
   chassis.set_drive_pid(conv(2.5), 50);
   chassis.wait_drive(); 
@@ -283,7 +283,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
   delay(1100); // wait for flywheel to get up to speed again
   // shoot 2nd disc
   fireOneDisc();
-  setFly(30);
+  setFlyAuto(30);
 
   chassis.set_turn_pid(229, 70);
   chassis.wait_drive();
@@ -296,7 +296,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
   chassis.set_drive_pid(conv(-5), 60, false, true);
   chassis.wait_drive();
 
-  setFly(76.8);
+  setFlyAuto(76.8);
 
   chassis.set_drive_pid(conv(29), 70, false, true);
   chassis.wait_drive();
@@ -315,7 +315,7 @@ void halfWPleft(){ // left colour wheel; shoot 5
   delay(1000); // wait for flywheel to get up to speed again
   // shoot 5th disc
   fireOneDisc();
-  setFly(30);
+  setFlyAuto(30);
 }
 
 void skillsPID1() {
@@ -332,7 +332,7 @@ void skills(){
   double o = 3; // starting orientation offset
   skillsPID1();
 
-  setFly(30);
+  setFlyAuto(30);
 
   chassis.set_drive_pid(conv(2.5), 80); // drive into colour wheel
   chassis.wait_drive(); 
@@ -358,7 +358,7 @@ void skills(){
   chassis.set_drive_pid(conv(33), 80); // intake one disc // and go to colour wheel
   chassis.wait_drive();
 
-  setFly(76);
+  setFlyAuto(76);
 
   setIntake(-100); // turn colour wheel
   delay(100);
@@ -388,7 +388,7 @@ void skills(){
   // shoot 3nd disc
   fireOneDisc();
 
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
 
   chassis.set_turn_pid(270+o, 80); // turn to triple stack
   chassis.wait_drive();
@@ -400,7 +400,7 @@ void skills(){
   chassis.set_drive_pid(conv(-2), 40); // back up a little
   chassis.wait_drive(); 
 
-  setFly(75);
+  setFlyAuto(75);
 
   chassis.set_drive_pid(conv(20), 75); // intake triple stack
   chassis.wait_drive();
@@ -422,7 +422,7 @@ void skills(){
   // shoot 3nd disc
   fireOneDisc();
 
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
 
   chassis.set_turn_pid(270+o, 80); // turn to other triple stack
   chassis.wait_drive();
@@ -435,7 +435,7 @@ void skills(){
 
   setIntake(100);
 
-  setFly(75);
+  setFlyAuto(75);
 
   chassis.set_drive_pid(conv(20), 75); // intake triple stack
   chassis.wait_drive();
@@ -457,14 +457,14 @@ void skills(){
   // shoot 3nd disc
   fireOneDisc();
 
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
 
   chassis.set_turn_pid(230+o, 80); // turn towards three lined up discs and colour wheel-ish
   chassis.wait_drive();
 
   setIntake(100);
 
-  setFly(76);
+  setFlyAuto(76);
 
   chassis.set_drive_pid(conv(50), 75); // intake the three consecutive discs
   chassis.wait_drive();
@@ -486,7 +486,7 @@ void skills(){
   // shoot 3nd disc
   fireOneDisc();
 
-  setFly(30); //idle flywheel; easier to ramp up speed for next shot
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
 
   chassis.set_turn_pid(230+o, 80); // turn towards colour wheel-ish
   chassis.wait_drive();

@@ -9,32 +9,41 @@ double flypct = 0;
 bool flytoggle = false;
 bool flytoggle1 = false;
 
+double autpct = 0;
+
 bool canFire1 = false;
 
 bool canFire(){
   return canFire1;
 }
 
-void setFly(double percent){
-  /* move voltage *
+void flyCalc(void*){
+  while (true){
+    // * voltage/rpm correction *           Use task for this version of setFly
+    // percent to miliVolts
+    double targetRPM = 600*autpct; // 600 is max internal rpm :: total rpm of system is 600*5/1 = 3000 rpm
+    double mV = 12000*autpct;       // 12000 is max mV          20 mV : 1 rpm
+    double exMV = 0;                 // extra mV needed to be added to flywheel
+    // canFire1 = false;
+    if (getActRPM() < targetRPM-10 || getActRPM() > targetRPM+10) {exMV = 20*(targetRPM - getActRPM()); canFire1 = false;}
+    else{canFire1 = true;}
+
+    flymotor1.move_voltage(mV + exMV);
+    flymotor2.move_voltage(mV + exMV);
+  }
+}
+
+void setFlyAuto(double percent){
+  autpct = percent/100;
+}
+
+void setFlyDriver(double percent){
+  //  * move voltage *
   // percent to voltage
   int voltage = percent*1.27;
   // -127 to +127
   flymotor1.move(voltage);
   flymotor2.move(voltage);
-  */
-
-  // * voltage/rpm correction *
-  // percent to miliVolts
-  double targetRPM = 600*percent; // 600 is max internal rpm :: total rpm of system is 600*5/1 = 3000 rpm
-  double mV = 12000*percent;       // 12000 is max mV          20 mV : 1 rpm
-  double exMV = 0;                 // extra mV needed to be added to flywheel
-  canFire1 = false;
-  if (getActVolt() < targetRPM-10 || getActVolt() > targetRPM+10) {exMV = 20*(targetRPM - getActVolt());}
-  else{canFire1 = true;}
-
-  flymotor1.move_voltage(mV + exMV);
-  flymotor2.move_voltage(mV + exMV);
 
   /* move velocity PID
   // percent to RPM
@@ -45,7 +54,7 @@ void setFly(double percent){
   */
 }
 
-double getActVolt(){
+double getActRPM(){
   return (flymotor1.get_actual_velocity()+flymotor2.get_actual_velocity())/2;
 }
 
@@ -84,7 +93,7 @@ void flywheelControl(){
     }
     delay(250);
   }
-  setFly(flypct);
+  setFlyDriver(flypct);
   master.print(0, 0, "Fly: %f", flypct);
 }
 

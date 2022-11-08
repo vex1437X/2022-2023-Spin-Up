@@ -89,6 +89,7 @@ void autonomous() {
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
   Task sinCalc1(sinCalc, nullptr);
+  Task flyCalc1(flyCalc, nullptr);
 
   testCode();
 

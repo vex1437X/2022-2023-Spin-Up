@@ -5,11 +5,15 @@ extern Motor flymotor1;
 extern Motor flymotor2;
 
 
-void setFly(double percent);
+void flyCalc(void*);
+
+void setFlyAuto(double percent);
+
+void setFlyDriver(double percent);
 
 bool canFire();
 
-double getActVolt();
+double getActRPM();
 
 int getFlyVolt();
 
