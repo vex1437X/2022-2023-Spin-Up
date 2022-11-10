@@ -63,7 +63,7 @@ void jiggle(double sec, double sinConstant){
     chassis.left_motors[1].move_voltage(12000*sinSpeedL);
     chassis.right_motors[0].move_voltage(12000*sinSpeedR);
     chassis.right_motors[1].move_voltage(12000*sinSpeedR);
-    count++;
+    count+=10;
     printf("Count: %f \n", count);
     delay(10);
   }
@@ -82,12 +82,19 @@ void tripleAuto(){       // shoot 3 in auton
   }
 }
 void testCode(){
+  tuning_constants();
+  // setFlyAuto(85);
+  // chassis.set_turn_pid(-32.5, 75);
+  // chassis.wait_drive();
+  // tripleAuto();
+  chassis.set_pid_constants(&chassis.forward_drivePID, 0.5, 0.1, 0, 5);
+  chassis.set_drive_pid(conv(8), 100);
+  chassis.wait_drive(); 
   setIntake(100);
-  chassis.set_drive_pid(conv(15), 100);
-  chassis.wait_drive();
-  chassis.set_drive_pid(conv(-4), 100);
-  chassis.wait_drive();
-  jiggle(1, 1.5);
+
+  jiggle(3, 2);
+
+  // tripleAuto();
 }
 
 void tune_PID() {
