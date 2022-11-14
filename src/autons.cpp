@@ -81,6 +81,24 @@ void tripleAuto(){       // shoot 3 in auton
     if(canFire()) fireOneDisc();
   }
 }
+
+void doubleAuto(){       // shoot 2 in auton
+  for (int i = 0; i < 2; i++){
+    while(!canFire()){
+      delay(10);
+    } 
+    if(canFire()) fireOneDisc();
+  }
+}
+void singleAuto(){       // shoot 1 in auton
+  for (int i = 0; i < 1; i++){
+    while(!canFire()){
+      delay(10);
+    } 
+    if(canFire()) fireOneDisc();
+  }
+}
+
 void testCode(){
   tuning_constants();
   // setFlyAuto(85);
@@ -505,4 +523,60 @@ void skills(){
   chassis.wait_drive();
 
   // AT THIS POINT SHOULD HAVE 12 DISCS AND 2 COLOUR WHEELS 
+}
+
+// JIGGLES
+
+void newhalfWPleft(){ // left colour wheel; shoot 6
+  tuning_constants();
+  setFlyAuto(85.6);
+
+  chassis.set_drive_pid(conv(2.5), 50);
+  chassis.wait_drive(); 
+
+  setIntake(-100); // turn colour wheel
+  delay(130);
+  setIntake(0);
+
+  // drive backwards so turn doesnt collide with the wall
+  chassis.set_drive_pid(conv(-6), 80);
+  chassis.wait_drive(); 
+
+
+  // turn to goal
+  chassis.set_turn_pid(168.3, 75);
+  chassis.wait_drive();
+
+  doubleAuto();
+
+  chassis.set_turn_pid(229, 70);
+  chassis.wait_drive();
+  setFlyAuto(30);
+
+  setIntake(100);
+
+  chassis.set_drive_pid(conv(32), 90, false, true);
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(-5), 60, false, true);
+  chassis.wait_drive();
+
+  setFlyAuto(78.5);
+  
+  chassis.set_drive_pid(conv(27.5), 70, false, true);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(135.7, 70);
+  chassis.wait_drive();
+
+  tripleAuto();
+
+  setFlyAuto(75);
+
+  chassis.set_drive_pid(conv(11), 70, false, true);
+  chassis.wait_drive();
+
+  delay(2300);
+
+  fireOneDisc();
 }

@@ -91,7 +91,8 @@ void autonomous() {
   Task sinCalc1(sinCalc, nullptr);
   Task flyCalc1(flyCalc, nullptr);
 
-  testCode();
+  // testCode();
+  newhalfWPleft();
 
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
