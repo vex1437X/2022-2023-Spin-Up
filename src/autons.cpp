@@ -139,6 +139,7 @@ void tune_PID() {
   // printf("done2: %d \n", true);
 }
 
+/*
 void winpoint(){ // both colour wheels; shoot 2
   tuning_constants();
   setFlyAuto(82);
@@ -524,8 +525,7 @@ void skills(){
 
   // AT THIS POINT SHOULD HAVE 12 DISCS AND 2 COLOUR WHEELS 
 }
-
-// JIGGLES
+*/
 
 void newhalfWPleft(){ // left colour wheel; shoot 6
   tuning_constants();
@@ -579,4 +579,69 @@ void newhalfWPleft(){ // left colour wheel; shoot 6
   delay(2300);
 
   fireOneDisc();
+}
+
+void newhalfWPright(){ // right colour wheel; shoot 6
+  tuning_constants();
+
+  setFlyAuto(80); // spin up flywheel instantly
+
+  setIntake(100);
+  chassis.set_drive_pid(conv(30), 90); // drive closer to the centre line to shoot
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(22.3, 65); // turn to be parallel with the centre line
+  chassis.wait_drive();
+
+  setIntake(100);
+  
+  tripleAuto();
+  setFlyAuto(78);
+
+  chassis.set_drive_pid(conv(12), 105);
+  chassis.wait_drive();
+
+  singleAuto();
+
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
+
+  chassis.set_drive_pid(conv(-12), 105);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(-46, 85); // turn to be parallel with the centre line
+  chassis.wait_drive();
+
+  setFlyAuto(77.5);
+
+  chassis.set_pid_constants(&chassis.forward_drivePID, 0.22, 0.02, 0, 0);
+  chassis.set_drive_pid(conv(39.3), 105);
+  chassis.wait_drive();
+  tuning_constants();
+
+  chassis.set_turn_pid(47, 80); // turn to goal
+  chassis.wait_drive();
+
+  doubleAuto();
+
+  setIntake(0);
+
+  chassis.set_turn_pid(135, 90); // turn to be parallel with the centre line
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(conv(72), 127);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(180, 100); // turn to be perpendicular with the colour wheel
+  chassis.wait_drive();
+
+  setIntake(-100);
+  chassis.set_drive_pid(conv(27), 127); // drive into colour wheel
+  chassis.wait_drive();
+
+  
+  delay(550);
+  setIntake(0);
+
+  chassis.set_drive_pid(conv(-3), 70); // drive out of colour wheel
+  chassis.wait_drive();
 }

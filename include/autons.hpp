@@ -12,8 +12,11 @@ void sinCalc(void*);
 void testCode();
 void none();
 void tune_PID();
+/*
 void winpoint();
 void halfWPright();
 void halfWPleft();
 void skills();
+*/
 void newhalfWPleft();
+void newhalfWPright();

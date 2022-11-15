@@ -63,11 +63,13 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
     // Auton("PID Tuner\n", tune_PID),
-    Auton("Half WP Right\n", halfWPright),
-    Auton("Half WP Left\n", halfWPleft),
-    Auton("Winpoint\n", winpoint),
+    Auton("Mew Half WP Left\n", newhalfWPleft),
+    Auton("New Half WP Right\n", newhalfWPright),
+    // Auton("Half WP Right\n", halfWPright),
+    // Auton("Half WP Left\n", halfWPleft),
+    // Auton("Winpoint\n", winpoint),
     Auton("None\n", none),
-    Auton("Skills Auton\n", skills)
+    // Auton("Skills Auton\n", skills)
   });
 
   // Initialize chassis and auton selector
@@ -92,9 +94,9 @@ void autonomous() {
   Task flyCalc1(flyCalc, nullptr);
 
   // testCode();
-  newhalfWPleft();
+  // newhalfWPleft();
 
-  // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
+  ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
 
 void opcontrol() {
