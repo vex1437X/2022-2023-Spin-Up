@@ -121,6 +121,18 @@ void opcontrol() {
     flywheelControl();
     intakeControl();
     chassis.tank();
+
+    // Coast/Brake drive toggle 
+		if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
+    		if (braketoggle == true){
+          chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
+          braketoggle = false;
+			} else if (braketoggle == false){
+          chassis.set_drive_brake(MOTOR_BRAKE_COAST);
+          braketoggle = true;
+			}
+      delay(250);
+  	}
     
     delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
