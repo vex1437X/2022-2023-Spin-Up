@@ -539,12 +539,12 @@ void newhalfWPleft(){ // left colour wheel; shoot 6
   setIntake(0);
 
   // drive backwards so turn doesnt collide with the wall
-  chassis.set_drive_pid(conv(-6), 80);
+  chassis.set_drive_pid(conv(-3.5), 80);
   chassis.wait_drive(); 
 
 
   // turn to goal
-  chassis.set_turn_pid(168.3, 75);
+  chassis.set_turn_pid(168.5, 75);
   chassis.wait_drive();
 
   doubleAuto();
@@ -573,10 +573,10 @@ void newhalfWPleft(){ // left colour wheel; shoot 6
 
   setFlyAuto(75);
 
-  chassis.set_drive_pid(conv(11), 70, false, true);
+  chassis.set_drive_pid(conv(11.5), 70, false, true);
   chassis.wait_drive();
 
-  delay(2300);
+  delay(1200);
 
   fireOneDisc();
 }
