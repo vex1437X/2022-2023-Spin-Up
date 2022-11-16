@@ -78,7 +78,10 @@ void tripleAuto(){       // shoot 3 in auton
     while(!canFire()){
       delay(10);
     } 
-    if(canFire()) fireOneDisc();
+    if(canFire()){
+      fireOneDisc();
+    }
+
   }
 }
 
@@ -584,28 +587,32 @@ void newhalfWPleft(){ // left colour wheel; shoot 6
 void newhalfWPright(){ // right colour wheel; shoot 6
   tuning_constants();
 
-  setFlyAuto(80); // spin up flywheel instantly
+  setFlyAuto(80.8); // spin up flywheel instantly
 
   setIntake(100);
-  chassis.set_drive_pid(conv(30), 90); // drive closer to the centre line to shoot
+  chassis.set_drive_pid(conv(21), 90); // drive closer to the centre line to shoot
   chassis.wait_drive();
 
-  chassis.set_turn_pid(22.3, 65); // turn to be parallel with the centre line
+  chassis.set_turn_pid(22.5, 65); // turn to be parallel with the centre line
   chassis.wait_drive();
 
   setIntake(100);
   
   tripleAuto();
-  setFlyAuto(78);
+
+  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
+
+  chassis.set_turn_pid(29, 65);
+  chassis.wait_drive();
+
 
   chassis.set_drive_pid(conv(12), 105);
   chassis.wait_drive();
 
-  singleAuto();
+  chassis.set_turn_pid(21.5, 65);
+  chassis.wait_drive();
 
-  setFlyAuto(30); //idle flywheel; easier to ramp up speed for next shot
-
-  chassis.set_drive_pid(conv(-12), 105);
+  chassis.set_drive_pid(conv(-13), 105);
   chassis.wait_drive();
 
   chassis.set_turn_pid(-46, 85); // turn to be parallel with the centre line
@@ -614,21 +621,21 @@ void newhalfWPright(){ // right colour wheel; shoot 6
   setFlyAuto(77.5);
 
   chassis.set_pid_constants(&chassis.forward_drivePID, 0.22, 0.02, 0, 0);
-  chassis.set_drive_pid(conv(39.3), 105);
+  chassis.set_drive_pid(conv(30), 105);
   chassis.wait_drive();
   tuning_constants();
 
-  chassis.set_turn_pid(47, 80); // turn to goal
+  chassis.set_turn_pid(40.4, 80); // turn to goal
   chassis.wait_drive();
 
-  doubleAuto();
+  tripleAuto();
 
   setIntake(0);
 
   chassis.set_turn_pid(135, 90); // turn to be parallel with the centre line
   chassis.wait_drive();
 
-  chassis.set_drive_pid(conv(72), 127);
+  chassis.set_drive_pid(conv(62), 127);
   chassis.wait_drive();
 
   chassis.set_turn_pid(180, 100); // turn to be perpendicular with the colour wheel
