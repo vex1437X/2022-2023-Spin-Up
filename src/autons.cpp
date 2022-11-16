@@ -4,8 +4,6 @@
 #include "pros/imu.h"
 #include <cmath>
 
-Imu imu(13);
-
 void none(){}
 
 void default_constants() {
