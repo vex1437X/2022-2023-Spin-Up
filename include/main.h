@@ -67,6 +67,7 @@ using namespace pros;
 #ifdef __cplusplus
 #include "catapult.hpp"
 #include "intake.hpp"
+#include "colour.hpp"
 #include "EZ-Template/drive/drive.hpp"
 extern "C" {
 #endif
