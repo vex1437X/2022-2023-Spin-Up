@@ -67,6 +67,7 @@ void autonomous() {
 void opcontrol() {
   // Task anti_jam_task(anti_jam, nullptr);
   Task limit(limitS, nullptr);
+  Task cataCont(cataControl, nullptr);
 
   chassis.left_motors[0].move_voltage(0);
   chassis.left_motors[1].move_voltage(0);
@@ -84,7 +85,6 @@ void opcontrol() {
 
 
   while (true) {
-    cataControl();
     intakeControl();
     chassis.tank();
 

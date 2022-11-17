@@ -3,29 +3,13 @@
 #include "pros/adi.hpp"
 
 extern Motor intake;
-extern Motor intake2;
-extern ADIDigitalOut indexer;
-extern ADIDigitalOut toggleSingle;
-extern ADIDigitalOut tripleIndexer;
-extern ADIDigitalIn limitswitch;
+
 extern ADIDigitalOut expand1;
 extern ADIDigitalOut expand2;
 
-// extern Task anti_jam_task;
-// extern Task limit;
-
-extern bool isJammed;
-
-void fireThreeDiscs();
-void fireOneDisc();
+// extern ADIDigitalIn limitswitch;
 
 void setIntake(int percent);
-
-void setIndexState(bool state);
-
-bool getIndexState();
-
-void anti_jam(void*);
 
 void limitS(void*);
 

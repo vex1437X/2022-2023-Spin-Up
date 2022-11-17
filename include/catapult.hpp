@@ -2,9 +2,10 @@
 #include "main.h"
 
 extern Motor catapult;
-
-bool canFire();
+extern ADIDigitalIn cataLimit;
 
 void resetCata();
 
-void cataControl();
+void fireCata();
+
+void cataControl(void*);

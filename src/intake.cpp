@@ -12,7 +12,7 @@ Motor intake(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 ADIDigitalOut expand1(1, false);
 ADIDigitalOut expand2(2, false);
 
-ADIDigitalIn limitswitch(2);
+// ADIDigitalIn limitswitch(2);
 
 bool isIntakeOn = false;
 bool stop = false;
@@ -30,6 +30,7 @@ void setIntake(int percent){
   intake.move(voltage);
 }
 
+/* limit switch only for disc counting
 void limitS(void*){
   bool cringe = false;
   bool cringe2 = false;
@@ -54,6 +55,7 @@ void limitS(void*){
     delay(20);
   }
 }
+*/
 
 void intakeControl(){
   // expansion
