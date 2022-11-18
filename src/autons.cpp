@@ -579,7 +579,11 @@ void newhalfWPleft(){ // left colour wheel; shoot 6
   chassis.set_drive_pid(conv(11.5), 70, false, true);
   chassis.wait_drive();
 
-  delay(1200);
+  chassis.set_turn_pid(136.7, 70);
+  chassis.wait_drive();
+
+
+  delay(1350);
 
   fireOneDisc();
 }
