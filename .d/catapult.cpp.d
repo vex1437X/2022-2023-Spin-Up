@@ -78,7 +78,7 @@ bin/catapult.cpp.o: src/catapult.cpp include/catapult.hpp include/main.h \
  include/EZ-Template/util.hpp include/EZ-Template/auton.hpp \
  include/EZ-Template/auton_selector.hpp \
  include/EZ-Template/drive/drive.hpp include/EZ-Template/sdcard.hpp \
- include/autons.hpp include/intake.hpp include/main.h
+ include/autons.hpp include/intake.hpp include/colour.hpp include/main.h
 include/catapult.hpp:
 include/main.h:
 include/api.h:
@@ -237,4 +237,5 @@ include/EZ-Template/drive/drive.hpp:
 include/EZ-Template/sdcard.hpp:
 include/autons.hpp:
 include/intake.hpp:
+include/colour.hpp:
 include/main.h:

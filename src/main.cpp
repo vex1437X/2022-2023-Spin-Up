@@ -11,7 +11,7 @@ Drive chassis (
   ,{4, 5, 6}
 
   // IMU Port
-  ,10
+  ,11
 
   // Wheel Diameter
   ,3.25
@@ -35,6 +35,7 @@ void initialize() {
   chassis.set_active_brake(0); // Sets the active brake kP. We recommend 0.1.
   chassis.set_curve_default(0, 0); // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)  
   default_constants(); // Set the drive to your own constants from autons.cpp!
+  catapult.set_brake_mode(MOTOR_BRAKE_COAST);
 
   ez::as::auton_selector.add_autons({
     Auton("Half WP Left\n", leftside),
@@ -56,17 +57,17 @@ void autonomous() {
   chassis.reset_gyro(); // Reset gyro position to 0
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
-  Task sinCalc1(sinCalc, nullptr);
+  // Task sinCalc1(sinCalc, nullptr);
 
-  // testCode();
+  testCode();
   // tune_PID();
 
-  ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
+  // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
 
 void opcontrol() {
   // Task anti_jam_task(anti_jam, nullptr);
-  Task limit(limitS, nullptr);
+  // Task limit(limitS, nullptr);
   Task cataCont(cataControl, nullptr);
 
   chassis.left_motors[0].move_voltage(0);
@@ -81,7 +82,7 @@ void opcontrol() {
 
 	// set drive motors to coast
 	bool braketoggle = true;
-  chassis.set_drive_brake(MOTOR_BRAKE_COAST);
+  chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
 
 
   while (true) {
@@ -91,10 +92,10 @@ void opcontrol() {
     // Coast/Brake drive toggle 
 		if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
     		if (braketoggle == true){
-          chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
+          chassis.set_drive_brake(MOTOR_BRAKE_COAST);
           braketoggle = false;
 			} else if (braketoggle == false){
-          chassis.set_drive_brake(MOTOR_BRAKE_COAST);
+          chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
           braketoggle = true;
 			}
       delay(250);

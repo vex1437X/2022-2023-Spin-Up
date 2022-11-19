@@ -78,8 +78,8 @@ bin/intake.cpp.o: src/intake.cpp include/intake.hpp include/main.h \
  include/EZ-Template/util.hpp include/EZ-Template/auton.hpp \
  include/EZ-Template/auton_selector.hpp \
  include/EZ-Template/drive/drive.hpp include/EZ-Template/sdcard.hpp \
- include/autons.hpp include/catapult.hpp include/main.h \
- include/pros/adi.hpp
+ include/autons.hpp include/catapult.hpp include/colour.hpp \
+ include/main.h include/pros/adi.hpp
 include/intake.hpp:
 include/main.h:
 include/api.h:
@@ -238,5 +238,6 @@ include/EZ-Template/drive/drive.hpp:
 include/EZ-Template/sdcard.hpp:
 include/autons.hpp:
 include/catapult.hpp:
+include/colour.hpp:
 include/main.h:
 include/pros/adi.hpp:

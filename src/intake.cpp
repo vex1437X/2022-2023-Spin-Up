@@ -7,10 +7,10 @@
 #include "pros/misc.h"
 using namespace ez;
 
-Motor intake(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
+Motor intake(16, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_COUNTS);
 
-ADIDigitalOut expand1(1, false);
-ADIDigitalOut expand2(2, false);
+ADIDigitalOut expand1(0, false);
+ADIDigitalOut expand2(0, false);
 
 // ADIDigitalIn limitswitch(2);
 

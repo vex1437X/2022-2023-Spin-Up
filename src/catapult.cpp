@@ -2,9 +2,9 @@
 #include "main.h"
 using namespace ez;
 
-Motor catapult(14, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_COUNTS);
+Motor catapult(10, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
 
-ADIDigitalIn cataLimit(3);
+ADIDigitalIn cataLimit(1);
 
 void setCata(int percent){
   // percent to voltage
@@ -31,8 +31,9 @@ void fireCata(){
 }
 
 void cataControl(void*){
+  catapult.set_brake_mode(MOTOR_BRAKE_COAST);
   while (true){
-    if (master.get_digital(E_CONTROLLER_DIGITAL_L2)){
+    if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
       fireCata();
       delay(600);
     }
