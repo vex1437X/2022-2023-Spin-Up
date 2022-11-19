@@ -2,7 +2,7 @@
 #include "main.h"
 using namespace ez;
 
-Motor catapult(10, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_COUNTS);
+Motor catapult(10, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
 
 ADIDigitalIn cataLimit(1);
 
