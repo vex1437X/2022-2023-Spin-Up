@@ -63,7 +63,7 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
     // Auton("PID Tuner\n", tune_PID),
-    Auton("N ew Half WP Left\n", newhalfWPleft),
+    Auton("New Half WP Left\n", newhalfWPleft),
     Auton("New Half WP Right\n", newhalfWPright),
     Auton("None\n", none),
   });
