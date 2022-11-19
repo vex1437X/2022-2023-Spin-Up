@@ -32,12 +32,13 @@ void fireCata(){
 
 void cataControl(void*){
   catapult.set_brake_mode(MOTOR_BRAKE_COAST);
+  resetCata();
   while (true){
     if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
       fireCata();
-      delay(600);
+      delay(800);
+      resetCata();
     }
-    resetCata();
     delay(20);
   }
 }
