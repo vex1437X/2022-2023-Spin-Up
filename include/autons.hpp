@@ -8,6 +8,7 @@ double conv(double i);
 
 void default_constants();
 void tuning_constants();
+void autonCalcs(void*);
 void sinCalc(void*);
 void testCode();
 void none();

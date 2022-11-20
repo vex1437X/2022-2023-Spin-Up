@@ -6,6 +6,12 @@
 
 void none(){}
 
+double conv(double i){
+  // use conv whenever you're using drive PID
+  return i * 3.8;
+}
+
+
 void default_constants() {
   chassis.set_slew_min_power(80, 80);
   chassis.set_slew_distance(7, 7);
@@ -26,9 +32,26 @@ void tuning_constants() {
   chassis.set_pid_constants(&chassis.swingPID, 0, 0, 0, 0);
 }
 
-double conv(double i){
-  // use conv whenever you're using drive PID
-  return i * 3.8;
+void tune_PID() {
+  tuning_constants();
+
+  chassis.set_turn_pid(90, 100);
+  chassis.wait_drive();
+
+  // chassis.set_drive_pid(conv(24), 80);
+  // chassis.wait_drive();
+
+  // delay(2000);
+
+  // chassis.set_drive_pid(conv(-24), 80);
+  // chassis.wait_drive();
+}
+
+void autonCalcs(void*){ // only runs during auton
+  while (true){
+    resetCata();
+    delay(20);
+  }
 }
 
 double sinSpeedL = 0;
@@ -57,59 +80,19 @@ void jiggle(double sec, double sinConstant){
   double count = 0;
   printf("Msec: %f \n", msec);
   while(count < msec){
-    chassis.left_motors[0].move_voltage(12000*sinSpeedL);
-    chassis.left_motors[1].move_voltage(12000*sinSpeedL);
-    chassis.left_motors[2].move_voltage(12000*sinSpeedL);
-    chassis.right_motors[0].move_voltage(12000*sinSpeedR);
-    chassis.right_motors[1].move_voltage(12000*sinSpeedR);
-    chassis.right_motors[2].move_voltage(12000*sinSpeedR);
+    setDrive(sinSpeedL*100, sinSpeedR*100);
     count+=10;
-    printf("Count: %f \n", count);
+    // printf("Count: %f \n", count);
     delay(10);
   }
-  chassis.left_motors[0].move_voltage(0);
-  chassis.left_motors[1].move_voltage(0);
-  chassis.left_motors[2].move_voltage(0);
-  chassis.right_motors[0].move_voltage(0);
-  chassis.right_motors[1].move_voltage(0);
-  chassis.right_motors[2].move_voltage(0);
+  setDrive(0);
 }
 
 void testCode(){
   tuning_constants();
-  // chassis.set_turn_pid(-32.5, 75);
-  // chassis.wait_drive();
-  chassis.set_pid_constants(&chassis.forward_drivePID, 0.5, 0.1, 0, 5);
-  chassis.set_drive_pid(conv(8), 100);
+  chassis.set_drive_pid(24, 100); // use conv if regular is really innacurate
   chassis.wait_drive(); 
-  setIntake(100);
 
-  jiggle(3, 2);
-
-}
-
-void tune_PID() {
-  // The first parameter is target inches
-  // The second parameter is max speed the robot will drive at
-  // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
-  // for slew, only enable it when the drive distance is greater then the slew distance + a few inches
-
-  tuning_constants();
-
-  chassis.set_turn_pid(90, 100);
-  chassis.wait_drive();
-
-  // chassis.set_drive_pid(conv(24), 80);
-  // chassis.wait_drive();
-
-  printf("done1: %d \n", true);
-
-  // delay(2000);
-
-  // chassis.set_drive_pid(conv(-24), 80);
-  // chassis.wait_drive();
-
-  // printf("done2: %d \n", true);
 }
 
 void winpoint(){}

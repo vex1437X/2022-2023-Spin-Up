@@ -36,7 +36,7 @@ void cataControl(void*){
   while (true){
     if (master.get_digital(E_CONTROLLER_DIGITAL_L1)){
       fireCata();
-      delay(800);
+      delay(600);
       resetCata();
     }
     delay(20);

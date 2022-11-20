@@ -2,13 +2,14 @@
 #include "autons.hpp"
 #include "intake.hpp"
 #include "pros/misc.h"
+#include "pros/rtos.h"
 
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
-  {-1, -2, -3}
+  {-1, -2, 3}
 
   // Right Chassis Ports (negative port will reverse it!)
-  ,{4, 5, 6}
+  ,{4, -5, 6}
 
   // IMU Port
   ,11
@@ -25,7 +26,10 @@ Drive chassis (
   ,0.6
 );
 
+Task autons(autonCalcs, nullptr);
+
 void initialize() {
+  autons.suspend();
   ez::print_ez_template();
   
   pros::delay(500);
@@ -42,7 +46,6 @@ void initialize() {
     Auton("Half WP Right\n", rightside),
     Auton("None\n", none),
   });
-
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
@@ -52,50 +55,52 @@ void disabled() {}
 
 void competition_initialize() {}
 
+
+
 void autonomous() {
   chassis.reset_pid_targets(); // Resets PID targets to 0
   chassis.reset_gyro(); // Reset gyro position to 0
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
   // Task sinCalc1(sinCalc, nullptr);
+  autons.resume();
 
-  testCode();
-  // tune_PID();
-
+  // testCode();
+  tune_PID();
+  
   // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
+  
 }
 
 void opcontrol() {
   // Task anti_jam_task(anti_jam, nullptr);
   // Task limit(limitS, nullptr);
+  autons.remove();
   Task cataCont(cataControl, nullptr);
 
-  chassis.left_motors[0].move_voltage(0);
-  chassis.left_motors[1].move_voltage(0);
-  chassis.left_motors[2].move_voltage(0);
-  chassis.right_motors[0].move_voltage(0);
-  chassis.right_motors[1].move_voltage(0);
-  chassis.right_motors[2].move_voltage(0);
+  // reset drive
+  setDrive(0);
 
   // reset intake
   setIntake(0);
 
 	// set drive motors to coast
 	bool braketoggle = true;
-  chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
+  chassis.set_drive_brake(MOTOR_BRAKE_HOLD);
 
 
   while (true) {
-    intakeControl();
     chassis.tank();
+    intakeControl();
+    colourControl();
 
-    // Coast/Brake drive toggle 
+    // Coast/Hold drive toggle 
 		if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
     		if (braketoggle == true){
           chassis.set_drive_brake(MOTOR_BRAKE_COAST);
           braketoggle = false;
 			} else if (braketoggle == false){
-          chassis.set_drive_brake(MOTOR_BRAKE_BRAKE);
+          chassis.set_drive_brake(MOTOR_BRAKE_HOLD);
           braketoggle = true;
 			}
       delay(250);
