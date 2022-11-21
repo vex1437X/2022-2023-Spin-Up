@@ -6,8 +6,8 @@ using namespace ez;
 
 // Motor intake(16);    already defined in intake.cpp
 
-double redHue = 0; // set this
-double blueHue = 0; // set this
+double redHue = 0;
+double blueHue = 240;
 
 // proximity
 // saturation
@@ -65,7 +65,7 @@ void spinRed(){
 
 void spinBlue(){
     int exit = 0;
-    while((!(colour.get_hue() > redHue - 20 && colour.get_hue() < redHue + 20)) && exit < 2500){
+    while((!(colour.get_hue() > redHue - 60 && colour.get_hue() < redHue + 60)) && exit < 2500){
         setIntake(-80);
         exit++;
     }
@@ -74,7 +74,7 @@ void spinBlue(){
 
 // auton colour check
 bool isRed(){
-    if (plateColour.get_hue() > redHue - 20 && plateColour.get_hue() < redHue + 20){
+    if (plateColour.get_hue() > redHue - 60 && plateColour.get_hue() < redHue + 60){
         return true;
     } else {
         return false;
@@ -90,14 +90,6 @@ void spinColour(){
 }
 
 bool colourswap = false;
-
-// 
-// 
-// ADD COLOUR SENSOR FOR LISCENCE PLATES
-// 
-// 
-// 
-// 
 
 void colourControl(){
     // TUNE THE PROXIMITY VALUES ***********
