@@ -6,6 +6,8 @@ Motor catapult(10, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_COUNTS);
 
 ADIDigitalIn cataLimit(1);
 
+bool didReach = false;
+
 void setCata(int percent){
   // percent to voltage
   int voltage = percent*1.27;
@@ -20,14 +22,18 @@ void cataFor(double sec, int percent){
 }
 
 void resetCata(){
-  while(!cataLimit.get_value()) {
+  while(!cataLimit.get_value() && !didReach) {
     setCata(-100);
   }
+  didReach = true;
   setCata(0);
 }
 
 void fireCata(){
-  cataFor(0.5, -100);
+  if(didReach){
+    cataFor(0.5, -100);
+  }
+  didReach = false;
 }
 
 void cataControl(void*){
@@ -39,6 +45,7 @@ void cataControl(void*){
       delay(600);
       resetCata();
     }
+    resetCata();
     delay(20);
   }
 }
