@@ -56,7 +56,7 @@ void driveFor(double sec, double speedpct){
 
 void spinRed(){
     int exit = 0;
-    while((!(colour.get_hue() > blueHue - 100 && colour.get_hue() < blueHue + 100)) && exit < 2500){
+    while((!(colour.get_hue() > blueHue - 100 && colour.get_hue() < blueHue + 100)) && exit < 1000){
         setIntake(-80);
         exit++;
     }
@@ -65,7 +65,7 @@ void spinRed(){
 
 void spinBlue(){
     int exit = 0;
-    while((!(colour.get_hue() > redHue - 100 && colour.get_hue() < redHue + 100)) && exit < 2500){
+    while((!(colour.get_hue() > 360 - 100 && colour.get_hue() < redHue + 100)) && exit < 1000){
         setIntake(-80);
         exit++;
     }
@@ -74,7 +74,7 @@ void spinBlue(){
 
 // auton colour check
 bool isRed(){
-    if (plateColour.get_hue() > redHue - 100 && plateColour.get_hue() < redHue + 100){
+    if (plateColour.get_hue() > 360 - 100 && plateColour.get_hue() < redHue + 100){
         return true;
     } else {
         return false;
