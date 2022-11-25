@@ -1,4 +1,4 @@
-bin/catapult.cpp.o: src/catapult.cpp include/catapult.hpp include/main.h \
+bin/EZ-Template/util.cpp.o: src/EZ-Template/util.cpp include/main.h \
  include/api.h include/pros/adi.h include/pros/colors.h \
  include/pros/distance.h include/pros/ext_adi.h include/pros/adi.h \
  include/pros/adi.h include/pros/gps.h include/pros/imu.h \
@@ -79,8 +79,8 @@ bin/catapult.cpp.o: src/catapult.cpp include/catapult.hpp include/main.h \
  include/EZ-Template/util.hpp include/EZ-Template/auton.hpp \
  include/EZ-Template/auton_selector.hpp \
  include/EZ-Template/drive/drive.hpp include/EZ-Template/sdcard.hpp \
- include/autons.hpp include/intake.hpp include/colour.hpp include/main.h
-include/catapult.hpp:
+ include/autons.hpp include/catapult.hpp include/main.h \
+ include/intake.hpp include/colour.hpp
 include/main.h:
 include/api.h:
 include/pros/adi.h:
@@ -238,6 +238,7 @@ include/EZ-Template/auton_selector.hpp:
 include/EZ-Template/drive/drive.hpp:
 include/EZ-Template/sdcard.hpp:
 include/autons.hpp:
+include/catapult.hpp:
+include/main.h:
 include/intake.hpp:
 include/colour.hpp:
-include/main.h:
