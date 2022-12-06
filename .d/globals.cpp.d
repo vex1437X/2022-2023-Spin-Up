@@ -77,7 +77,8 @@ bin/globals.cpp.o: src/globals.cpp include/main.h include/api.h \
  include/pros/screen.hpp include/pros/screen.h include/pros/vision.hpp \
  include/pros/vision.h include/pros/link.hpp include/pros/link.h \
  include/globals.hpp include/main.h include/drive.hpp \
- include/flywheel.hpp include/driverassistant.hpp include/PID.hpp
+ include/flywheel.hpp include/driverassistant.hpp include/PID.hpp \
+ include/intake.hpp
 include/main.h:
 include/api.h:
 include/pros/adi.h:
@@ -237,3 +238,4 @@ include/drive.hpp:
 include/flywheel.hpp:
 include/driverassistant.hpp:
 include/PID.hpp:
+include/intake.hpp:
