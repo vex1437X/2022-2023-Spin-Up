@@ -23,6 +23,7 @@ bin/colour.cpp.o: src/colour.cpp include/colour.hpp include/main.h \
  include/display/lv_themes/lv_theme_templ.h \
  include/display/lv_themes/lv_theme_default.h \
  include/display/lv_themes/lv_theme_alien.h \
+ include/display/lv_themes/lv_theme_flight.h \
  include/display/lv_themes/lv_theme_night.h \
  include/display/lv_themes/lv_theme_zen.h \
  include/display/lv_themes/lv_theme_mono.h \
@@ -128,6 +129,7 @@ include/display/lv_core/lv_style.h:
 include/display/lv_themes/lv_theme_templ.h:
 include/display/lv_themes/lv_theme_default.h:
 include/display/lv_themes/lv_theme_alien.h:
+include/display/lv_themes/lv_theme_flight.h:
 include/display/lv_themes/lv_theme_night.h:
 include/display/lv_themes/lv_theme_zen.h:
 include/display/lv_themes/lv_theme_mono.h:
