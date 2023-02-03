@@ -1,102 +1,96 @@
-#include "catapult.hpp"
-#include "intake.hpp"
 #include "main.h"
-#include "pros/imu.h"
-#include <cmath>
+#include "systems.hpp"
+using namespace pros;
 
 void none(){}
 
-double conv(double i){
-  // use conv whenever you're using drive PID
-  return i * 3.8;
-}
-
-
-void default_constants() {
-  chassis.set_slew_min_power(80, 80);
-  chassis.set_slew_distance(7, 7);
-  chassis.set_pid_constants(&chassis.headingPID, 11, 0, 20, 0);
+void illPIDurmom() {
+  // chassis.set_slew_min_power(80, 80);
+  // chassis.set_slew_distance(7, 7);
+  // chassis.set_pid_constants(&chassis.headingPID, 11, 0, 20, 0);
   chassis.set_pid_constants(&chassis.forward_drivePID, 0.45, 0, 5, 0);
   chassis.set_pid_constants(&chassis.backward_drivePID, 0.45, 0, 5, 0);
-  chassis.set_pid_constants(&chassis.turnPID, 5, 0.003, 35, 15);
-  chassis.set_pid_constants(&chassis.swingPID, 7, 0, 45, 0);
+  chassis.set_pid_constants(&chassis.turnPID, 0, 0, 0, 0);
+  // chassis.set_pid_constants(&chassis.forward_drivePID, 0.45, 0, 5, 0);
+  // chassis.set_pid_constants(&chassis.backward_drivePID, 0.45, 0, 5, 0);
+  // chassis.set_pid_constants(&chassis.turnPID, 5, 0.003, 35, 15);
+  // chassis.set_pid_constants(&chassis.swingPID, 7, 0, 45, 0);
 }
 
-void tuning_constants() {
-  chassis.set_slew_min_power(70, 70);
-  chassis.set_slew_distance(10, 10);
-  chassis.set_pid_constants(&chassis.headingPID, 0, 0, 0, 0);
-  chassis.set_pid_constants(&chassis.forward_drivePID, 0.24, 0.05, 0, 0);
-  chassis.set_pid_constants(&chassis.backward_drivePID, 0.24, 0.05, 0, 0);
-  chassis.set_pid_constants(&chassis.turnPID, 5.6, 0.002, 32, 0);
-  chassis.set_pid_constants(&chassis.swingPID, 0, 0, 0, 0);
+
+void modified_exit_condition() {
+  chassis.set_exit_condition(chassis.turn_exit, 100, 3, 500, 7, 500, 500);
+  chassis.set_exit_condition(chassis.swing_exit, 100, 3, 500, 7, 500, 500);
+  chassis.set_exit_condition(chassis.drive_exit, 80, 50, 300, 150, 500, 500);
+}
+// chassis.set_drive_pid(10, 127);
+// superIdol();
+// chassis.wait_drive();
+
+void pid_tune(){
+
 }
 
-void tune_PID() {
-  tuning_constants();
-
-  chassis.set_turn_pid(90, 100);
+void left_wp() {
+  illPIDurmom();
+  // Back up into colour wheel
+  chassis.set_drive_pid(-3, 127);
   chassis.wait_drive();
-
-  // chassis.set_drive_pid(conv(24), 80);
-  // chassis.wait_drive();
-
-  // delay(2000);
-
-  // chassis.set_drive_pid(conv(-24), 80);
-  // chassis.wait_drive();
+  // Spin colour wheel
+  set_colour(-100);
+  delay(700);
+  set_colour(0);
+  // Drive outside of colour wheel zone
+  chassis.set_drive_pid(26, 80);
+  chassis.wait_drive();
+  // Turn to be parallel with the centre line
+  chassis.set_turn_pid(45, 80);
+  chassis.wait_drive();
+  // Drive to the centre of the field
+  chassis.set_drive_pid(50, 80);
+  chassis.wait_drive();
+  // Turn to align catapult with goal
+  chassis.set_turn_pid(-45, 80);
+  chassis.wait_drive();
+  // Drive back a bit
+  chassis.set_drive_pid(-12, 40);
+  chassis.wait_drive();
+  // Drive and shoot 2 discs
+  chassis.set_drive_pid(12, 110);
+  delay(200);
+  superIdol();
+  chassis.wait_drive();
+  // Turn to be parallel with the centre line
+  chassis.set_turn_pid(45, 80);
+  chassis.wait_drive();
+  // Drive to the towards other colour wheel
+  chassis.set_drive_pid(50, 80);
+  chassis.wait_drive();
+  // Turn to be perpendicular to the colour wheel
+  chassis.set_turn_pid(-90, 80);
+  chassis.wait_drive();
+  // Back up into the colour wheel
+  chassis.set_drive_pid(-26, 80);
+  chassis.wait_drive();
+  // Spin colour wheel
+  set_colour(-100);
+  delay(700);
+  set_colour(0);
+  // Drive outside of the colour wheel
+  chassis.set_drive_pid(5, 80);
+  chassis.wait_drive();
 }
 
-void autonCalcs(void*){ // only runs during auton
-  while (true){
-    resetCata();
-    delay(20);
-  }
+void left_halfwp() {
+  illPIDurmom();
 }
 
-double sinSpeedL = 0;
-double sinSpeedR = 0;
-double sinConst = 2.5;
-double LRoffset = M_PI/2;
-
-void sinCalc(void*){
-  double t = 0;
-  while(true){
-    t+=0.1;
-    sinSpeedL = sin(sinConst*t-LRoffset);
-    sinSpeedR = sin(sinConst*t+LRoffset);
-    if(fabs(sinSpeedL < 0.2))sinSpeedL = 0.2;
-    if(fabs(sinSpeedR < 0.2))sinSpeedR = 0.2;
-    printf("sinSpeedL: %f \n", sinSpeedL);
-    printf("sinSpeedR: %f \n", sinSpeedR);
-    printf("t: %f \n", t);
-    delay(10);
-  }
+void right_halfwp() { // allign in the middle of allowed section
+  illPIDurmom();
+  set_intake(100);
+  // Intake middle disc
+  chassis.set_drive_pid(-33, 80);
+  chassis.wait_drive();
+  // Align cata with goal
+  
 }
-
-void jiggle(double sec, double sinConstant){
-  sinConst = sinConstant;
-  double msec = sec*1000;
-  double count = 0;
-  printf("Msec: %f \n", msec);
-  while(count < msec){
-    setDrive(sinSpeedL*100, sinSpeedR*100);
-    count+=10;
-    // printf("Count: %f \n", count);
-    delay(10);
-  }
-  setDrive(0);
-}
-
-void testCode(){
-  tuning_constants();
-  chassis.set_drive_pid(24, 100); // use conv if regular is really innacurate
-  chassis.wait_drive(); 
-
-}
-
-void winpoint(){}
-
-void rightside(){}
-
-void leftside(){}

@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Pattycake",
+    "project_name": "COOKIE",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -307,10 +307,10 @@
     },
     "upload_options": {
       "compress_bin": true,
-      "description": "our bozo",
-      "remote_name": "EZ-Template",
+      "description": "LET US COOK",
+      "remote_name": "COOKIE",
       "slot": 1,
-      "icon": "planet"
+      "icon": "X"
     }
   }
 }

@@ -1,20 +1,25 @@
 #include "main.h"
 #include "autons.hpp"
-#include "intake.hpp"
-#include "pros/misc.h"
-#include "pros/rtos.h"
+#include "systems.hpp"
 
+using namespace pros;
+
+
+// Chassis constructor
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
-  {-1, -2, 3}
+  //   the first port is the sensored port (when trackers are not used!)
+  {-17, 19, 20}
 
   // Right Chassis Ports (negative port will reverse it!)
-  ,{4, -5, 6}
+  //   the first port is the sensored port (when trackers are not used!)
+  ,{12, -15, -16}
 
   // IMU Port
-  ,11
+  ,13
 
-  // Wheel Diameter
+  // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
+  //    (or tracking wheel diameter)
   ,3.25
 
   // Cartridge RPM
@@ -22,30 +27,44 @@ Drive chassis (
   ,600
 
   // External Gear Ratio (MUST BE DECIMAL)
-  // 1:2 gear ratio , 360 rpm
-  ,0.6
+  //    (or gear ratio of tracking wheel)
+  // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
+  // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
+  ,60.0/36.0
 );
 
-Task autons(autonCalcs, nullptr);
+#define piston_boost_port 7
+pros::ADIDigitalOut PistonBoost(piston_boost_port);
+
+pros::Task SystemsCalc(Systems_task, nullptr);
+pros::Task AutoTask(Auton_task, nullptr);
+pros::Task cont(intake_control, nullptr);
+
 
 void initialize() {
-  autons.suspend();
-  ez::print_ez_template();
+  AutoTask.suspend();
+  SystemsCalc.suspend();
+  cont.suspend();
   
   pros::delay(500);
 
   // Configure your chassis controls
   chassis.toggle_modify_curve_with_controller(true); // Enables modifying the controller curve with buttons on the joysticks
-  chassis.set_active_brake(0); // Sets the active brake kP. We recommend 0.1.
-  chassis.set_curve_default(0, 0); // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)  
-  default_constants(); // Set the drive to your own constants from autons.cpp!
-  catapult.set_brake_mode(MOTOR_BRAKE_COAST);
+  chassis.set_active_brake(0.0); // Sets the active brake kP. We recommend 0.1.
+  chassis.set_curve_default(0, 0); // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
 
+  PistonBoost.set_value(0);  
+
+  // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("Half WP Left\n", leftside),
-    Auton("Half WP Right\n", rightside),
-    Auton("None\n", none),
+    Auton("Tune PIP", pid_tune),
+    Auton("Left Side WP", left_wp),
+    Auton("Left Side HALF WP", left_halfwp),
+    Auton("Right Side HALF WP", right_halfwp),
+    Auton("None", none)
+    // Auton("Left Side WP", left_wp)
   });
+
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
@@ -55,57 +74,30 @@ void disabled() {}
 
 void competition_initialize() {}
 
-
-
 void autonomous() {
-  chassis.reset_pid_targets(); // Resets PID targets to 0
-  chassis.reset_gyro(); // Reset gyro position to 0
-  chassis.reset_drive_sensor(); // Reset drive sensors to 0
-  chassis.set_drive_brake(MOTOR_BRAKE_BRAKE); // Set motors to hold.  This helps autonomous consistency.
-  // Task sinCalc1(sinCalc, nullptr);
-  autons.resume();
+  chassis.reset_pid_targets();
+  chassis.reset_gyro();
+  chassis.reset_drive_sensor();
+  chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
+  SystemsCalc.resume();
+  AutoTask.resume();
 
-  // testCode();
-  tune_PID();
-  
-  // ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
-  
+  ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
 
+
 void opcontrol() {
-  // Task anti_jam_task(anti_jam, nullptr);
-  // Task limit(limitS, nullptr);
-  autons.remove();
-  Task cataCont(cataControl, nullptr);
-
-  // reset drive
-  setDrive(0);
-
-  // reset intake
-  setIntake(0);
-
-	// set drive motors to coast
-	bool braketoggle = true;
+  // AutoTask.suspend();
+  // AutoTask.remove();
+  AutoTask.resume();
+  SystemsCalc.resume();
+  cont.resume();
   chassis.set_drive_brake(MOTOR_BRAKE_HOLD);
-
 
   while (true) {
     chassis.tank();
-    intakeControl();
-    colourControl();
+    // intake_control();
 
-    // Coast/Hold drive toggle 
-		if (master.get_digital(E_CONTROLLER_DIGITAL_Y)){
-    		if (braketoggle == true){
-          chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-          braketoggle = false;
-			} else if (braketoggle == false){
-          chassis.set_drive_brake(MOTOR_BRAKE_HOLD);
-          braketoggle = true;
-			}
-      delay(250);
-  	}
-    
-    delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+    pros::delay(10);
   }
 }
