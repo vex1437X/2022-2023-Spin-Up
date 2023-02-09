@@ -1,2 +1,4 @@
-# 2022-2023-Spin-Up
-Repository for the VEX 2022-2023 game.
+# DumboEz
+Code for Dumbo v1 using EZ template
+- (1st) Used for Clash in the Canyon 15-10-2022 [[Webcast]](https://vimeo.com/event/2482613/7f0d02ef15)
+- (2nd) Used for ECR 404: Competition Not Found 29-10-2022 [[Events Page]](https://www.robotevents.com/robot-competitions/vex-robotics-competition/RE-VRC-22-8641.html#general-info)

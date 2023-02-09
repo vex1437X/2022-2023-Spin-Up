@@ -250,6 +250,40 @@
             "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/include-fixed",
             "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include",
             "-iquote./include",
+            "-iquote./include/./",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-Os",
+            "-g",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Wno-psabi",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "-funwind-tables",
+            "--std=gnu++17",
+            "-o",
+            "bin/main.cpp.o",
+            "src/main.cpp"
+        ],
+        "directory": "/Users/mahdi/Desktop/cook",
+        "file": "src/main.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1",
+            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/arm-none-eabi/thumb/v7-a+simd/softfp",
+            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/backward",
+            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/include",
+            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/include-fixed",
+            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
             "-iquote./include/EZ-Template/",
             "-mcpu=cortex-a9",
             "-mfpu=neon-fp16",
@@ -299,11 +333,11 @@
             "-funwind-tables",
             "--std=gnu++17",
             "-o",
-            "bin/main.cpp.o",
-            "src/main.cpp"
+            "bin/systems.cpp.o",
+            "src/systems.cpp"
         ],
         "directory": "/Users/mahdi/Desktop/cook",
-        "file": "src/main.cpp"
+        "file": "src/systems.cpp"
     },
     {
         "arguments": [
@@ -338,39 +372,5 @@
         ],
         "directory": "/Users/mahdi/Desktop/cook",
         "file": "src/autons.cpp"
-    },
-    {
-        "arguments": [
-            "clang++",
-            "-c",
-            "-target",
-            "armv7ar-none-none-eabi",
-            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1",
-            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/arm-none-eabi/thumb/v7-a+simd/softfp",
-            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1/backward",
-            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/include",
-            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/include-fixed",
-            "-isystem/usr/local/Cellar/arm-gcc-bin@10/10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include",
-            "-iquote./include",
-            "-iquote./include/./",
-            "-mcpu=cortex-a9",
-            "-mfpu=neon-fp16",
-            "-mfloat-abi=softfp",
-            "-Os",
-            "-g",
-            "-D_POSIX_THREADS",
-            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
-            "-Wno-psabi",
-            "-ffunction-sections",
-            "-fdata-sections",
-            "-fdiagnostics-color",
-            "-funwind-tables",
-            "--std=gnu++17",
-            "-o",
-            "bin/systems.cpp.o",
-            "src/systems.cpp"
-        ],
-        "directory": "/Users/mahdi/Desktop/cook",
-        "file": "src/systems.cpp"
     }
 ]
