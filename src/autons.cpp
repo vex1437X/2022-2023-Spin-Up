@@ -249,7 +249,7 @@ void right_halfwp(){
   chassis.wait_drive();
 
   set_colour(-100);
-  delay(150);
+  delay(210);
   set_colour(0);
 
   chassis.set_drive_pid(7, 127);
@@ -262,39 +262,27 @@ void right_halfwp(){
   chassis.set_drive_pid(-27, 90);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(107, 127);
+  chassis.set_turn_pid(105, 127);
   chassis.wait_drive();
 
-  // Shoot 2 discs
-  chassis.set_drive_pid(13, 127);
-  set_intake(100);
-  delay(390);
+  // Shoot 3 discs
+  chassis.set_drive_pid(10, 127);
+  delay(60);
   superIdol();
   chassis.wait_drive();
 
-  chassis.set_drive_pid(-14, 127);
+  chassis.set_drive_pid(-12, 127);
   chassis.wait_drive();
+
+  delay(700);
 
   chassis.set_turn_pid(222, 127);
   chassis.wait_drive();
 
-
-  chassis.set_drive_pid(-38.5, 94);
+  chassis.set_drive_pid(-25, 94);
   chassis.wait_drive();
 
-  chassis.set_turn_pid(132, 127);
-  chassis.wait_drive();
-
-  // chassis.set_drive_pid(-6, 100);
-  // chassis.wait_drive();
-
-  // delay(300);
-
-  // Shoot 3 discs
-  chassis.set_drive_pid(13, 127);
-  set_intake(0);
-  delay(320);
-  superIdol();
+  chassis.set_drive_pid(39.5, 127);
   chassis.wait_drive();
 }
 
@@ -305,7 +293,7 @@ void left_halfwp() {
   chassis.wait_drive();
   // Spin colour wheel
   set_colour(-100);
-  delay(250);
+  pros::delay(250);
   set_colour(0);
   // Drive outside of colour wheel zone
   chassis.set_drive_pid(3, 127);
@@ -317,7 +305,7 @@ void left_halfwp() {
   // Drive closer to triple stack
   // chassis.set_drive_pid(-9, 100);
   set_intake(100);
-  chassis.set_drive_pid(-25.5, 127);
+  chassis.set_drive_pid(-25.5, 110);
   chassis.wait_drive();
   // Intake triple stack
   
@@ -327,12 +315,30 @@ void left_halfwp() {
   chassis.set_drive_pid(10, 127);
   chassis.wait_drive();
   // Turn to align catapult with goal
-  chassis.set_turn_pid(-37, 127);
+  chassis.set_turn_pid(-38.5, 120);
   chassis.wait_drive();
   set_intake(0);
+  chassis.set_drive_pid(-5, 120);
+  chassis.wait_drive();
+  delay(100);
   // Shoot 3 discs
-  chassis.set_drive_pid(15, 127);
-  delay(310);
+  chassis.set_drive_pid(18, 127);
+  pros::delay(60);
+  superIdol();
+  chassis.wait_drive();
+  pros::delay(150);
+  set_intake(100);
+  chassis.set_turn_pid(-40, 127);
+  chassis.wait_drive();
+  
+  chassis.set_drive_pid(-12, 90);
+  chassis.wait_drive();
+
+  chassis.set_turn_pid(-38.5, 127);
+  chassis.wait_drive();
+  // Shoot 3 discs
+  chassis.set_drive_pid(12, 127);
+  pros::delay(90);
   superIdol();
   chassis.wait_drive();
 }
@@ -360,125 +366,4 @@ illPIDurmom();
   chassis.wait_drive();
 
   Expansion1.set_value(true);
-}
-
-
-void old_right_halfwp() { // allign in the middle of allowed section
-  illPIDurmom();
-  set_intake(100);
-  // Intake middle disc
-  chassis.set_drive_pid(-33, 110);
-  chassis.wait_drive();
-  // Align cata with goal
-  chassis.set_turn_pid(-148, 120);
-  chassis.wait_drive();
-  // Drive and shoot 2 discs
-  set_intake(0);
-  chassis.set_drive_pid(14, 120);
-  delay(300);
-  superIdol();
-  chassis.wait_drive();
-  // Back-up from centre line
-  chassis.set_drive_pid(-10, 120);
-  chassis.wait_drive();
-  // Align intake with single disc
-  chassis.set_turn_pid(-50, 120);
-  chassis.wait_drive();
-  // Drive and intake 1st disc
-  set_intake(100);
-  chassis.set_drive_pid(-20.4, 90);
-  chassis.wait_drive();
-  // Align 2nd disc
-  chassis.set_turn_pid(-180, 120);
-  chassis.wait_drive();
-  // Drive and intake 2nd & 3rd disc
-  chassis.set_drive_pid(-37, 120);
-  chassis.wait_drive();
-
-  chassis.set_drive_pid(35, 120);
-  chassis.wait_drive();
-
-
-  // Align to goal
-  chassis.set_turn_pid(-122, 127);
-  chassis.wait_drive();
-  // Drive and shoot 2 discs
-  set_intake(0);
-  chassis.set_drive_pid(13, 127);
-  delay(300);
-  superIdol();
-  chassis.wait_drive();
-  // Align to be anti-parallel with the centre line
-  chassis.set_turn_pid(-222, 127);
-  chassis.wait_drive();
-  // Drive towards colour wheel
-  chassis.set_drive_pid(-68, 127);
-  chassis.wait_drive();
-  // Align to be perpendicular to the colour wheel
-  chassis.set_turn_pid(-180, 120);
-  chassis.wait_drive();
-  // Drive into colour wheel
-  chassis.set_drive_pid(-40, 120);
-  chassis.wait_drive();
-  // Spin colour wheel
-  set_colour(-100);
-  delay(250);
-  set_colour(0);
-  // Drive outside of colour wheel zone
-  chassis.set_drive_pid(4.5, 120);
-  chassis.wait_drive();
-}
-
-void old_left_wp() {
-  illPIDurmom();
-  // Back up into colour wheel
-  chassis.set_drive_pid(-3, 127);
-  chassis.wait_drive();
-  // Spin colour wheel
-  set_colour(-100);
-  delay(350);
-  set_colour(0);
-  // Drive outside of colour wheel zone
-  chassis.set_drive_pid(8, 100);
-  chassis.wait_drive();
-  // Turn to be parallel with the centre line
-  set_intake(-100);
-  chassis.set_turn_pid(-134.5, 100);
-  chassis.wait_drive();
-  // Drive to the centre of the field
-  chassis.set_drive_pid(-65, 100);
-  chassis.wait_drive();
-  // Turn to align catapult with goal
-  chassis.set_turn_pid(-45, 100);
-  chassis.wait_drive();
-  // Drive back a bit
-  chassis.set_drive_pid(-12, 80);
-  chassis.wait_drive();
-  // Drive and shoot 2 discs
-  chassis.set_drive_pid(12, 120);
-  delay(200);
-  superIdol();
-  chassis.wait_drive();
-  // Drive back a bit
-  chassis.set_drive_pid(-6, 80);
-  chassis.wait_drive();
-  // Turn to be parallel with the centre line
-  chassis.set_turn_pid(-137.5, 100);
-  chassis.wait_drive();
-  // Drive to the towards other colour wheel
-  chassis.set_drive_pid(-55, 100);
-  chassis.wait_drive();
-  // Turn to be perpendicular to the colour wheel
-  chassis.set_turn_pid(-90, 100);
-  chassis.wait_drive();
-  // Back up into the colour wheel
-  chassis.set_drive_pid(-32, 100);
-  chassis.wait_drive();
-  // Spin colour wheel
-  set_colour(-100);
-  delay(700);
-  set_colour(0);
-  // Drive outside of the colour wheel
-  chassis.set_drive_pid(5, 100);
-  chassis.wait_drive();
 }

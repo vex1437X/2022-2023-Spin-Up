@@ -60,17 +60,24 @@ void initialize() {
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
     // Auton("Tune PID", pid_tune),
+    
+    Auton("Right Side HALF WP", right_halfwp),
+    Auton("Left Side HALF WP", left_halfwp),
+
     Auton("Right Side HALF WP", elims_right_halfwp),
+    Auton("None", none),
+
+
+
+    Auton("Left Side WP", left_wp),
     Auton("Left Side HALF WP", elims_left_halfwp),
-    // Auton("Right Side HALF WP", right_halfwp),
     // Auton("Left Side HALF WP", left_halfwp),
     // Auton("Left Side WP", left_wp),
     // Auton("Left Side HALF WP", left_halfwp),
     // Auton("Left Side WP", old_left_wp),
     // Auton("Left Easy Colourwheel", left_easy_single_colour),
     // Auton("Right Easy Colourwheel", right_easy_single_colour),
-    // Auton("Skills", skills),
-    Auton("None", none),
+    // Auton("Skills", skills)
   });
 
   // Initialize chassis and auton selector
@@ -105,6 +112,9 @@ void opcontrol() {
 
   while (true) {
     chassis.tank();
+    // printf("right: %f \n", chassis.right_eff());
+    // printf("\n");
+    // printf("left: %f \n", chassis.left_eff());
     // intake_control();
 
     pros::delay(10);

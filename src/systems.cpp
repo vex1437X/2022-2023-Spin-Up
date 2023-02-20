@@ -1,5 +1,7 @@
 #include "main.h"
 #include "pros/misc.h"
+#include "autons.hpp"
+#include "systems.hpp"
 
 using namespace pros;
 
@@ -188,18 +190,18 @@ int get_colourW_prox(){
 double get_colourW_hue(){
     colourW.disable_gesture();
     colourW.set_led_pwm(100);
-    return colourW.get_hue(); // should only run once
+    return colourW.get_hue();
 }
 
 double get_plate_hue(){
     plateColour.disable_gesture();
     plateColour.set_led_pwm(100);
-    return plateColour.get_hue(); // should only run once
+    return plateColour.get_hue();
 }
 
 void spinRed(){ // spin until blue is bottom
     int exit = 0;
-    while((!(get_colourW_hue() > blueHue - 100 && get_colourW_hue() < blueHue + 100)) && exit < 1000){
+    while((!(get_colourW_hue() > blueHue - 100 && get_colourW_hue() < blueHue + 80)) && exit < 1000){
         set_colour(abs(COLOUR_SPEED)*-1);
         exit++;
         pros::delay(10);
@@ -209,7 +211,7 @@ void spinRed(){ // spin until blue is bottom
 
 void spinBlue(){ // spin until red is bottom
     int exit = 0;
-    while((!(get_colourW_hue() > 360 - 100 || get_colourW_hue() < redHue + 100)) && exit < 1000){
+    while((!(get_colourW_hue() > 360 - 40 || get_colourW_hue() < redHue + 100)) && exit < 1000){
         set_colour(abs(COLOUR_SPEED)*-1);
         exit++;
         pros::delay(10);
@@ -218,7 +220,7 @@ void spinBlue(){ // spin until red is bottom
 }
 
 bool isRed(){
-    if (get_plate_hue() > 360 - 100 || get_plate_hue() < redHue + 100){
+    if (get_plate_hue() > 360 - 40 || get_plate_hue() < redHue + 100){
         return true;
     } else {
         return false;
@@ -236,7 +238,7 @@ void spinColour(){
 void Auton_task(void*){
     while(true){
         if (super && didReach){      
-            superCata(0.1,0.6, CATA_SPEED);
+            superCata(0.2,1.5, CATA_SPEED);
             PistonBoost.set_value(0);
             didReach = false;
             super = false;
@@ -253,11 +255,11 @@ void Systems_task(void*) {
             fireCata();
             pros::delay(600);
         }
-        /*
+        // /*
         if (master.get_digital(COLOUR_SPIN)){
             superIdol();
         }
-        */
+        // */
         resetCata();
 
 

@@ -99,6 +99,11 @@ class Drive {
    */
   void set_mode(e_mode p_mode);
 
+  double right_eff();
+
+  double left_eff();
+
+
   /**
    * Returns current mode of drive.
    */

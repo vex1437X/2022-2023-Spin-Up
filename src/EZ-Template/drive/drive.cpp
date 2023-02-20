@@ -321,6 +321,22 @@ void Drive::set_drive_brake(pros::motor_brake_mode_e_t brake_type) {
   }
 }
 
+double Drive::right_eff() {
+  double r = 0;
+  for (auto i : right_motors) {
+    r+=i.get_torque();
+  }
+  return r/3;
+}
+
+double Drive::left_eff() {
+  double l = 0;
+  for (auto h : left_motors) {
+    l+=h.get_torque();
+  }
+  return l/3;
+}
+
 void Drive::initialize() {
   init_curve_sd();
   imu_calibrate();
