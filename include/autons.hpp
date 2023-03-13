@@ -12,3 +12,5 @@ void pid_tune();
 void left_wp();
 void left_halfwp();
 void right_halfwp();
+void skills();
+void elims_right_halfwp();

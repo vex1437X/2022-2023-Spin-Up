@@ -23,7 +23,6 @@ bin/EZ-Template/util.cpp.o: src/EZ-Template/util.cpp include/main.h \
  include/display/lv_themes/lv_theme_templ.h \
  include/display/lv_themes/lv_theme_default.h \
  include/display/lv_themes/lv_theme_alien.h \
- include/display/lv_themes/lv_theme_flight.h \
  include/display/lv_themes/lv_theme_night.h \
  include/display/lv_themes/lv_theme_zen.h \
  include/display/lv_themes/lv_theme_mono.h \
@@ -79,8 +78,7 @@ bin/EZ-Template/util.cpp.o: src/EZ-Template/util.cpp include/main.h \
  include/EZ-Template/util.hpp include/EZ-Template/auton.hpp \
  include/EZ-Template/auton_selector.hpp \
  include/EZ-Template/drive/drive.hpp include/EZ-Template/sdcard.hpp \
- include/autons.hpp include/catapult.hpp include/main.h \
- include/intake.hpp include/colour.hpp
+ include/autons.hpp include/systems.hpp include/main.h
 include/main.h:
 include/api.h:
 include/pros/adi.h:
@@ -128,7 +126,6 @@ include/display/lv_core/lv_style.h:
 include/display/lv_themes/lv_theme_templ.h:
 include/display/lv_themes/lv_theme_default.h:
 include/display/lv_themes/lv_theme_alien.h:
-include/display/lv_themes/lv_theme_flight.h:
 include/display/lv_themes/lv_theme_night.h:
 include/display/lv_themes/lv_theme_zen.h:
 include/display/lv_themes/lv_theme_mono.h:
@@ -238,7 +235,5 @@ include/EZ-Template/auton_selector.hpp:
 include/EZ-Template/drive/drive.hpp:
 include/EZ-Template/sdcard.hpp:
 include/autons.hpp:
-include/catapult.hpp:
+include/systems.hpp:
 include/main.h:
-include/intake.hpp:
-include/colour.hpp:

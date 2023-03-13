@@ -4,7 +4,8 @@
       "name": "PROS Project",
       "includePath": [
         "${workspaceFolder}/**",
-        "/Users/mahdi/Documents/VEX/1437X/2022-2023/Pattycake/include"
+        "/Users/mahdi/Documents/VEX/1437X/2022-2023/Pattycake/include",
+        "/Users/mahdi/Desktop/cook/include"
       ],
       "defines": [
         "_DEBUG",
@@ -15,13 +16,13 @@
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-arm",
-      "compileCommands": "/Users/mahdi/Documents/VEX/1437X/2022-2023/Pattycake/compile_commands.json",
+      "compileCommands": "/Users/mahdi/Desktop/cook/compile_commands.json",
       "macFrameworkPath": [
         "/System/Library/Frameworks"
       ],
       "browse": {
         "path": [
-          "/Users/mahdi/Documents/VEX/1437X/2022-2023/Pattycake"
+          "/Users/mahdi/Desktop/cook"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""

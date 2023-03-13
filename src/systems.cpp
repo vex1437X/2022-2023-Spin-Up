@@ -1,5 +1,7 @@
 #include "main.h"
 #include "pros/misc.h"
+#include "autons.hpp"
+#include "systems.hpp"
 
 using namespace pros;
 
@@ -8,6 +10,8 @@ using namespace pros;
 // ports
 #define piston_boost_port 7
 #define catapult_limit_switch_port 8
+#define expansion_port_1 6
+#define expansion_port_2 0
 #define plate_optical_port 0
 #define colourwheel_optical_port 0
 
@@ -16,6 +20,8 @@ pros::controller_digital_e_t CATA_SHOT = pros::E_CONTROLLER_DIGITAL_L1;
 pros::controller_digital_e_t COLOUR_SPIN = pros::E_CONTROLLER_DIGITAL_L2;
 pros::controller_digital_e_t INTAKE_IN = pros::E_CONTROLLER_DIGITAL_R1;
 pros::controller_digital_e_t INTAKE_OUT = pros::E_CONTROLLER_DIGITAL_R2;
+pros::controller_digital_e_t EXPAND_LEFT = pros::E_CONTROLLER_DIGITAL_X;
+pros::controller_digital_e_t EXPAND_RIGHT = pros::E_CONTROLLER_DIGITAL_A;
 
 // speeds
 int INTAKE_IN_SPEED = 100;
@@ -38,6 +44,8 @@ std::vector<pros::Motor> catapult_motors{cat1};
 
 // * DONT CHANGE
 pros::ADIDigitalOut PistonBoost(piston_boost_port);
+pros::ADIDigitalOut Expansion1(expansion_port_1);
+pros::ADIDigitalOut Expansion2(expansion_port_2);
 pros::ADIDigitalIn cataLimit(catapult_limit_switch_port);
 pros::Optical plateColour(plate_optical_port);
 pros::Optical colourW(colourwheel_optical_port);
@@ -54,6 +62,7 @@ double cata_kI = 0;
 double cata_kD = 0;
 bool justshot = false;
 bool first = true;
+bool expand = false;
 
 void set_intake(double percent) {
     for (pros::Motor i : intake_motors) {
@@ -68,6 +77,8 @@ void set_cata(double percent) {
         i.move(127*(percent/100));
     }
 }
+
+bool testttt = false;
 
 void intake_control(void*){
     while(true){
@@ -91,6 +102,31 @@ void intake_control(void*){
             }
             pros::delay(350);
         }
+        if (master.get_digital(EXPAND_LEFT) || master.get_digital(EXPAND_RIGHT) || 
+            master.get_digital(E_CONTROLLER_DIGITAL_LEFT) || master.get_digital(E_CONTROLLER_DIGITAL_UP)){
+            if (expand == false){
+                Expansion1.set_value(true);
+                expand = true;
+            } else if (expand == true){
+                Expansion1.set_value(false);
+                expand = false;
+            }
+            pros::delay(350);
+            
+            // Expansion2.set_value(true);
+        }
+        /*
+        if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+            if (!testttt){
+                PistonBoost.set_value(1);
+                testttt = true;
+            } else{
+                PistonBoost.set_value(0);
+                testttt = false;
+            }
+            pros::delay(350);
+        }
+        */
         pros::delay(20);
     }
 }
@@ -118,88 +154,30 @@ void cataFor(double sec, int percent){
   set_cata(0);
 }
 
-void superCata(double sec, double del, int percent){
-  set_cata(abs(CATA_SPEED)*-1);
-  pros::delay(del*1000);
-  PistonBoost.set_value(1);
-  pros::delay(sec*1000);
-  set_cata(0);
+void superCata(double del, double sec, int percent){
+    set_cata(abs(CATA_SPEED)*-1);
+    pros::delay(del*1000);
+    PistonBoost.set_value(1);
+    pros::delay(sec*1000);
+    set_cata(0);
 }
 
 void resetCata(){
-    // while(!get_cataLimit_value() && !didReach) {
     while(!didReach){
         cat1.set_brake_mode(MOTOR_BRAKE_COAST);
-        // if(justshot || first){
-            // if (first){
-            // set_cata(abs(CATA_SPEED)*-1);
-            // } else{
-            //     set_cata(abs(CATA_SPEED)*-1);
-            //     delay(300);
-            //     set_cata(abs(CATA_SPEED/2)*-1);
-            // }
-            
-            if (get_cataLimit_value()){
-                // cat1.tare_position();
-                // while (cat1.get_encoder_units() < 10){
-                //     printf("enc: %d", cat1.get_encoder_units());
-                //     delay(5);
-                // }
-                // delay(12);
-                didReach = true;
-                set_cata(0);
-                // justshot = false;
-                delay(10);
-                cat1.set_brake_mode(MOTOR_BRAKE_BRAKE);
-                delay(1000);
-                cat1.set_brake_mode(MOTOR_BRAKE_COAST);
-                first = false;
-                return;
-            // }
-            pros::delay(10);
-        }
-    }
-    // didReach = true;
-    // set_cata(0);
-
-    // 
-    /*
-
-    cat1.tare_position();
-    double target = 270; // in degrees
-    // TODO \\ MEASURE THE ANGLE ABOVE
-
-    double error = 0;
-    double prevError = 0;
-    double P = 0;
-    double i = 0;
-    double I = 0;
-    double d = 0;
-    double D = 0;
-    
-    while(!get_cataLimit_value() && !didReach) {
-        prevError = error;
-        error = target - cat1.get_position();
-
-        i += error;
-        d = error - prevError;
-
-        P = error * cata_kP;
-        I = i * cata_kI;
-        D = d * cata_kD;
-
-
-        set_cata(CATA_SPEED);
+        set_cata(abs(CATA_SPEED)*-1);
         if (get_cataLimit_value()){
             didReach = true;
             set_cata(0);
-            return;
+            delay(10);
+            // cat1.set_brake_mode(MOTOR_BRAKE_BRAKE);
+            // delay(1000);
+            // cat1.set_brake_mode(MOTOR_BRAKE_COAST);
+            first = false;
+            return;   
         }
-        pros::delay(20);
+        pros::delay(10);
     }
-    didReach = true;
-    set_cata(0); 
-    */
 }
 
 void fireCata(){
@@ -217,17 +195,6 @@ bool super = false;
 
 void superIdol(){
     super = true;
-    // bool done = false;
-    // while (!done){
-        // if(didReach){
-        //     PistonBoost.set_value(1);
-        //     cataFor(0.7, CATA_SPEED);
-            // done = true;
-        // }
-        // PistonBoost.set_value(0);
-        // pros::delay(15);
-    // }
-    // didReach = false;
 }
 
 int get_colourW_prox(){
@@ -237,18 +204,18 @@ int get_colourW_prox(){
 double get_colourW_hue(){
     colourW.disable_gesture();
     colourW.set_led_pwm(100);
-    return colourW.get_hue(); // should only run once
+    return colourW.get_hue();
 }
 
 double get_plate_hue(){
     plateColour.disable_gesture();
     plateColour.set_led_pwm(100);
-    return plateColour.get_hue(); // should only run once
+    return plateColour.get_hue();
 }
 
 void spinRed(){ // spin until blue is bottom
     int exit = 0;
-    while((!(get_colourW_hue() > blueHue - 100 && get_colourW_hue() < blueHue + 100)) && exit < 1000){
+    while((!(get_colourW_hue() > blueHue - 100 && get_colourW_hue() < blueHue + 80)) && exit < 1000){
         set_colour(abs(COLOUR_SPEED)*-1);
         exit++;
         pros::delay(10);
@@ -258,7 +225,7 @@ void spinRed(){ // spin until blue is bottom
 
 void spinBlue(){ // spin until red is bottom
     int exit = 0;
-    while((!(get_colourW_hue() > 360 - 100 || get_colourW_hue() < redHue + 100)) && exit < 1000){
+    while((!(get_colourW_hue() > 360 - 40 || get_colourW_hue() < redHue + 100)) && exit < 1000){
         set_colour(abs(COLOUR_SPEED)*-1);
         exit++;
         pros::delay(10);
@@ -267,7 +234,7 @@ void spinBlue(){ // spin until red is bottom
 }
 
 bool isRed(){
-    if (get_plate_hue() > 360 - 100 || get_plate_hue() < redHue + 100){
+    if (get_plate_hue() > 360 - 40 || get_plate_hue() < redHue + 100){
         return true;
     } else {
         return false;
@@ -284,8 +251,8 @@ void spinColour(){
 
 void Auton_task(void*){
     while(true){
-        if (super && didReach){      
-            superCata(0.4,0.11, CATA_SPEED);
+        if (super && didReach){
+            superCata(0.0,0.6, CATA_SPEED);
             PistonBoost.set_value(0);
             didReach = false;
             super = false;
@@ -300,17 +267,15 @@ void Systems_task(void*) {
 
         if (master.get_digital(CATA_SHOT)){
             fireCata();
-            pros::delay(600);
+            pros::delay(350);
         }
-        /*
+        // /*
         if (master.get_digital(COLOUR_SPIN)){
             superIdol();
         }
-        */
+        // */
         resetCata();
 
-
-        // justshot = false;
 
         // if (master.get_digital(CATA_SHOT)){
         //     set_cata(-100);

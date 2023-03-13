@@ -1,5 +1,6 @@
 #include "main.h"
 #include "autons.hpp"
+#include "pros/misc.h"
 #include "systems.hpp"
 
 using namespace pros;
@@ -42,6 +43,7 @@ pros::Task cont(intake_control, nullptr);
 
 
 void initialize() {
+  // Expansion1.set_value(false);
   AutoTask.suspend();
   SystemsCalc.suspend();
   cont.suspend();
@@ -57,12 +59,19 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("Tune PIP", pid_tune),
-    Auton("Left Side WP", left_wp),
+    // Auton("Tune PID", pid_tune),
+    
+    // Auton("Skills", skills),
+
     Auton("Left Side HALF WP", left_halfwp),
-    Auton("Right Side HALF WP", right_halfwp),
-    Auton("None", none)
-    // Auton("Left Side WP", left_wp)
+    // Auton("Right Side HALF WP", right_halfwp),
+
+    Auton("WP", left_wp),
+    Auton("Left Side HALF WP", left_halfwp),
+    Auton("Elims Right Side HALF WP", elims_right_halfwp),
+    Auton("Left Side WP", left_wp),
+    Auton("None", none),
+    // Auton("Skills", skills)
   });
 
   // Initialize chassis and auton selector
@@ -89,6 +98,7 @@ void autonomous() {
 void opcontrol() {
   // AutoTask.suspend();
   // AutoTask.remove();
+  set_intake(0);
   AutoTask.resume();
   SystemsCalc.resume();
   cont.resume();
@@ -96,6 +106,9 @@ void opcontrol() {
 
   while (true) {
     chassis.tank();
+    // printf("right: %f \n", chassis.right_eff());
+    // printf("\n");
+    // printf("left: %f \n", chassis.left_eff());
     // intake_control();
 
     pros::delay(10);
